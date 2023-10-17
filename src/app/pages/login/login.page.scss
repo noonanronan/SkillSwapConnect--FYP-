@@ -1,0 +1,43 @@
+/* login.page.scss */
+
+/* Center the login card */
+ion-card {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Center the login button */
+  ion-button {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  /* Style the input fields */
+  ion-item {
+    margin-bottom: 15px;
+  }
+  
+  /* Center the card title */
+  ion-card-title {
+    text-align: center;
+    font-size: 24px;
+  }
+  
+  /* Style the header */
+  ion-header {
+    background-color: #3880ff;
+    color: white;
+  }
+  
+  /* Style the content */
+  ion-content {
+    --background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
