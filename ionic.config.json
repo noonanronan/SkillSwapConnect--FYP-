@@ -1,0 +1,7 @@
+{
+  "name": "SkillSwapConnect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
