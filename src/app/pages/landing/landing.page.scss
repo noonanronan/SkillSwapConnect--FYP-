@@ -1,0 +1,67 @@
+.custom-landing-page {
+    --background: #f9f9f9; /* Light gray background for contrast */
+  
+    .header-section {
+      text-align: center; // this will center the image horizontally
+      padding: 20px; // feel free to adjust
+      background-color: #3880ff; // background color of the header
+      color: #ffffff; // text color in the header
+  
+      .landing-logo {
+        max-width: 50%; // limits image width to 50% of the containing element
+        height: auto; // maintains aspect ratio
+        margin: 0 auto; // centers the image horizontally if it's an inline or inline-block element
+        display: block; // makes sure the image behaves as a block element
+      }
+  
+      h2 {
+        margin-top: 15px;
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+  
+      p {
+        font-size: 1em;
+      }
+    }
+  
+    .content-section {
+      padding: 20px;
+      text-align: center;
+  
+      h3 {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+    }
+  
+    .feature-section {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 25px;
+  
+      ion-card {
+        flex: 0 0 30%; /* Makes three cards fit in a row. Adjust as needed */
+  
+        ion-card-header {
+          text-align: center;
+          --background: #ffffff; /* White background for the cards */
+        }
+  
+        ion-card-content {
+          text-align: center;
+        }
+      }
+    }
+  
+    .cta-section {
+      padding: 20px;
+      text-align: center;
+  
+      ion-button {
+        font-weight: bold;
+      }
+    }
+  }
+  

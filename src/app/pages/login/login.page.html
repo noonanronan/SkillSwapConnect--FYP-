@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
       <ion-card-title>Login to Your Account</ion-card-title>
@@ -18,7 +18,21 @@
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" [(ngModel)]="password"></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="login()">Login</ion-button>
+      <div class="ion-padding-top">
+        <ion-button expand="block" [routerLink]="['/home']">Login</ion-button>
+      </div>
+      
+      <div class="ion-padding-top ion-text-center">
+        <ion-button fill="clear" size="small" [routerLink]="['/reset-password']">
+          Forgot Password?
+        </ion-button>
+      </div>
+      <div class="ion-padding-top ion-text-center">
+        <ion-label>Don't have an account? </ion-label>
+        <ion-button fill="clear" size="small" [routerLink]="['/signup']">
+          Sign Up
+        </ion-button>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
