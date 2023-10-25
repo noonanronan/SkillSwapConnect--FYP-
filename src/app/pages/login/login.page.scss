@@ -2,7 +2,10 @@
 
 /* Style the header */
 ion-header {
-  --background: #3880ff; /* Adjusted for Ionic's coloring system */
+  --background: #94ffa9; /* Adjusted for Ionic's coloring system */
+}
+
+ion-header, ion-header ion-title {
   color: white;
 }
 
@@ -46,6 +49,10 @@ ion-button {
 
 /* Additional style for the 'Forgot Password?' and 'Sign Up' links */
 ion-button[fill="clear"] {
-  --color: #3880ff; /* Primary color for better emphasis */
+  --color: rgba(0, 0, 0, 0.2)	; /* Primary color for better emphasis */
   font-weight: 500;
+}
+
+.input{
+  font-size: 300;
 }
