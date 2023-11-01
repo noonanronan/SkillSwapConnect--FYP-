@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Don't forget to import Router
+import { FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
+import { AutheticationService } from 'src/app/authetication.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -7,29 +12,45 @@ import { Router } from '@angular/router'; // Don't forget to import Router
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  email: string = '';
-  password: string = '';
-
-  // Inject Router into your component
-  constructor(private router: Router) { }
+  loginForm: FormGroup 
+  
+  constructor(public route : Router ,public formBuilder:FormBuilder, public loadingCntrl: LoadingController, public authService: AutheticationService) { }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      email : ['', [
+        Validators.required,
+        Validators.email,
+        Validators.pattern("[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$")
+      ]],
+      password: ['',[
+        Validators.required,
+        Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8]).{8,}")
+      ]]
+  })
   }
 
-  login() {
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
+  get errorControl(){
+    return this.loginForm?.controls;
   }
 
-  // Method to handle forgot password click
-  forgotPassword() {
-    console.log('Forgot Password clicked');
-    this.router.navigate(['/reset-password']); //path for resetting password
-  }
+  // when i click this button it calls the sign up button
+  async login(){
+    const loading = await this.loadingCntrl.create();
+    await loading.present();
+    if(this.loginForm?.valid){
+      const user = await this.authService.loginUser(this.loginForm.value.email, this.loginForm.value.password).catch((error) =>{
+        console.log(error);
+        loading.dismiss()
 
-  // Method to handle sign up click
-  goToSignUp() {
-    console.log('Go to Sign Up clicked');
-    this.router.navigate(['/signup']); //Path for signing up
+      })
+
+      if(user){
+        loading.dismiss();
+        this.route.navigate(['/home'])
+      }else{
+        console.log('provided correct values')
+      }
+    }
   }
 }
