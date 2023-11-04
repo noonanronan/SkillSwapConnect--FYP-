@@ -1,6 +1,8 @@
-// Firebase Configuration 
+// This file exports Firebase configuration settings for the Angular app. 
 export const environment = {
   production: false,
+
+  // Firebase configuration details.
    firebaseConfig : {
     apiKey: "AIzaSyC7xGCFJehnq5pRdWkhWtHhmXr6zp540BA",
     authDomain: "skill-swap-connect.firebaseapp.com",
