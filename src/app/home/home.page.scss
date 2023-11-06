@@ -1,27 +1,56 @@
-#container {
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+
+  .logo {
+    font-size: 12px;
+    font-weight: bold;
+    max-width: 25%; // limits image width to 50% of the containing element
+    height: auto; // maintains aspect ratio
+    margin: 0 auto; // centers the image horizontally if it's an inline or inline-block element
+  }
+
+  button {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #eee;
+  margin: 20px 0;
+
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+}
+
+.content-area {
+  padding: 20px;
+}
+
+.app-footer {
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
 }
