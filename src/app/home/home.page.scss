@@ -1,56 +1,95 @@
+/* Overall Container */
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  height: 100vh; /* Full viewport height */
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center; /* Center text for all child elements */
 }
 
+/* Header */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  width: 100%; /* Full width */
   background-color: #333;
   color: #fff;
-
-  .logo {
-    font-size: 12px;
-    font-weight: bold;
-    max-width: 25%; // limits image width to 50% of the containing element
-    height: auto; // maintains aspect ratio
-    margin: 0 auto; // centers the image horizontally if it's an inline or inline-block element
-  }
-
-  button {
-    background-color: #f44336;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  z-index: 1000; /* Ensures it stays above other content */
 }
 
+.app-header .logo img {
+  height: 80px; /* Adjust as necessary */
+  display: block;
+}
+
+.app-header button {
+  background-color: #4CAF50; /* Softer green color */
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.app-header button:hover {
+  background-color: #43A047; /* Darker shade on hover */
+}
+
+/* Profile Card */
 .profile-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
-  border: 1px solid #eee;
-  margin: 20px 0;
-
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-top: 100px; /* Spacing from the fixed header */
 }
 
+.profile-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #eee; /* Placeholder background color */
+  margin-bottom: 20px; /* Spacing from the image to the text */
+}
+
+/* Welcome Message */
 .content-area {
   padding: 20px;
+  margin-top: 20px; /* Spacing from the profile card */
 }
 
+.content-area h2 {
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* Footer */
 .app-footer {
   padding: 20px;
   background-color: #333;
   color: #fff;
   text-align: center;
+  position: fixed; /* Fixed at the bottom */
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Ensure content is pushed down by the footer */
+body {
+  margin-bottom: 60px; /* Height of the footer */
 }
