@@ -37,23 +37,30 @@ export class SignUpPage implements OnInit {
   }
 
   // when i click this button it calls the sign up button
-  async signUp(){
+  async signUp() {
     const loading = await this.loadingCntrl.create();
     await loading.present();
-    if(this.regForm?.valid){
-      const user = await this.authService.registerUser(this.regForm.value.email, this.regForm.value.password).catch((error) =>{
-        console.log(error);
-        loading.dismiss()
-
-      })
-
-      if(user){
+  
+    if (this.regForm.valid) {
+      const { fullname, email, password } = this.regForm.value;
+  
+      try {
+        const userCredential = await this.authService.registerUser(email, password, fullname);
+        // Handle successful registration
+        console.log('User registered successfully!', userCredential);
         loading.dismiss();
-        this.router.navigate(['/home'])
-      }else{
-        console.log('provided correct values')
+        this.router.navigate(['/home']); // Navigate to the home page or a welcome page
+      } catch (error) {
+        // Handle errors from registration
+        console.error('Registration error:', error);
+        loading.dismiss();
       }
+    } else {
+      // Handle form validation errors
+      console.error('Form not valid:', this.regForm.errors);
+      loading.dismiss();
     }
   }
+
   
 }

@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 
 // Import IonicModule
 import { IonicModule } from '@ionic/angular';
+import { AutheticationService } from './authetication.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { IonicModule } from '@ionic/angular';
     AngularFireAuthModule,
     IonicModule.forRoot(), // Add IonicModule to your imports
   ],
-  providers: [],
+  providers: [AutheticationService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add this line for the CUSTOM_ELEMENTS_SCHEMA
 })

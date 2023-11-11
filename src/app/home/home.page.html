@@ -9,10 +9,12 @@
   </header>
 
   <!-- User Profile Card -->
-  <section class="profile-card">
-    <img src="" alt="User Image" class=""/>
-    <h2>{{ user.name }}</h2>
-    <p>{{ user.email }}</p>
+  <section class="profile-card" *ngIf="user">
+    <!-- User profile picture -->
+    <img [src]="user?.photoURL || 'path/to/default/image.jpg'" alt="User Image" class="profile-pic">
+    <!-- User name -->
+    <h2>{{ user?.displayName || 'User' }}</h2>
+    <p>{{ user?.email }}</p>
   </section>
 
   <!-- Main Content Area -->

@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="regForm">
+  <form [formGroup]="regForm" (ngSubmit)="signUp()">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Create Your Account</ion-card-title>
@@ -13,53 +13,47 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Name</ion-label>
-          <ion-input formControlName="fullname" ></ion-input>
+          <ion-input formControlName="fullname"></ion-input>
         </ion-item>
         <div *ngIf="regForm.get('fullname').touched && regForm.get('fullname').invalid">
-          <ion-text *ngIf="regForm.get('fullname').hasError('required')">
-            fullname is required
+          <ion-text color="danger" *ngIf="regForm.get('fullname').hasError('required')">
+            Name is required.
           </ion-text>
         </div>
+
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input formControlName="email" ></ion-input>
+          <ion-input formControlName="email"></ion-input>
         </ion-item>
         <div *ngIf="regForm.get('email').touched && regForm.get('email').invalid">
-          <ion-text *ngIf="regForm.get('email').hasError('required')">
-            Email is required
+          <ion-text color="danger" *ngIf="regForm.get('email').hasError('required')">
+            Email is required.
           </ion-text>
-          <ion-text *ngIf="regForm.get('email').hasError('pattern')">
-            Email should be valid
+          <ion-text color="danger" *ngIf="regForm.get('email').hasError('pattern')">
+            Please enter a valid email.
           </ion-text>
         </div>
 
         <ion-item>
           <ion-label position="floating">Password</ion-label>
-          <ion-input formControlName="password"></ion-input>
+          <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
-        <ion-item>
-          <div *ngIf="regForm.get('password').touched && regForm.get('password').invalid">
-            <ion-text *ngIf="regForm.get('password').hasError('required')">
-                Password is required
-            </ion-text>
-            <ion-text *ngIf="regForm.get('password').hasError('pattern')">
-                Password must Contain:
-                - One Character
-                - One Capital Letter
-                - One Number
-                - Contain 8 digits
-            </ion-text>
+        <div *ngIf="regForm.get('password').touched && regForm.get('password').invalid">
+          <ion-text color="danger" *ngIf="regForm.get('password').hasError('required')">
+            Password is required.
+          </ion-text>
+          <ion-text color="danger" *ngIf="regForm.get('password').hasError('pattern')">
+            Password must contain at least one character, one capital letter, one number, and be at least 8 characters long.
+          </ion-text>
         </div>
 
-          <!-- <ion-label position="floating">Confirm Password</ion-label>
-          <ion-input type="password" ></ion-input> -->
-        </ion-item>
         <div class="ion-padding-top signinLink">
-          <ion-button expand="block" type="submit" (click)="signUp()" >Sign Up</ion-button>
+          <ion-button expand="block" type="submit">Sign Up</ion-button>
         </div>
+
         <div class="ion-padding-top signupLink">
           <a>Already a member?</a>
-          <ion-button expand="block" >Sign in</ion-button>
+          <ion-button expand="block" [routerLink]="['/login']">Sign in</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
