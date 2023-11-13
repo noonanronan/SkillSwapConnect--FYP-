@@ -2,12 +2,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  height: 100vh; /* Full viewport height */
+  justify-content: center; // Center content vertically 
+  align-items: center; // Center content horizontally 
+  height: 100vh; // Full viewport height 
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center; /* Center text for all child elements */
+  text-align: center; // Center text for all child elements 
 }
 
 /* Header */
@@ -16,21 +16,21 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  width: 100%; /* Full width */
+  width: 100%; // Full width 
   background-color: #333;
   color: #fff;
   position: fixed; /* Fixed at the top */
   top: 0;
-  z-index: 1000; /* Ensures it stays above other content */
+  z-index: 1000; // Ensures it stays above other content
 }
 
 .app-header .logo img {
-  height: 80px; /* Adjust as necessary */
+  height: 80px; 
   display: block;
 }
 
 .app-header button {
-  background-color: #4CAF50; /* Softer green color */
+  background-color: #4CAF50; // Softer green color 
   color: #fff;
   padding: 12px 24px;
   border: none;
@@ -41,33 +41,68 @@
 }
 
 .app-header button:hover {
-  background-color: #43A047; /* Darker shade on hover */
+  background-color: #43A047; // Darker shade on hover 
 }
 
 /* Profile Card */
-.profile-card {
+// .profile-card {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 20px;
+//   background: #fff;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//   border-radius: 10px;
+//   margin-top: 100px; // Spacing from the fixed header 
+// }
+
+// .profile-card img {
+//   width: 100px;
+//   height: 100px;
+//   border-radius: 50%;
+//   background: #eee; /* Placeholder background color */
+//   margin-bottom: 20px; /* Spacing from the image to the text */
+// }
+
+/* Side Menu Content */
+ion-menu {
+  --width: 250px; // Adjust the width of the side menu as needed */
+}
+
+/* Profile Card in Side Menu */
+ion-menu .profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-top: 100px; /* Spacing from the fixed header */
 }
 
-.profile-card img {
-  width: 100px;
-  height: 100px;
+ion-menu .profile-card img {
+  width: 80px; /* Adjust the size as needed */
+  height: 80px;
   border-radius: 50%;
-  background: #eee; /* Placeholder background color */
-  margin-bottom: 20px; /* Spacing from the image to the text */
+  margin-bottom: 15px; /* Adjust spacing as needed */
 }
+
+/* Profile Card Name and Email */
+ion-menu .profile-card h2,
+ion-menu .profile-card p {
+  color: #333;
+  margin: 4px 0; /* Adjust spacing as needed */
+}
+
+/* Logout Button in Side Menu */
+ion-menu ion-button {
+  width: 100%; // Full width of the side menu
+  margin-top: 15px; // Adjust spacing
+}
+
 
 /* Welcome Message */
 .content-area {
   padding: 20px;
-  margin-top: 20px; /* Spacing from the profile card */
+  margin-top: 20px; // Spacing from the profile card 
 }
 
 .content-area h2 {
@@ -83,7 +118,7 @@
   background-color: #333;
   color: #fff;
   text-align: center;
-  position: fixed; /* Fixed at the bottom */
+  position: fixed; // Fixed at the bottom 
   bottom: 0;
   width: 100%;
   z-index: 1000;
@@ -91,5 +126,5 @@
 
 /* Ensure content is pushed down by the footer */
 body {
-  margin-bottom: 60px; /* Height of the footer */
+  margin-bottom: 60px; // Height of the footer 
 }
