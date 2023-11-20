@@ -21,11 +21,12 @@
   color: #fff;
   position: fixed;
   top: 0;
-  z-index: 1001; /* Higher than the ion-header */
+  z-index: 1001; // Higher than the ion-header 
 }
 
 .app-header .logo img {
-  height: 80px; 
+  height: 100px; 
+  width: 120px;
   display: block;
 }
 
@@ -49,12 +50,6 @@ ion-menu {
   --width: 250px; // Adjust the width of the side menu
 }
 
-// /* Ion-Button */
-// ion-buttons {
-//   position: absolute; // Position it absolutely within the header
-//   top: 100%; // Right below the header
-//   left: 0; // Align to the left side
-// }
 
 /* Profile Card in Side Menu */
 ion-menu .profile-card {
@@ -66,17 +61,17 @@ ion-menu .profile-card {
 }
 
 ion-menu .profile-card img {
-  width: 80px; /* Adjust the size as needed */
+  width: 80px; 
   height: 80px;
   border-radius: 50%;
-  margin-bottom: 15px; /* Adjust spacing as needed */
+  margin-bottom: 15px; // spacing
 }
 
 /* Profile Card Name and Email */
 ion-menu .profile-card h2,
 ion-menu .profile-card p {
   color: #333;
-  margin: 4px 0; /* Adjust spacing as needed */
+  margin: 4px 0; // spacing
 }
 
 /* Logout Button in Side Menu */
