@@ -1,8 +1,6 @@
-/* login.page.scss */
-
 /* Style the header */
 ion-header {
-  --background: #94ffa9; /* Adjusted for Ionic's coloring system */
+  --background: #94ffa9; // Adjusted for Ionic's coloring system 
 }
 
 ion-header, ion-header ion-title {
@@ -16,7 +14,7 @@ ion-content {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 20px; /* Added padding for better spacing */
+  padding: 20px; // Added padding for better spacing 
 }
 
 /* Center the login card */
@@ -35,21 +33,21 @@ ion-item {
 /* Center the card title */
 ion-card-title {
   text-align: center;
-  font-size: 24px; /* Increased font size for better visibility */
+  font-size: 24px; // Increased font size for better visibility 
 }
 
 /* Center the login button and additional links */
 ion-button {
-  margin-top: 20px; /* Adjusted spacing */
+  margin-top: 20px; // Adjusted spacing 
 
   &.ion-no-margin {
-    margin-top: 0; /* Remove margin for the links below */
+    margin-top: 0; // Remove margin for the links below
   }
 }
 
 /* Additional style for the 'Forgot Password?' and 'Sign Up' links */
 ion-button[fill="clear"] {
-  --color: rgba(0, 0, 0, 0.2)	; /* Primary color for better emphasis */
+  --color: rgba(0, 0, 0, 0.2)	; // Primary color for better emphasis
   font-weight: 500;
 }
 

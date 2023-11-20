@@ -2,16 +2,16 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <!-- Rest of your toolbar content -->
+      
     </ion-toolbar>
   </ion-header>
   
   <!-- Header -->
   <header class="app-header">
-    <div class="logo" >
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="logo">
       <img src="assets/logo.png"/>
     </div>
     <button (click)="logout()">Logout</button>
@@ -28,7 +28,7 @@
         <!-- User Profile Card -->
         <section class="profile-card" *ngIf="user">
           <!-- User profile picture -->
-          <img [src]="user?.photoURL || 'path/to/default/image.jpg'" alt="User Image" class="profile-pic">
+          <img [src]="user?.photoURL || 'path/to/image.jpg'" alt="User Image" class="profile-pic">
           <!-- User name -->
           <h2>{{ user?.displayName || 'User' }}</h2>
           <p>{{ user?.email }}</p>
@@ -49,7 +49,7 @@
 
   <!-- Footer -->
   <footer class="app-footer">
-    <p>&copy; 2023 Skill Swap Connect. All rights reserved.</p>
+    
   </footer>
 
 </div>
