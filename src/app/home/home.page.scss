@@ -25,8 +25,8 @@
 }
 
 .app-header .logo img {
-  height: 100px; 
-  width: 120px;
+  height: 60px; 
+  width: 80px;
   display: block;
 }
 
@@ -50,6 +50,9 @@ ion-menu {
   --width: 250px; // Adjust the width of the side menu
 }
 
+.menu-top-spacing {
+  margin-top: 70px; // Adjust this value as needed
+}
 
 /* Profile Card in Side Menu */
 ion-menu .profile-card {
@@ -63,8 +66,9 @@ ion-menu .profile-card {
 ion-menu .profile-card img {
   width: 80px; 
   height: 80px;
-  border-radius: 50%;
-  margin-bottom: 15px; // spacing
+  border-radius: 50%; // Makes the image circular
+  object-fit: cover; // Ensures the image covers the area well
+  margin-bottom: 15px; // Spacing
 }
 
 /* Profile Card Name and Email */
