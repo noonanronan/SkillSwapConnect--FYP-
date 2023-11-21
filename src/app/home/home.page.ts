@@ -1,6 +1,6 @@
 // Import necessary modules from Angular
 import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core'; 
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'; 
 import { AutheticationService } from '../authetication.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
@@ -14,6 +14,8 @@ import { User } from 'firebase/auth';
 export class HomePage implements OnInit, OnDestroy { // Implement both OnInit and OnDestroy
   user: User | null = null;  
   private authSubscription: Subscription; // This will hold the subscription to the auth service
+
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
   // The constructor initializes Router and AuthenticationService when this component is instantiated.
   constructor(public route: Router, 
@@ -35,6 +37,21 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
     // Unsubscribe to avoid memory leaks
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+  }
+
+  // Method to trigger the file input
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  // Method to handle file selection
+  onFileSelected(event) {
+    const file = event.target.files[0];
+    if (file) {
+      // Implement the logic to handle the file eg upload to firebase
+      console.log(file);
+      // call method to handle upload
     }
   }
 

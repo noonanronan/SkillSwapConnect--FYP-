@@ -28,7 +28,11 @@
         <!-- User Profile Card -->
         <section class="profile-card menu-top-spacing" *ngIf="user">
           <!-- User profile picture -->
-          <img [src]="user?.photoURL || 'assets/ronan.png'" alt="User Image" class="profile-pic">
+          <img [src]="user?.photoURL || 'assets/ronan.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
+
+          <!-- Hidden File Input -->
+          <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+
           <!-- User name -->
           <h2>{{ user?.displayName || 'User' }}</h2>
           <p>{{ user?.email }}</p>
