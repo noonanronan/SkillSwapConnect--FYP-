@@ -17,7 +17,7 @@
   align-items: center;
   padding: 20px;
   width: 100%;
-  background-color: #333;
+  background-color: #90EE90;
   color: #fff;
   position: fixed;
   top: 0;
@@ -80,6 +80,7 @@ ion-menu .profile-card p {
 
 /* Logout Button in Side Menu */
 ion-menu ion-button {
+  background-color: #43A047;
   width: 100%; // Full width of the side menu
   margin-top: 15px; // Adjust spacing
 }
@@ -101,7 +102,7 @@ ion-menu ion-button {
 /* Footer */
 .app-footer {
   padding: 20px;
-  background-color: #333;
+  background-color: #AA336A;
   color: #fff;
   text-align: center;
   position: fixed; // Fixed at the bottom 
