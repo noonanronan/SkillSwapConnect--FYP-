@@ -1,68 +1,81 @@
 .custom-landing-page {
-    --background: #f9f9f9; /* Light gray background for contrast */
-  
-    .header-section {
-      text-align: center; // this will center the image horizontally
-      padding: 20px; // feel free to adjust
-      background-color: #94ffa9; // background color of the header
-      color: #ffffff; // text color in the header
-  
-      .landing-logo {
-        max-width: 50%; // limits image width to 50% of the containing element
-        height: auto; // maintains aspect ratio
-        margin: 0 auto; // centers the image horizontally if it's an inline or inline-block element
-        display: block; // makes sure the image behaves as a block element
-      }
-  
-      h2 {
-        margin-top: 15px;
-        font-size: 1.5em;
-        font-weight: bold;
-      }
-  
-      p {
-        font-size: 1em;
-      }
+  --background: #f9f9f9; // Light gray background for contrast
+
+  .header-section {
+    text-align: center;
+    padding: 40px; // Increased padding for visual space
+    background-color: #90EE90; // Green background color to match branding
+    color: #005a30; // Dark green color for text for contrast against background
+
+    .landing-logo {
+      max-width: 50%; // Limits the logo to half of the section width
+      height: auto; // Ensures the logo maintains its aspect ratio
+      margin: 0 auto; // Centers the logo horizontally
+      display: block; // Ensures the image is treated as a block-level element
     }
-  
-    .content-section {
-      padding: 20px;
-      text-align: center;
-  
-      h3 {
-        font-size: 1.3em;
-        font-weight: bold;
-        margin-bottom: 15px;
-      }
+
+    h2 {
+      margin-top: 15px; // Adds space above the h2 element
+      font-size: 2em; // Enlarges the h2 font for emphasis
+      font-weight: bold; // Bold font weight for h2 for prominence
     }
-  
-    .feature-section {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 25px;
-  
-      ion-card {
-        flex: 0 0 30%; /* Makes three cards fit in a row. Adjust as needed */
-  
-        ion-card-header {
-          text-align: center;
-          --background: #ffffff; /* White background for the cards */
-        }
-  
-        ion-card-content {
-          text-align: center;
-        }
-      }
+
+    p {
+      font-size: 1.2em; // Increases the paragraph font size for readability
     }
-  
-    .cta-section {
-      padding: 20px;
-      text-align: center;
-  
-      ion-button {
-        font-weight: bold;
-        
+  }
+
+  .content-section {
+    padding: 40px; // Uniform padding for consistent spacing
+    text-align: center; // Centers the text within the content section
+
+    h3 {
+      font-size: 1.5em; // Enlarges the h3 font for clear section headers
+      font-weight: bold; // Bold font weight for h3 for distinction
+      color: #ffd1dc; // Pink color for h3 to complement the overall design
+      margin-bottom: 20px; // Adds space below the h3 element
+    }
+  }
+
+  .feature-section {
+    display: flex; // Uses flexbox for a flexible card layout
+    justify-content: space-around; // Spaces out the flex items evenly
+    margin-top: 25px; // Adds space above the feature section
+
+    .feature-card {
+      flex: 1; // Flex grow factor set to 1 for equal width cards
+      margin: 0 10px; // Horizontal margin between cards
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for card depth
+      ion-card-header {
+        text-align: center; // Centers the card header text
+        --background: #ffffff; // Sets a white background for the card headers
+      }
+
+      ion-card-content {
+        text-align: center; // Centers the card content text
+        font-size: 1em; // Standard font size for card content
       }
     }
   }
-  
+
+  .cta-section {
+    padding: 40px; // Increased padding around the CTA button for emphasis
+    text-align: center; // Centers the CTA button
+
+    .cta-button {
+      max-width: 250px;// Width of the button
+      font-weight: bold; // Bold font weight for the CTA button text
+      background-color: #ffd1dc; // Pink background color for the CTA button
+      color: #ffffff; // White text for high contrast on the CTA button
+      font-size: 1.2em; // Larger font size for the button text
+      padding: 15px 30px; // Padding to increase the button size
+      border: none; // No border for a cleaner button look
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Shadow for visual depth on the button
+      transition: transform 0.3s ease; // Smooth transition effect for the button press
+    }
+
+    .cta-button:active {
+      transform: scale(0.5); // Reduces the size of the button when clicked
+    }
+  }
+}

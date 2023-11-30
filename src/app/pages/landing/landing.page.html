@@ -1,54 +1,54 @@
 <ion-content [fullscreen]="true" class="custom-landing-page">
+  <!-- Header Section: Contains the logo and sets the first visual impression -->
+  <div class="header-section">
+    <ion-img class="landing-logo" src="assets/Skillshare-Logo.png" alt="Welcome to SkillSwap"></ion-img> 
+  </div>
 
-    <!-- Header Section -->
-    <div class="header-section">
-      <ion-img class="landing-logo" src="assets/Skillshare-Logo.png" alt="Welcome to SkillSwap"></ion-img> 
-    </div>
-  
-    <!-- Content Section -->
-    <div class="content-section">
+  <!-- Content Section: Introduces SkillSwapConnect -->
+  <div class="content-section">
+    <!-- Main Heading: Greeting message -->
     <h2>Welcome to SkillSwap!</h2>
-      <p>Connect. Exchange. Grow.</p>
-      <h3>Discover new opportunities</h3>
-      <p>Join a thriving community dedicated to sharing skills and knowledge.</p>
-  
-      <!-- Features -->
-      <div class="feature-section">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Learn</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            Dive into diverse subjects.
-          </ion-card-content>
-        </ion-card>
-  
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Share</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            Teach others what you know.
-          </ion-card-content>
-        </ion-card>
-  
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Connect</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            Build your network and friendships.
-          </ion-card-content>
-        </ion-card>
-      </div>
+    <p>Connect. Exchange. Grow.</p>
+    <h3>Discover new opportunities</h3>
+    <p>Join a thriving community dedicated to sharing skills and knowledge.</p>
+
+    <!-- Features Card: Learn -->
+    <div class="feature-section">
+      <ion-card class="feature-card">
+        <ion-card-header>
+          <ion-card-title>Learn</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Dive into diverse subjects.
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Feature Card: Share  -->
+      <ion-card class="feature-card">
+        <ion-card-header>
+          <ion-card-title>Share</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Teach others what you know.
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Feature Card: Connect-->
+      <ion-card class="feature-card">
+        <ion-card-header>
+          <ion-card-title>Connect</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Build your network and friendships.
+        </ion-card-content>
+      </ion-card>
     </div>
-  
-    <!-- Call to Action -->
-    <div class="cta-section">
-      <ion-button style="--background: #94ffa9;" expand="block" shape="round" [routerLink]="['/login']">
-        Get Started
-      </ion-button>
-    </div>
-  
-  </ion-content>
-  
+  </div>
+
+  <!-- CTA Button: 'Get Started' -->
+  <div class="cta-section">
+    <ion-button style="--background: #90EE90;" class="cta-button" shape="round" [routerLink]="['/login']">
+      Get Started
+    </ion-button>
+  </div>
+</ion-content>
