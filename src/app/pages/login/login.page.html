@@ -1,11 +1,14 @@
+<!-- Header Section -->
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title style="color: #94ffa9;" class="title" >Login</ion-title>
+  <!-- Custom Toolbar with a custom class for styling -->
+  <ion-toolbar class="custom-toolbar">
+    <ion-title class="title">Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <form [formGroup]="loginForm">
+    <!-- Card for the login form -->
     <ion-card>
       <ion-card-header>
         <ion-card-title class="subTitle">Login to Your Account</ion-card-title>
@@ -15,6 +18,7 @@
           <ion-label position="floating">Email</ion-label>
           <ion-input type="email" placeholder="username" class="input" formControlName="email"></ion-input>
         </ion-item>
+         <!-- Validation messages for Email -->
         <div *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid">
           <ion-text *ngIf="loginForm.get('email').hasError('required')">
             Email is required
@@ -28,6 +32,7 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input type="password" placeholder="Password" class="input" formControlName="password"></ion-input>
         </ion-item>
+         <!-- Validation messages for Password -->
         <div *ngIf="loginForm.get('password').touched && loginForm.get('password').invalid">
           <ion-text *ngIf="loginForm.get('password').hasError('required')">
               Password is required
@@ -41,15 +46,19 @@
           </ion-text>
       </div>
 
+      <!-- Login button -->
         <div class="ion-padding-top forgot-password">
-          <ion-button style="--background: #94ffa9;" expand="block" (click)="login()">Login</ion-button>
+          <ion-button style="--background: #AA336A;" expand="block" (click)="login()">Login</ion-button>
         </div>
         
+        <!-- Link to Reset Password page -->
         <div class="ion-padding-top ion-text-center">
           <ion-button fill="clear" size="small" [routerLink]="['/reset-password']" style="color: rgba(107, 107, 107, 0.772)">
             Forgot Password?
           </ion-button>
         </div>
+
+        <!-- Link to Sign Up page -->
         <div class="ion-padding-top ion-text-center signup-link">
           <ion-label style="color: rgb(0, 0, 0)">Don't have an account? </ion-label>
           <ion-button fill="clear" size="small" [routerLink]="['/signup']" style="color: rgba(107, 107, 107, 0.772)">
