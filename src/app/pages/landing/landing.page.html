@@ -12,42 +12,37 @@
     <h3>Discover new opportunities</h3>
     <p>Join a thriving community dedicated to sharing skills and knowledge.</p>
 
-    <!-- Features Card: Learn -->
+    
     <div class="feature-section">
-      <ion-card class="feature-card">
+      <!-- Features Card: Learn -->
+      <ion-card class="feature-card" (click)="showLearnMessage()">
         <ion-card-header>
           <ion-card-title>Learn</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Dive into diverse subjects.
-        </ion-card-content>
       </ion-card>
+      <p *ngIf="learnMessage" class="message">{{ learnMessage }}</p>
 
       <!-- Feature Card: Share  -->
-      <ion-card class="feature-card">
+      <ion-card class="feature-card" (click)="showShareMessage()">
         <ion-card-header>
           <ion-card-title>Share</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Teach others what you know.
-        </ion-card-content>
       </ion-card>
+      <p *ngIf="shareMessage" class="message">{{ shareMessage }}</p>
 
       <!-- Feature Card: Connect-->
-      <ion-card class="feature-card">
+      <ion-card class="feature-card" (click)="showConnectMessage()">
         <ion-card-header>
           <ion-card-title>Connect</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Build your network and friendships.
-        </ion-card-content>
       </ion-card>
+      <p *ngIf="connectMessage" class="message">{{ connectMessage }}</p>
     </div>
   </div>
 
   <!-- CTA Button: 'Get Started' -->
   <div class="cta-section">
-    <ion-button style="--background: #ffd1dc;" class="cta-button" shape="round" [routerLink]="['/login']">
+    <ion-button class="cta-button" shape="round" [routerLink]="['/login']">
       Get Started
     </ion-button>
   </div>

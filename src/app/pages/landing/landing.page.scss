@@ -51,6 +51,18 @@
         --background: #ffffff; // Sets a white background for the card headers
       }
 
+      /* Message on feature card */
+      .message {
+        display: none; // Stops message from being displayed at start
+        transition: opacity 0.5s ease;
+      }
+
+      /* This class is added to the message when it needs to be shown */
+      .message.show {
+        display: block;
+        opacity: 1;
+      }
+
       ion-card-content {
         text-align: center; // Centers the card content text
         font-size: 1em; // Standard font size for card content
