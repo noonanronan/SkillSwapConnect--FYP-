@@ -20,6 +20,11 @@ export class AutheticationService {
     });
   }
 
+  
+  updateCurrentUser(user: firebase.User) {
+    this.currentUserSubject.next(user);
+  }
+
   // Method to register a user with email and password.
   async registerUser(email: string, password: string, name: string): Promise<firebase.auth.UserCredential> {
     const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);

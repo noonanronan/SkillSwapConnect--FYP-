@@ -4,12 +4,13 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { AutheticationService } from '../authetication.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
+import { AddImageService } from '../services/add-image.service';// importing the service
 
 
 @Component({
-  selector: 'app-home', // This specifies the custom tag name for this component.
-  templateUrl: 'home.page.html', // Path to the component's HTML template.
-  styleUrls: ['home.page.scss'], // Path to the component's styles.
+  selector: 'app-home', // This specifies the custom tag name for this component
+  templateUrl: 'home.page.html', // Path to the component's HTML template
+  styleUrls: ['home.page.scss'], // Path to the component's styles
 })
 export class HomePage implements OnInit, OnDestroy { // Implement both OnInit and OnDestroy
   user: User | null = null;  
@@ -19,7 +20,8 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
 
   // The constructor initializes Router and AuthenticationService when this component is instantiated.
   constructor(public route: Router, 
-    public authService: AutheticationService) {}
+    public authService: AutheticationService,
+    private addImageService : AddImageService) {}
 
   ngOnInit(): void {
     // Subscribe to the auth service to get user profile updates
@@ -46,14 +48,26 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
   }
 
   // Method to handle file selection
-  onFileSelected(event) {
+  async onFileSelected(event) {
+    // Get the file the user selected
     const file = event.target.files[0];
+    // Check to see if a file was selected
     if (file) {
-      // Implement the logic to handle the file eg upload to firebase
-      console.log(file);
-      // call method to handle upload
+      try {
+        const imageUrl = await this.addImageService.addProfileImage(file); // Upload the file using the addImageService
+        const user = await this.authService.getProfile(); //  Get the current users profile
+        // If make sure users logged in
+        if (user) {
+          await user.updateProfile({ photoURL: imageUrl }); // Update the user's profile in FB
+          this.authService.updateCurrentUser(user);
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error); // log error if doesn't work
+      }
     }
   }
+
+  
 
   // Method to handle logout process.
   async logout(): Promise<void> {

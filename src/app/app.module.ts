@@ -13,6 +13,9 @@ import { environment } from '../environments/environment';
 import { IonicModule } from '@ionic/angular';
 import { AutheticationService } from './authetication.service';
 
+// Import AngularFireStorageModule
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,10 +25,11 @@ import { AutheticationService } from './authetication.service';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFireStorageModule,
     IonicModule.forRoot(), // Add IonicModule to your imports
   ],
   providers: [AutheticationService],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Add this line for the CUSTOM_ELEMENTS_SCHEMA
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // The CUSTOM_ELEMENTS_SCHEMA
 })
 export class AppModule { }

@@ -3,7 +3,7 @@ export const environment = {
   production: false,
 
   // Firebase configuration details.
-   firebaseConfig : {
+  firebaseConfig : {
     apiKey: "AIzaSyC7xGCFJehnq5pRdWkhWtHhmXr6zp540BA",
     authDomain: "skill-swap-connect.firebaseapp.com",
     projectId: "skill-swap-connect",
@@ -13,4 +13,3 @@ export const environment = {
     measurementId: "G-J3RZKL5JNQ"
   }
 };
-
