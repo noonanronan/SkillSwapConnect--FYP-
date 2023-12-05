@@ -67,8 +67,10 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
     }
   }
 
+  goToProfile() {
+    this.route.navigateByUrl('/profile');
+  }
   
-
   // Method to handle logout process.
   async logout(): Promise<void> {
     try {

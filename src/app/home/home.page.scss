@@ -47,21 +47,24 @@
 
 /* Side Menu Content */
 ion-menu {
-  --width: 250px; // Adjust the width of the side menu
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This will push the logout button to the bottom */
+  height: 100%; /* Full height to allow justify-content to work */
 }
 
 .menu-top-spacing {
-  margin-top: 70px; // Adjust this value as needed
+  margin-top: 30px; // Adjust this value as needed
 }
 
-/* Profile Card in Side Menu */
-ion-menu .profile-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: #fff;
+
+
+/* Styling the ion-icon inside the button for the home icon */
+.home-icon-button ion-icon {
+  font-size: 32px;
+  color: white; 
 }
+
 
 ion-menu .profile-card img {
   width: 80px; 
