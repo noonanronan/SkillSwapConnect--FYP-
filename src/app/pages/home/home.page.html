@@ -28,7 +28,7 @@
         <!-- User Profile Card -->
         <section class="profile-card menu-top-spacing" *ngIf="user">
           <!-- User Profile button -->
-          <ion-button class="home-icon-button" (click)="goToProfile()">
+          <ion-button class="home-icon-button" style="--background:#0000;" (click)="goToProfile()">
             <ion-icon name="home"></ion-icon>
           </ion-button>          
           <!-- User profile picture -->
@@ -41,7 +41,7 @@
           <h2>{{ user?.displayName || 'User' }}</h2>
           <p>{{ user?.email }}</p>
           <!-- Logout button -->
-          <ion-button style="--background:#AA336A;" expand="full" (click)="logout()">Logout</ion-button>
+          <ion-button style="background-color: #ffe5b4;" (click)="logout()">Logout</ion-button>
         </section>
       </ion-content>
     </ion-menu>

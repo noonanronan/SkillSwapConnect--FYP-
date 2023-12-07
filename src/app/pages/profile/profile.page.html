@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
+<ion-header class="app-header">
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <!-- Home button on the left -->
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Centered Logo -->
+    <div class="logo">
+      <img src="assets/logo.png"/>
+    </div>
+
+    <!-- Logout button on the right -->
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<div class="profile-page-container">
+  <div class="user-profile-section">
+    <img [src]="user?.photoURL || 'assets/default-profile.png'" alt="User Image" class="profile-pic">
+    <h2>{{ user?.displayName || 'User' }}</h2>
+    <p>{{ user?.email }}</p>
+    <ion-textarea [(ngModel)]="bio" placeholder="Enter your bio here..."></ion-textarea>
+    <ion-button style="--background:#ffe5b4;" (click)="updateBio()">Update Bio</ion-button>
+  </div>
+  <div class="user-skill-section">
+    <h3>Share a Learning Skill</h3>
+    <ion-input placeholder="Enter skill title..."></ion-input>
+    <ion-textarea placeholder="Describe the skill you can teach..."></ion-textarea>
+    <ion-button style="--background:#ffe5b4;">Upload Skill</ion-button>
+  </div>
+</div>

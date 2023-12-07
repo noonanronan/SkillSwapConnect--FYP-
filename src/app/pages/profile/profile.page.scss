@@ -1,0 +1,124 @@
+/* Overall Container */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Center content vertically 
+    align-items: center; // Center content horizontally 
+    height: 100vh; // Full viewport height 
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; // Center text for all child elements 
+  }
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: center; // Center horizontally
+    align-items: center; // Center vertically
+    // padding: 20px;
+    width: 100%;
+    background-color: #4169e1;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1001; // Higher than the ion-header 
+  }
+
+  .app-header ion-button {
+    font-size: 32px;
+    --background: transparent;
+    --color: #fff;
+    --padding: 0; // Remove padding for the buttons to be less bulky
+  }
+  
+
+    .app-header .left-header,
+    .app-header .right-header {
+    // Flex basis allows the elements to grow or shrink to fit the content's width
+    flex: 1;
+    display: flex;
+    align-items: center;
+    }
+
+    .app-header .left-header {
+        justify-content: flex-start;
+      }
+      
+      .app-header .right-header {
+        justify-content: flex-end;
+      }
+
+  .app-header ion-button {
+    --background: transparent;
+    --color: #fff;
+  }
+
+
+  .app-header .logo {
+    flex-grow: 2; // Allows the logo to take up the available space
+    display: flex;
+    justify-content: center; // Centers the logo within the .logo div
+  }
+  
+  .app-header .logo img {
+    height: 90px;
+    width: auto;
+  }
+
+  .app-header button {
+    background-color: #4169e1; // Softer green color 
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  ion-header, ion-toolbar {
+    --background: #4169e1; 
+  }
+
+.profile-page-container {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  
+.user-profile-section, .user-skill-section {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+  
+    h2, p {
+      margin: 0;
+      color: #333;
+    }
+  
+    ion-textarea, ion-input {
+      width: 100%;
+      margin-top: 20px;
+    }
+  
+    ion-button {
+      margin-top: 10px;
+    }
+  
+    .user-skill-section h3 {
+      color: #555;
+      margin-bottom: 15px;
+    }
+  }
+  

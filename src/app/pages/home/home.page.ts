@@ -1,10 +1,10 @@
 // Import necessary modules from Angular
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'; 
-import { AutheticationService } from '../authetication.service';
+import { AutheticationService } from '../../authetication.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
-import { AddImageService } from '../services/add-image.service';// importing the service
+import { AddImageService } from '../../services/add-image.service';// importing the service
 
 
 @Component({

@@ -15,9 +15,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  // padding: 20px;
   width: 100%;
-  background-color: #90EE90;
+  background-color: #4169e1;
   color: #fff;
   position: fixed;
   top: 0;
@@ -25,13 +25,13 @@
 }
 
 .app-header .logo img {
-  height: 60px; 
-  width: 80px;
+  height: 90px; 
+  width: auto;
   display: block;
 }
 
 .app-header button {
-  background-color: #4CAF50; // Softer green color 
+  background-color: #4169e1; // Softer green color 
   color: #fff;
   padding: 12px 24px;
   border: none;
@@ -42,27 +42,26 @@
 }
 
 .app-header button:hover {
-  background-color: #43A047; // Darker shade on hover 
+  background-color: #ffe5b4; // Darker shade on hover 
 }
 
 /* Side Menu Content */
 ion-menu {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* This will push the logout button to the bottom */
-  height: 100%; /* Full height to allow justify-content to work */
+  height: 100%; // Full height to allow justify-content to work
 }
+
 
 .menu-top-spacing {
-  margin-top: 30px; // Adjust this value as needed
+  margin-top: 30px;
 }
-
-
 
 /* Styling the ion-icon inside the button for the home icon */
 .home-icon-button ion-icon {
   font-size: 32px;
   color: white; 
+  background-color:#ffe5b4;
 }
 
 
@@ -83,9 +82,11 @@ ion-menu .profile-card p {
 
 /* Logout Button in Side Menu */
 ion-menu ion-button {
-  background-color: #43A047;
   width: 100%; // Full width of the side menu
-  margin-top: 15px; // Adjust spacing
+  margin-top: 100px; 
+  flex-direction: column;
+  justify-content: space-between; // This should push the logout button to the bottom without fixed margin 
+  margin-top: auto;
 }
 
 
@@ -107,7 +108,7 @@ ion-menu ion-button {
 /* Footer */
 .app-footer {
   padding: 20px;
-  background-color: #AA336A;
+  background-color: #ffe5b4;
   color: #fff;
   text-align: center;
   position: fixed; // Fixed at the bottom 

@@ -4,7 +4,7 @@ ion-header {
 }
 
 .custom-toolbar {
-  --background: #94ffa9; // Set the background color 
+  --background: #4169e1; // Set the background color 
   --color: #fff; // Set the text color
 }
 
@@ -58,4 +58,7 @@ ion-button[fill="clear"] {
 
 .input{
   font-size: 300;
+  --highlight-background-focused: #ffe5b4; 
+  --highlight-color-focused: #ffe5b4; 
+  --highlight-height-focused: 2px; 
 }
