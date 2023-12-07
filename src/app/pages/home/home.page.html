@@ -28,9 +28,9 @@
         <!-- User Profile Card -->
         <section class="profile-card menu-top-spacing" *ngIf="user">
           <!-- User Profile button -->
-          <ion-button class="home-icon-button" style="--background:#0000;" (click)="goToProfile()">
-            <ion-icon name="home"></ion-icon>
-          </ion-button>          
+          <ion-button class="profile-icon-button" style="--background:#0000;" (click)="goToProfile()">
+            <ion-icon name="person-circle"></ion-icon>
+          </ion-button>        
           <!-- User profile picture -->
           <img [src]="user?.photoURL || 'assets/ronan.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
 

@@ -7,22 +7,22 @@ import { Component } from '@angular/core';
 })
 export class LandingPage {
   // Hold messages for each feature card - They are initialized to empty strings.
-  learnMessage: string = '';
-  shareMessage: string = '';
+  skillMessage: string = '';
+  swapMessage: string = '';
   connectMessage: string = '';
 
   constructor() { }
 
   // Method to show the learn message - Clears after 2 seconds.
-  showLearnMessage(): void {
-    this.learnMessage = 'Learn and expand your knowledge!';
-    setTimeout(() => this.learnMessage = '', 2000);
+  showSkillMessage(): void {
+    this.skillMessage = 'Share your skills and learn from others!';
+    setTimeout(() => this.skillMessage = '', 2000);
   }
 
   // Method to show the share message - Clears after 2 seconds.
-  showShareMessage(): void {
-    this.shareMessage = 'Share your skills and learn from others!';
-    setTimeout(() => this.shareMessage = '', 2000);
+  showSwapMessage(): void {
+    this.swapMessage = 'Meeting friends!';
+    setTimeout(() => this.swapMessage = '', 2000);
   }
 
   // Method to show the connect message - Clears after 2 seconds.

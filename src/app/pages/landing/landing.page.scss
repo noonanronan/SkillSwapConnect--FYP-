@@ -1,96 +1,47 @@
 .custom-landing-page {
-  --background: #f9f9f9; // Light gray background for contrast
-
-  .header-section {
-    text-align: center;
-    // padding: 5px; // Increased padding for visual space
-    background-color: #4169e1; // Green background color to match branding
-    color: #005a30; // Dark green color for text for contrast against background
-
-    .landing-logo {
-      max-width: 30%; // Limits the logo to half of the section width
-      height: auto; // Ensures the logo maintains its aspect ratio
-      margin: 0 auto; // Centers the logo horizontally
-      display: block; // Ensures the image is treated as a block-level element
-      position: relative;
-      padding-left: 10px;
-    }
-
-
-    h2 {
-      margin-top: 15px; // Adds space above the h2 element
-      font-size: 2em; // Enlarges the h2 font for emphasis
-      font-weight: bold; // Bold font weight for h2 for prominence
-    }
-
-    p {
-      font-size: 1.2em; // Increases the paragraph font size for readability
-    }
-  }
-
-  .content-section {
-    padding: 40px; // Uniform padding for consistent spacing
-    text-align: center; // Centers the text within the content section
-
-    h3 {
-      font-size: 1.5em; // Enlarges the h3 font for clear section headers
-      font-weight: bold; // Bold font weight for h3 for distinction
-      color: #ffd1dc; // Pink color for h3 to complement the overall design
-      margin-bottom: 20px; // Adds space below the h3 element
-    }
-  }
+  --background: url('/assets/background-landing.png') 0 0/100% 100% no-repeat; // BG image
+  background-size: cover; // Cover the entire area
+  background-position: center; // Center the image
+  background-repeat: no-repeat; // Prevent repeating the image
 
   .feature-section {
-    display: flex; // Uses flexbox for a flexible card layout
-    justify-content: space-around; // Spaces out the flex items evenly
-    margin-top: 25px; // Adds space above the feature section
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 20px; +
 
     .feature-card {
-      flex: 1; // Flex grow factor set to 1 for equal width cards
-      margin: 0 10px; // Horizontal margin between cards
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for card depth
+      width: calc(33.333% - 20px); // Subtract the total margin from the width
+      margin: 0 10px; // Give some space between the cards
+
       ion-card-header {
-        text-align: center; // Centers the card header text
-        --background: #ffe5b4; // Sets a DPink background for the card headers
-      }
-
-      /* Message on feature card */
-      .message {
-        display: none; // Stops message from being displayed at start
-        transition: opacity 0.5s ease;
-      }
-
-      /* This class is added to the message when it needs to be shown */
-      .message.show {
-        display: block;
-        opacity: 1;
-      }
-
-      ion-card-content {
-        text-align: center; // Centers the card content text
-        font-size: 1em; // Standard font size for card content
+        text-align: center;
+        --background: #4a6fa5; // New color to match the background
+        color: #ffffff; //white for better contrast
       }
     }
   }
 
   .cta-section {
-    padding: 40px; // Increased padding around the CTA button for emphasis
-    text-align: center; // Centers the CTA button
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
 
     .cta-button {
-      max-width: 250px;// Width of the button
-      font-weight: bold; // Bold font weight for the CTA button text
-      background-color: #ffe5b4; // DPink background color for the button
-      color: #ffffff; // White text for high contrast on the CTA button
-      font-size: 1.2em; // Larger font size for the button text
-      padding: 15px 30px; // Padding to increase the button size
-      border: none; // No border for a cleaner button look
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Shadow for visual depth on the button
-      transition: transform 0.3s ease; // Smooth transition effect for the button press
+      max-width: 90%;
+      font-weight: bold;
+      background-color: #304875; // New button color to match the background
+      color: #ffffff; // white for better contrast
+      font-size: 1.2em;
+      padding: 15px 30px;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
     }
 
     .cta-button:active {
-      transform: scale(0.5); // Reduces the size of the button when clicked
+      transform: scale(0.95); // Subtle click effect
     }
   }
 }

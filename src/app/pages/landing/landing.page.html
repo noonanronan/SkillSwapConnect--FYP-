@@ -1,48 +1,37 @@
-<ion-content [fullscreen]="true" class="custom-landing-page">
-  <!-- Header Section: Contains the logo and sets the first visual impression -->
-  <div class="header-section">
-    <ion-img class="landing-logo" src="assets/Skillshare-Logo.png" alt="Welcome to SkillSwap"></ion-img>
+<ion-content class="custom-landing-page">
+  <!-- Feature Section -->
+  <div class="feature-section">
+    <ion-card class="feature-card" (click)="showSkillMessage()">
+      <ion-card-header>
+        <ion-card-title>Skill</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="skillMessage" class="message">{{ skillMessage }}</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="feature-card" (click)="showSwapMessage()">
+      <ion-card-header>
+        <ion-card-title>Swap</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="swapMessage" class="message">{{ swapMessage }}</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="feature-card" (click)="showConnectMessage()">
+      <ion-card-header>
+        <ion-card-title>Connect</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="connectMessage" class="message">{{ connectMessage }}</div>
+      </ion-card-content>
+    </ion-card>
   </div>
 
-  <!-- Content Section: Introduces SkillSwapConnect -->
-  <div class="content-section">
-    <!-- Main Heading: Greeting message -->
-    <h2>Welcome to SkillSwap!</h2>
-    <p>Connect. Exchange. Grow.</p>
-    <h3>Discover new opportunities</h3>
-    <p>Join a thriving community dedicated to sharing skills and knowledge.</p>
-
-    
-    <div class="feature-section">
-      <!-- Features Card: Learn -->
-      <ion-card class="feature-card" (click)="showLearnMessage()">
-        <ion-card-header>
-          <ion-card-title>Learn</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-      <p *ngIf="learnMessage" class="message">{{ learnMessage }}</p>
-
-      <!-- Feature Card: Share  -->
-      <ion-card class="feature-card" (click)="showShareMessage()">
-        <ion-card-header>
-          <ion-card-title>Share</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-      <p *ngIf="shareMessage" class="message">{{ shareMessage }}</p>
-
-      <!-- Feature Card: Connect-->
-      <ion-card class="feature-card" (click)="showConnectMessage()">
-        <ion-card-header>
-          <ion-card-title>Connect</ion-card-title>
-        </ion-card-header>
-      </ion-card>
-      <p *ngIf="connectMessage" class="message">{{ connectMessage }}</p>
-    </div>
-  </div>
-
-  <!-- CTA Button: 'Get Started' -->
+  <!-- CTA Button Section -->
   <div class="cta-section">
-    <ion-button style="--background: #ffd1dc;" class="cta-button" shape="round" [routerLink]="['/login']">
+    <ion-button class="cta-button" shape="round" [routerLink]="['/login']">
       Get Started
     </ion-button>
   </div>
