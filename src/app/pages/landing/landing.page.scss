@@ -8,15 +8,15 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 20px; +
-
+    padding-top: 20px;
+  
     .feature-card {
       width: calc(33.333% - 20px); // Subtract the total margin from the width
       margin: 0 10px; // Give some space between the cards
-
+  
       ion-card-header {
         text-align: center;
-        --background: #4a6fa5; // New color to match the background
+        background: transparent; // Make the background transparent
         color: #ffffff; //white for better contrast
       }
     }

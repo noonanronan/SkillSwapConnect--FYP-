@@ -2,12 +2,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center; // Center content vertically 
-  align-items: center; // Center content horizontally 
-  height: 100vh; // Full viewport height 
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  height: 100vh; /* Full viewport height */
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center; // Center text for all child elements 
+  text-align: center; /* Center text for all child elements */
 }
 
 /* Header */
@@ -15,23 +15,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // padding: 20px;
   width: 100%;
   background-color: #4169e1;
   color: #fff;
   position: fixed;
   top: 0;
-  z-index: 1001; // Higher than the ion-header 
+  z-index: 1001; /* Higher than the ion-header */
 }
 
 .app-header .logo img {
-  height: 90px; 
+  height: 90px;
   width: auto;
   display: block;
 }
 
 .app-header button {
-  background-color: #4169e1; // Softer green color 
+  background-color: #4169e1; /* Softer green color */
   color: #fff;
   padding: 12px 24px;
   border: none;
@@ -42,55 +41,52 @@
 }
 
 .app-header button:hover {
-  background-color: #ffe5b4; // Darker shade on hover 
+  background-color: #ffe5b4; /* Darker shade on hover */
 }
 
 /* Side Menu Content */
 ion-menu {
   display: flex;
   flex-direction: column;
-  height: 100%; // Full height to allow justify-content to work
+  justify-content: space-between; /* Ensure children are spread out */
+  height: 100%; /* Full height */
 }
 
-
 .menu-top-spacing {
-  margin-top: 30px;
+  margin-top: -276px;
 }
 
 /* Styling the ion-icon inside the button for the home icon */
 .profile-icon-button ion-icon {
   font-size: 32px;
-  color: white; 
-  background-color:#ffe5b4;
+  color: white;
+  background-color: #ffe5b4;
 }
 
-
 ion-menu .profile-card img {
-  width: 80px; 
+  width: 80px;
   height: 80px;
-  border-radius: 50%; // Makes the image circular
+  border-radius: 50%; // Makes the image circular 
   object-fit: cover; // Ensures the image covers the area well
-  margin-bottom: 15px; // Spacing
+  margin-top: 15px; // Spacing 
+  margin-bottom: 15px; // Spacing 
 }
 
 /* Profile Card Name and Email */
 ion-menu .profile-card h2,
 ion-menu .profile-card p {
   color: #333;
-  margin: 4px 0; // spacing
+  margin: 4px 0; // Spacing 
 }
 
 /* Logout Button in Side Menu */
 ion-menu ion-button {
-  width: 100%; // Full width of the side menu
-  margin-top: 100px; 
-  flex-direction: column;
-  justify-content: space-between; // This should push the logout button to the bottom without fixed margin 
-  margin-top: auto;
+  width: 100%; // Full width of the side menu 
+  margin-top: 310px; // Push button to the bottom 
+  margin-bottom: 0px; // Spacing from bottom 
 }
 
-
-/* Welcome Message */
+/* Content area */
 .content-area {
   padding: 20px;
   margin-top: 20px; // Spacing from the profile card 
@@ -102,8 +98,6 @@ ion-menu ion-button {
   font-weight: bold;
   margin-bottom: 8px;
 }
-
-
 
 /* Footer */
 .app-footer {
