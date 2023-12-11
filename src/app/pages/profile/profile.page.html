@@ -20,13 +20,41 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <div class="profile-page-container">
   <div class="user-profile-section">
-    <img [src]="user?.photoURL" alt="User Image" class="profile-pic">
+    <!-- User profile image -->
+    <img [src]="user?.photoURL || 'assets/default-profile.png'" alt="User Image" class="profile-pic">
+    <!-- User name and email -->
     <h2>{{ user?.displayName || 'User' }}</h2>
     <p>{{ user?.email }}</p>
+    <!-- Bio textarea -->
     <ion-textarea [(ngModel)]="bio" placeholder="Enter your bio here..."></ion-textarea>
+    <!-- Update bio button -->
     <ion-button style="--background:#ffe5b4;" (click)="updateBio()">Update Bio</ion-button>
+
+    <!-- Section for teaching and learning options -->
+<div class="teach-learn-section">
+  <!-- Teach option with checkbox and image -->
+  <div class="option teach">
+    <label>
+      <input type="checkbox" [(ngModel)]="teach"> Teach
+    </label>
+    <img src="../assets/icon/teaching.png" alt="Teaching Icon" class="option-icon">
+    <select [(ngModel)]="selectedTeachingOption">
+      <option *ngFor="let option of teachingOptions" [value]="option">{{ option }}</option>
+    </select>
   </div>
   
+  <!-- Learn option with checkbox and image -->
+  <div class="option learn">
+    <label>
+      <input type="checkbox" [(ngModel)]="learn"> Learn
+    </label>
+    <img src="../assets/icon/learning.png" alt="Learning Icon" class="option-icon">
+    <select [(ngModel)]="selectedLearningOption">
+      <option *ngFor="let option of learningOptions" [value]="option">{{ option }}</option>
+    </select>
+  </div>
 </div>
+

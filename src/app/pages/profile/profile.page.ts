@@ -9,9 +9,17 @@ import { DatabaseService } from 'src/app/services/database.service';
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
   user: User | null = null;
   bio: string = '';
+  teach: boolean = false; // Will be true if the user selects "Teach"
+  learn: boolean = false; // Will be true if the user selects "Learn"
+  selectedTeachingOption: string; // Currently selected teaching option
+  selectedLearningOption: string; // Currently selected learning option
+  teachingOptions: string[] = ['Math', 'Science', 'Art']; // // Array to allow user to select multiple options
+  learningOptions: string[] = ['Physics', 'Painting', 'Music']; // // Array to allow user to select multiple options
+
 
   constructor(public route: Router, 
     public authService: AutheticationService,

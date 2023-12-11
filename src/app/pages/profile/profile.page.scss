@@ -81,10 +81,10 @@ ion-header, ion-toolbar {
 }
 
 .profile-page-container {
-  margin-top: 80px;
+  margin-top: 100px;
   display: flex;
-  justify-content: space-around;
-  padding: 20px;
+  justify-content: space-between; // Adjusted for new layout 
+}
 
 .user-profile-section {
   flex: 1;
@@ -92,28 +92,42 @@ ion-header, ion-toolbar {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1; // Allows the section to grow 
+  margin-right: 20px; // Spacing between the sections 
 }
 
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-  }
-
-  h2, p {
-    margin: 0;
-    color: #333;
-  }
-
-  ion-textarea, ion-input {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  ion-button {
-    margin-top: 10px;
-  }
-
+.user-profile-section .profile-pic {
+  width: 100px; // Width
+  height: 100px; // Height
+  border-radius: 50%; // Makes the image round 
+  object-fit: cover; // Ensures the image covers the area without distortion 
+  margin-bottom: 15px; // Spacing below the image
 }
+
+.teach-learn-section {
+  /* Adjust styles for layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.teach-learn-section .option {
+  /* Style for option container */
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.teach-learn-section .option-icon {
+  /* Style for option icons */
+  width: 50px; // Width 
+  height: 50px; // Height
+  margin-right: 10px;
+}
+
+.teach-learn-section select {
+  /* Style for select dropdown */
+  padding: 5px;
+  margin-left: 10px; // spacing
+}
+
