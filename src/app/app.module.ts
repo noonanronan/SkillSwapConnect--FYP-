@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 
 // Import IonicModule
 import { IonicModule } from '@ionic/angular';
-import { AutheticationService } from './authetication.service';
+import { AutheticationService } from './services/authetication.service';
 
 // Import AngularFireStorageModule
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';

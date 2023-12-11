@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 // import { log } from 'console';
 
 // Import the authentication service to handle user-related operations.
-import { AutheticationService } from 'src/app/authetication.service';
+import { AutheticationService } from 'src/app/services/authetication.service';
 
 @Component({
   selector: 'app-reset-password',         // This specifies the custom tag name for this component.

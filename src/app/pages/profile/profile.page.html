@@ -22,7 +22,7 @@
 </ion-header>
 <div class="profile-page-container">
   <div class="user-profile-section">
-    <img [src]="user?.photoURL || 'assets/default-profile.png'" alt="User Image" class="profile-pic">
+    <img [src]="user?.photoURL" alt="User Image" class="profile-pic">
     <h2>{{ user?.displayName || 'User' }}</h2>
     <p>{{ user?.email }}</p>
     <ion-textarea [(ngModel)]="bio" placeholder="Enter your bio here..."></ion-textarea>

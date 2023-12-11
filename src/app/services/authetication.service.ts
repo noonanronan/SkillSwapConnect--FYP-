@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app'; 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BehaviorSubject } from 'rxjs';
+import { DatabaseService } from './database.service';
+
 
 // The Injectable decorator marks it as a service that can be injected into other parts of the app.
 @Injectable({
@@ -14,7 +16,9 @@ export class AutheticationService {
   private currentUserSubject = new BehaviorSubject<firebase.User | null>(null);
   public currentUser = this.currentUserSubject.asObservable();
 
-  constructor(public ngFireAuth: AngularFireAuth) {
+  constructor(public ngFireAuth: AngularFireAuth,
+    private databaseService: DatabaseService
+    ) {
     this.ngFireAuth.authState.subscribe(user => {
       this.currentUserSubject.next(user);
     });
@@ -25,15 +29,15 @@ export class AutheticationService {
     this.currentUserSubject.next(user);
   }
 
-  // Method to register a user with email and password.
   async registerUser(email: string, password: string, name: string): Promise<firebase.auth.UserCredential> {
     const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
     const user = credential.user;
     if (user) {
-      await user.updateProfile({
-        displayName: name
-        // photoURL: 'photoURL, put it here'
-      });
+      await user.updateProfile({ displayName: name });
+      
+      // Now use DatabaseService to initialize the user profile
+      await this.databaseService.initializeUserProfile(user.uid, name);
+      
       this.currentUserSubject.next(user); // Update the current user observable
     }
     return credential;

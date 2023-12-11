@@ -32,7 +32,7 @@
             <ion-icon name="person-circle"></ion-icon>
           </ion-button>        
           <!-- User profile picture -->
-          <img [src]="user?.photoURL || 'assets/ronan.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
+          <img [src]="user?.photoURL" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
 
           <!-- Hidden File Input -->
           <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">

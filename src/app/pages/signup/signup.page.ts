@@ -4,7 +4,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { AutheticationService } from 'src/app/authetication.service';
+import { AutheticationService } from 'src/app/services/authetication.service';
 
 @Component({
   selector: 'app-signup',

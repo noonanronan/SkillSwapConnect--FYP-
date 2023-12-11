@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { AutheticationService } from 'src/app/authetication.service';
+import { AutheticationService } from 'src/app/services/authetication.service';
 import { Router } from '@angular/router';
 
 @Component({
