@@ -45,7 +45,7 @@
       <!-- Option for user to select if they want to teach -->
       <div class="option teach">
         <label>
-          <input type="checkbox" [(ngModel)]="teach"> Teach
+          <input type="checkbox" [(ngModel)]="teach" (ngModelChange)="updatePreferences()"> Teach
         </label>
         <img src="../assets/icon/teaching.png" alt="Teaching Icon" class="option-icon">
         <!-- Dropdown for user to select what they want to teach -->
@@ -57,7 +57,7 @@
       <!-- Option for user to select if they want to learn -->
       <div class="option learn">
         <label>
-          <input type="checkbox" [(ngModel)]="learn"> Learn
+          <input type="checkbox" [(ngModel)]="learn" (ngModelChange)="updatePreferences()"> Learn
         </label>
         <img src="../assets/icon/learning.png" alt="Learning Icon" class="option-icon">
         <!-- Dropdown for user to select what they want to learn -->

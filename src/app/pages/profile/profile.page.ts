@@ -31,10 +31,15 @@ export class ProfilePage implements OnInit {
         (user) => {
           this.user = user;
           if (user) {
-            // Fetch the current bio from the database
-            this.databaseService.getUserBio(user.uid).once('value', (snapshot) => {
+            // Fetch the current bio and preferences from the database
+            this.databaseService.getUserPreferences(user.uid).once('value', (snapshot) => {
               if (snapshot.exists()) {
-                this.bio = snapshot.val().bio; 
+                const userData = snapshot.val();
+                this.bio = userData.bio;
+                this.teach = userData.teach;
+                this.learn = userData.learn;
+                this.selectedTeachingOption = userData.selectedTeachingOption;
+                this.selectedLearningOption = userData.selectedLearningOption;
               }
             });
           }
@@ -59,6 +64,20 @@ export class ProfilePage implements OnInit {
         })
         .catch((error) => {
           console.error('Error updating bio:', error);
+          // Show an error message
+        });
+    }
+  }
+
+  updatePreferences() {
+    if (this.user) {
+      this.databaseService.updateUserPreferences(this.user.uid, this.teach, this.learn, this.selectedTeachingOption, this.selectedLearningOption)
+        .then(() => {
+          console.log('Preferences updated');
+          // Show a success message
+        })
+        .catch((error) => {
+          console.error('Error updating preferences:', error);
           // Show an error message
         });
     }

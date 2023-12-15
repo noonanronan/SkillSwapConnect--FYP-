@@ -26,4 +26,19 @@ export class DatabaseService {
   getUserBio(uid: string): firebase.database.Reference {
     return this.db.object(`users/${uid}`).query.ref;
   }
+
+  // Update teach and learn preferences
+  updateUserPreferences(uid: string, teach: boolean, learn: boolean, selectedTeachingOption: string, selectedLearningOption: string): Promise<void> {
+    return this.db.object(`users/${uid}`).update({ 
+      teach, 
+      learn, 
+      selectedTeachingOption, 
+      selectedLearningOption 
+    });
+  }
+
+  // Retrieve teach and learn preferences
+  getUserPreferences(uid: string): firebase.database.Reference {
+    return this.db.object(`users/${uid}`).query.ref;
+  }
 }
