@@ -37,7 +37,7 @@
       <!-- Text area for user to edit their bio -->
       <ion-textarea [(ngModel)]="bio" placeholder="Enter your bio here..."></ion-textarea>
       <!-- Button to update the user bio -->
-      <ion-button style="--background:#ffe5b4;" (click)="updateBio()">Update Bio</ion-button>
+      <ion-button class="bio-button" style="--background: #ffe5b4;" (click)="updateBio()">Update Bio</ion-button>
     </div>
 
     <!-- Right section for teaching and learning options -->
@@ -67,10 +67,25 @@
       </div>
     </div>
     
-    <!-- Section displayed if the user selects "Teach", for uploading teaching material -->
+    <!-- Section for uploading teaching material -->
     <div *ngIf="teach" class="teaching-material-box">
-      <h3>Upload Teaching Material</h3>
-      <!-- Placeholder for future upload functionality -->
+      <h3>Share Your Knowledge in {{ selectedTeachingOption }}</h3>
+      <p>Selected Subject: <strong>{{ selectedTeachingOption || 'None' }}</strong></p>
+
+    <!-- Upload Notes -->
+    <div class="upload-section">
+      <label for="uploadNotes">Upload Notes:</label>
+      <input type="file" id="uploadNotes" accept=".pdf,.doc,.docx" />
     </div>
+
+    <!-- Upload Video -->
+    <div class="upload-section">
+      <label for="uploadVideo">Upload Video:</label>
+      <input type="file" id="uploadVideo" accept="video/*" />
+    </div>
+
+    <!-- Upload Button -->
+    <button class="upload-button">Upload Materials</button>
+  </div>
   </div>
 </ion-content>

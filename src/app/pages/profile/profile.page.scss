@@ -11,16 +11,7 @@ ion-content {
   --overflow: auto; // Ensure Ionic content is scrollable
 }
 
-/* Overall Container */
-.profile-page-container {
-  display: flex;
-  flex-direction: row; // Align children horizontally
-  justify-content: space-between; // Space between sections
-  flex-wrap: wrap; // Wrap content on smaller screens
-  margin-top: 100px; // Offset for the fixed header
-  width: 100%; // Full width of the container
-  margin-bottom: 20px; // Space at the bottom of the container
-}
+// g
 
 /* Header */
 .app-header {
@@ -91,6 +82,17 @@ ion-header, ion-toolbar {
   --background: #4169e1; 
 }
 
+/* Overall Container */
+.profile-page-container {
+  display: flex;
+  flex-direction: row; // Align children horizontally
+  justify-content: space-between; // Space between sections
+  flex-wrap: wrap; // Wrap content on smaller screens
+  margin-top: 100px; // Offset for the fixed header
+  width: 100%; // Full width of the container
+  margin-bottom: 20px; // Space at the bottom of the container
+}
+
 /* Left Section: User Profile and Bio */
 .left-section {
   flex: 1; // Takes half of the space
@@ -101,7 +103,10 @@ ion-header, ion-toolbar {
   display: flex;
   flex-direction: column; // Align items vertically (vertically for better appearacne)
   align-items: center; // Center items horizontally
+  
 }
+
+
 
 /* User profile image */
 .left-section .profile-pic {
@@ -156,4 +161,39 @@ ion-header, ion-toolbar {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9; // Light background
   box-sizing: border-box; // Include padding and border in width calculation
+
+  .upload-section {
+    margin-top: 15px;
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  }
+
+  .upload-button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffe5b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken(#ffe5b4, 10%);
+    }
+  }
 }
