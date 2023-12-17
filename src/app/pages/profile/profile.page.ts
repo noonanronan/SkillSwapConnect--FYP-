@@ -17,8 +17,8 @@ export class ProfilePage implements OnInit {
   learn: boolean = false; // Will be true if the user selects "Learn"
   selectedTeachingOption: string; // Currently selected teaching option
   selectedLearningOption: string; // Currently selected learning option
-  teachingOptions: string[] = ['Math', 'Science', 'Art']; // // Array to allow user to select multiple options
-  learningOptions: string[] = ['Physics', 'Painting', 'Music']; // // Array to allow user to select multiple options
+  teachingOptions: string[] = ['Music', 'Sports', 'Programming']; // // Array to allow user to select multiple options
+  learningOptions: string[] = ['Music', 'Sports', 'Programming']; // // Array to allow user to select multiple options
 
 
   constructor(public route: Router, 

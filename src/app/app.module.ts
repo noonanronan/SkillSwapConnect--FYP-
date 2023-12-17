@@ -16,6 +16,8 @@ import { AutheticationService } from './services/authetication.service';
 // Import AngularFireStorageModule
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -26,6 +28,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireStorageModule,
+    HttpClientModule,
     IonicModule.forRoot(), // Add IonicModule to your imports
   ],
   providers: [AutheticationService],

@@ -42,6 +42,11 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
     }
   }
 
+
+  search(query: string): void {
+    // Logic for search functionality
+  }
+  
   // Method to trigger the file input
   triggerFileInput() {
     this.fileInput.nativeElement.click();

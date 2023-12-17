@@ -3,28 +3,28 @@
   <div class="feature-section">
     <ion-card class="feature-card" (click)="showSkillMessage()">
       <ion-card-header>
-        <ion-card-title>Skill</ion-card-title>
+        <ion-button class="feature-cta-button">Skill</ion-button>
       </ion-card-header>
       <ion-card-content>
-        <div *ngIf="skillMessage" class="message">{{ skillMessage }}</div>
+        <div *ngIf="skillMessage" class="message" style="background-color: #304875;">{{ skillMessage }}</div>
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="feature-card" (click)="showSwapMessage()">
+    <ion-card class="feature-card" (click)="showSwapMessage() ">
       <ion-card-header>
-        <ion-card-title>Swap</ion-card-title>
+        <ion-button class="feature-cta-button">Swap</ion-button>
       </ion-card-header>
       <ion-card-content>
-        <div *ngIf="swapMessage" class="message">{{ swapMessage }}</div>
+        <div *ngIf="swapMessage" class="message" style="background-color: #304875;">{{ swapMessage }}</div>
       </ion-card-content>
     </ion-card>
 
     <ion-card class="feature-card" (click)="showConnectMessage()">
       <ion-card-header>
-        <ion-card-title>Connect</ion-card-title>
+        <ion-button class="feature-cta-button">Connect</ion-button>
       </ion-card-header>
       <ion-card-content>
-        <div *ngIf="connectMessage" class="message">{{ connectMessage }}</div>
+        <div *ngIf="connectMessage" class="message" style="background-color: #304875;">{{ connectMessage }}</div>
       </ion-card-content>
     </ion-card>
   </div>

@@ -1,3 +1,4 @@
+
 .custom-landing-page {
   --background: url('/assets/background-landing.png') 0 0/100% 100% no-repeat; // BG image
   background-size: cover; // Cover the entire area
@@ -12,12 +13,29 @@
   
     .feature-card {
       width: calc(33.333% - 20px); // Subtract the total margin from the width
-      margin: 0 10px; // Give some space between the cards
-  
+      margin: 0; // Remove margin
+      padding: 0; // Remove padding
+      background-color: #304875;
+
       ion-card-header {
         text-align: center;
         background: transparent; // Make the background transparent
-        color: #ffffff; //white for better contrast
+        color: #304875; 
+      }
+
+      .feature-cta-button {
+        background-color: #304875; // button color to match the background
+        color: #304875; 
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken(#304875, 10%);
+        }
       }
     }
   }
@@ -31,17 +49,18 @@
     .cta-button {
       max-width: 90%;
       font-weight: bold;
-      background-color: #304875; // New button color to match the background
-      color: #ffffff; // white for better contrast
+      background-color: #304875;
+      color: #304875;
       font-size: 1.2em;
       padding: 15px 30px;
       border: none;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease;
-    }
 
-    .cta-button:active {
-      transform: scale(0.95); // Subtle click effect
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
 }
+

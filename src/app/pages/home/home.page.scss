@@ -117,3 +117,46 @@ ion-menu ion-button {
 body {
   margin-bottom: 60px; // Height of the footer 
 }
+
+/* Search Bar Styles */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 70%;
+  }
+
+  button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4169e1;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+// /* User Profiles Section */
+// .user-profiles {
+//   /* Styles for user profiles */
+// }
+
+// /* Notes Section */
+// .notes-section {
+//   /* Styles for notes */
+// }
+
+// /* Videos Section */
+// .videos-section {
+//   /* Styles for videos */
+// }
+
+// /* Other Creative Elements */
+// .other-elements {
+//   /* Styles for additional elements */
+// }
