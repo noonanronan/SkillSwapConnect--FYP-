@@ -72,20 +72,21 @@
       <h3>Share Your Knowledge in {{ selectedTeachingOption }}</h3>
       <p>Selected Subject: <strong>{{ selectedTeachingOption || 'None' }}</strong></p>
 
-    <!-- Upload Notes -->
-    <div class="upload-section">
-      <label for="uploadNotes">Upload Notes:</label>
-      <input type="file" id="uploadNotes" accept=".pdf,.doc,.docx" />
-    </div>
+      <!-- Upload Notes -->
+      <div class="upload-section">
+        <label for="uploadNotes">Upload Notes:</label>
+        <input type="file" id="uploadNotes" (change)="storeFile($event, 'notes')" accept=".pdf,.doc,.docx">
+      </div>
 
-    <!-- Upload Video -->
-    <div class="upload-section">
-      <label for="uploadVideo">Upload Video:</label>
-      <input type="file" id="uploadVideo" accept="video/*" />
-    </div>
+      <!-- Upload Video -->
+      <div class="upload-section">
+        <label for="uploadVideo">Upload Video:</label>
+        <input type="file" id="uploadVideo" (change)="storeFile($event, 'video')" accept="video/*">
+      </div>
 
-    <!-- Upload Button -->
-    <button class="upload-button">Upload Materials</button>
-  </div>
+      <!-- Upload Button -->
+      <button class="upload-button" (click)="uploadMaterials()">Upload Materials</button>
+
+    </div>
   </div>
 </ion-content>
