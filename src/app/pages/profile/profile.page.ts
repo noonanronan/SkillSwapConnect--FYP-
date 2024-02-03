@@ -3,35 +3,29 @@ import { User } from 'firebase/auth';
 import { AutheticationService } from 'src/app/services/authetication.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
-import { ContentUploadService } from 'src/app/services/content-upload.service'; // Ensure correct path
+import { ContentUploadService } from 'src/app/services/content-upload.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
   user: User | null = null;
   bio: string = '';
-  teach: boolean = false; // Will be true if the user selects "Teach"
-  learn: boolean = false; // Will be true if the user selects "Learn"
-  selectedTeachingOption: string; // Currently selected teaching option
-  selectedLearningOption: string; // Currently selected learning option
-  
-  teachingOptions: string[] = [
-    'Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
-    'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
-    'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
-    'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy'
-  ]; // Array to allow user to select multiple options
-  learningOptions: string[] = [
-    'Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
-    'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
-    'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
-    'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy'
-  ]; // Array to allow user to select multiple options
+  // Properties to track if the user wants to teach or learn
+  isTeaching = false;
+  isLearning = false;
+  selectedTeachingOption: string = ''; // The teaching option selected by the user
+  selectedLearningOption: string = ''; // The learning option selected by the user
+  teachingOptions: string[] = ['Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
+  'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
+  'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
+  'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy']; 
+  learningOptions: string[] = this.teachingOptions;
 
-  // Add properties to track selected files
+  // Properties to track selected files
   selectedNotesFile: File | null = null;
   selectedVideoFile: File | null = null;
 
@@ -40,74 +34,95 @@ export class ProfilePage implements OnInit {
     public authService: AutheticationService,
     private databaseService: DatabaseService,
     private contentUploadService: ContentUploadService
-  ) {} 
+  ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(
-      (user) => {
-        this.user = user;
-        if (user) {
-          // Fetch the current bio and preferences from the database
-          this.databaseService.getUserPreferences(user.uid).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-              const userData = snapshot.val();
-              this.bio = userData.bio;
-              this.teach = userData.teach;
-              this.learn = userData.learn;
-              this.selectedTeachingOption = userData.selectedTeachingOption;
-              this.selectedLearningOption = userData.selectedLearningOption;
-            }
-          });
-        }
-      },
-      (error) => {
-        console.error('Error fetching user data:', error);
+    this.authService.currentUser.subscribe(user => {
+      this.user = user;
+      if (user) {
+        this.loadUserPreferences(user.uid);
       }
-    );
+    });
+  }
+
+  loadUserPreferences(uid: string): void {
+    this.databaseService.getUserPreferences(uid).then(snapshot => {
+      const userData = snapshot.val();
+      this.bio = userData.bio;
+      this.isTeaching = userData.role === 'teacher';
+      this.isLearning = userData.role === 'learner';
+      this.selectedTeachingOption = userData.selectedTeachingOption;
+      this.selectedLearningOption = userData.selectedLearningOption;
+    }).catch(error => console.error(error));
   }
 
   goToHome() {
     this.route.navigateByUrl('/home');
   }
-  
-  updateBio() {
-    // Bio update logic
+
+  // Method to handle logout process.
+  async logout(): Promise<void> {
+    try {
+      await this.authService.signOut(); // Attempt to sign out using the authentication service.
+      this.route.navigate(['/landing']); // If sign out is successful, navigate to the landing page.
+    } catch (error) {
+      console.error('Logout error:', error); // If there's an error log the error to the console.
+    }
   }
 
-  updatePreferences() {
-    // Preferences update logic
+  updateBio(): void {
+    if (this.user) {
+      this.databaseService.updateUserBio(this.user.uid, this.bio).then(() => {
+        console.log('Bio updated:', this.bio);
+      }).catch(error => console.error('Error updating bio:', error));
+    }
   }
 
-  async logout() {
-    // Logout logic
+
+  updateRole(role: 'teach' | 'learn', isSelected: boolean): void {
+    if (role === 'teach') {
+      this.isTeaching = isSelected;
+      if (isSelected) this.isLearning = false;
+    } else if (role === 'learn') {
+      this.isLearning = isSelected;
+      if (isSelected) this.isTeaching = false;
+    }
+    this.updatePreferences();
   }
 
-  // Modified to store the selected file instead of uploading immediately
-  storeFile(event: any, type: 'notes' | 'video') {
+  updatePreferences(): void {
+    if (!this.user) return;
+    const preferences = {
+      role: this.isTeaching ? 'teacher' : 'learner',
+      interests: [this.isTeaching ? this.selectedTeachingOption : this.selectedLearningOption],
+    };
+    this.databaseService.updateUserPreferences(this.user.uid, preferences).then(() => {
+      console.log('Preferences updated');
+    }).catch(error => console.error('Error updating preferences:', error));
+  }
+
+  storeFile(event: any, type: 'notes' | 'video'): void {
     const file: File = event.target.files[0];
     if (type === 'notes') {
       this.selectedNotesFile = file;
     } else if (type === 'video') {
       this.selectedVideoFile = file;
     }
-    // Reminder alert users that files are ready for upload
   }
 
-  // New method to upload stored files
-  async uploadMaterials() {
+  async uploadMaterials(): Promise<void> {
     if (this.selectedNotesFile) {
       await this.uploadFile(this.selectedNotesFile, 'notes');
-      this.selectedNotesFile = null; // Reset after successful upload
+      this.selectedNotesFile = null;
     }
     if (this.selectedVideoFile) {
       await this.uploadFile(this.selectedVideoFile, 'video');
-      this.selectedVideoFile = null; // Reset after successful upload
+      this.selectedVideoFile = null;
     }
-    // Provide user feedback about the upload status 
   }
 
-  // Utility method for uploading a file
-  private async uploadFile(file: File, type: 'notes' | 'video') {
+  private async uploadFile(file: File, type: 'notes' | 'video'): Promise<void> {
+    if (!this.user || !this.selectedTeachingOption) return;
     const path = `teaching_materials/${this.selectedTeachingOption}/${type}`;
     try {
       const downloadURL = await this.contentUploadService.uploadContent(file, path);

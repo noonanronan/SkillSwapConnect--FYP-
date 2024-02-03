@@ -45,11 +45,11 @@
       <!-- Option for user to select if they want to teach -->
       <div class="option teach">
         <label>
-          <input type="checkbox" [(ngModel)]="teach" (ngModelChange)="updatePreferences()"> Teach
+          <input type="checkbox" [(ngModel)]="isTeaching" (change)="updateRole('teach', isTeaching)"> Teach
         </label>
         <img src="../assets/icon/teaching.png" alt="Teaching Icon" class="option-icon">
         <!-- Dropdown for user to select what they want to teach -->
-        <select [(ngModel)]="selectedTeachingOption">
+        <select [(ngModel)]="selectedTeachingOption" (ngModelChange)="updatePreferences()">
           <option *ngFor="let option of teachingOptions" [value]="option">{{ option }}</option>
         </select>
       </div>
@@ -57,18 +57,18 @@
       <!-- Option for user to select if they want to learn -->
       <div class="option learn">
         <label>
-          <input type="checkbox" [(ngModel)]="learn" (ngModelChange)="updatePreferences()"> Learn
+          <input type="checkbox" [(ngModel)]="isLearning" (change)="updateRole('learn', isLearning)"> Learn
         </label>
         <img src="../assets/icon/learning.png" alt="Learning Icon" class="option-icon">
         <!-- Dropdown for user to select what they want to learn -->
-        <select [(ngModel)]="selectedLearningOption">
+        <select [(ngModel)]="selectedLearningOption" (ngModelChange)="updatePreferences()">
           <option *ngFor="let option of learningOptions" [value]="option">{{ option }}</option>
         </select>
       </div>
     </div>
     
-    <!-- Section for uploading teaching material -->
-    <div *ngIf="teach" class="teaching-material-box">
+    <!-- Section for uploading teaching material, appears when 'Teach' is selected -->
+    <div *ngIf="isTeaching" class="teaching-material-box">
       <h3>Share Your Knowledge in {{ selectedTeachingOption }}</h3>
       <p>Selected Subject: <strong>{{ selectedTeachingOption || 'None' }}</strong></p>
 
@@ -86,7 +86,6 @@
 
       <!-- Upload Button -->
       <button class="upload-button" (click)="uploadMaterials()">Upload Materials</button>
-
     </div>
   </div>
 </ion-content>
