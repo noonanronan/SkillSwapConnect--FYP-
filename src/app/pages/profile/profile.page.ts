@@ -48,11 +48,12 @@ export class ProfilePage implements OnInit {
   loadUserPreferences(uid: string): void {
     this.databaseService.getUserPreferences(uid).then(snapshot => {
       const userData = snapshot.val();
-      this.bio = userData.bio;
-      this.isTeaching = userData.role === 'teacher';
-      this.isLearning = userData.role === 'learner';
-      this.selectedTeachingOption = userData.selectedTeachingOption;
-      this.selectedLearningOption = userData.selectedLearningOption;
+      this.bio = userData.bio || '';
+      // Handle both teaching and learning states
+      this.isTeaching = userData.role.includes('teacher');
+      this.isLearning = userData.role.includes('learner');
+      this.selectedTeachingOption = userData.selectedTeachingOption || '';
+      this.selectedLearningOption = userData.selectedLearningOption || '';
     }).catch(error => console.error(error));
   }
 
@@ -82,24 +83,32 @@ export class ProfilePage implements OnInit {
   updateRole(role: 'teach' | 'learn', isSelected: boolean): void {
     if (role === 'teach') {
       this.isTeaching = isSelected;
-      if (isSelected) this.isLearning = false;
     } else if (role === 'learn') {
       this.isLearning = isSelected;
-      if (isSelected) this.isTeaching = false;
     }
+    // No longer automatically disabling the other role
     this.updatePreferences();
   }
 
   updatePreferences(): void {
     if (!this.user) return;
+    
+    // Assuming the role will be set based on what options are selected
+    let role = this.isTeaching && this.isLearning ? 'both' : this.isTeaching ? 'teacher' : 'learner';
+    let interests = [];
+    if (this.selectedTeachingOption) interests.push(this.selectedTeachingOption);
+    if (this.selectedLearningOption) interests.push(this.selectedLearningOption);
+  
     const preferences = {
-      role: this.isTeaching ? 'teacher' : 'learner',
-      interests: [this.isTeaching ? this.selectedTeachingOption : this.selectedLearningOption],
+      role: role, // Use a string that indicates the user's role or roles
+      interests: interests, // Combine teaching and learning options into a single array
     };
+    
     this.databaseService.updateUserPreferences(this.user.uid, preferences).then(() => {
       console.log('Preferences updated');
     }).catch(error => console.error('Error updating preferences:', error));
   }
+  
 
   storeFile(event: any, type: 'notes' | 'video'): void {
     const file: File = event.target.files[0];
