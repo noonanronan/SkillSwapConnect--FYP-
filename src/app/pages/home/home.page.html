@@ -32,7 +32,7 @@
             <ion-icon name="person-circle"></ion-icon>
           </ion-button>        
           <!-- User profile picture -->
-          <img [src]="user?.photoURL" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
+          <img [src]="user?.photoURL || '../assets/icon/default.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
 
           <!-- Hidden File Input -->
           <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
@@ -49,35 +49,9 @@
     <div class="container" id="main-content">
       <!-- Main Content Area -->
       <main class="content-area">
-        <!-- Search Bar -->
-        <section class="search-bar">
-          <input type="text" placeholder="Search...(Users)">
-          <button type="submit"><ion-icon name="search"></ion-icon></button>
-        </section>
+        
       
-        <!-- User Profiles Section
-        <div class="box">
-          <h3>User Profiles</h3>
-          <p>User profiles will be displayed here.</p>
-        </div> -->
-
-        <!-- Notes Section -->
-        <div class="box">
-          <h3>Notes</h3>
-          <p>Notes and reminders will be organized here.</p>
-        </div>
-
-        <!-- Videos Section -->
-        <div class="box">
-          <h3>Videos</h3>
-          <p>Video content will be shown here.</p>
-        </div>
-
-        <!-- Other Features -->
-        <div class="box">
-          <h3>Other Features</h3>
-          <p>Additional features such as feedback, messaging, etc., will be added here.</p>
-        </div>
+        
       </main>
     </div>
   </ion-app>

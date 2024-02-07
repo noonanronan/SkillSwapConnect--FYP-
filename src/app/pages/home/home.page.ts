@@ -1,10 +1,11 @@
-// Import necessary modules from Angular
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'; 
 import { AutheticationService } from '../../services/authetication.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
-import { AddImageService } from '../../services/add-image.service';// importing the service
+import { AddImageService } from '../../services/add-image.service';
+import { DatabaseService } from '../../services/database.service';
+
 
 
 @Component({
@@ -16,12 +17,21 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
   user: User | null = null;  
   private authSubscription: Subscription; // This will hold the subscription to the auth service
 
+  selectedSubject: string;
+  teachingOptions: string[] = ['Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
+                                'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
+                                'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
+                                'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy'];
+
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
   // The constructor initializes Router and AuthenticationService when this component is instantiated.
-  constructor(public route: Router, 
+  constructor(
+    public router: Router, 
     public authService: AutheticationService,
-    private addImageService : AddImageService) {}
+    private addImageService : AddImageService,
+    private databaseService: DatabaseService
+    ) {}
 
   ngOnInit(): void {
     // Subscribe to the auth service to get user profile updates
@@ -42,11 +52,18 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
     }
   }
 
+  
+  onSubjectSelect(): void {
+    if (this.selectedSubject) {
+      this.router.navigate(['/search-results'], { queryParams: { subject: this.selectedSubject } });
+    }
+  }
 
-  search(query: string): void {
-    // Logic for search functionality
+  logFocus(): void {
+    console.log('Input is focused');
   }
   
+
   // Method to trigger the file input
   triggerFileInput() {
     this.fileInput.nativeElement.click();
@@ -73,16 +90,23 @@ export class HomePage implements OnInit, OnDestroy { // Implement both OnInit an
   }
 
   goToProfile() {
-    this.route.navigateByUrl('/profile');
+    this.router.navigateByUrl('/profile'); 
   }
   
   // Method to handle logout process.
   async logout(): Promise<void> {
     try {
-      await this.authService.signOut(); // Attempt to sign out using the authentication service.
-      this.route.navigate(['/landing']); // If sign out is successful, navigate to the landing page.
+      await this.authService.signOut();
+      this.router.navigate(['/landing']); 
     } catch (error) {
-      console.error('Logout error:', error); // If there's an error log the error to the console.
+      console.error('Logout error:', error);
     }
   }
+
+  testClick(): void {
+    console.log('Input clicked');
+  }
+  
+
+
 }

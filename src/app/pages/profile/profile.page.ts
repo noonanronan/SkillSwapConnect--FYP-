@@ -37,25 +37,43 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.loadUserPreferences(user.uid);
-      }
-    });
-  }
+  this.authService.currentUser.subscribe(user => {
+    this.user = user;
+    if (user) {
+      this.loadUserPreferences(user.uid);
+    }
+  });
+}
 
-  loadUserPreferences(uid: string): void {
-    this.databaseService.getUserPreferences(uid).then(snapshot => {
-      const userData = snapshot.val();
-      this.bio = userData.bio || '';
-      // Handle both teaching and learning states
-      this.isTeaching = userData.role.includes('teacher');
-      this.isLearning = userData.role.includes('learner');
-      this.selectedTeachingOption = userData.selectedTeachingOption || '';
-      this.selectedLearningOption = userData.selectedLearningOption || '';
-    }).catch(error => console.error(error));
-  }
+
+loadUserPreferences(uid: string): void {
+  this.databaseService.getUserPreferences(uid).then(snapshot => {
+    const userData = snapshot.val();
+    this.bio = userData.bio || '';
+
+    // Reset states
+    this.isTeaching = false;
+    this.isLearning = false;
+    this.selectedTeachingOption = '';
+    this.selectedLearningOption = '';
+
+    // Check and apply roles
+    if (userData.roles && userData.roles.includes('teacher')) {
+      this.isTeaching = true;
+      // Find the teaching subject from interests if it exists
+      const teachInterest = userData.interests?.find(i => i.type === 'teach');
+      this.selectedTeachingOption = teachInterest ? teachInterest.subject : '';
+    }
+    if (userData.roles && userData.roles.includes('learner')) {
+      this.isLearning = true;
+      // Find the learning subject from interests if it exists
+      const learnInterest = userData.interests?.find(i => i.type === 'learn');
+      this.selectedLearningOption = learnInterest ? learnInterest.subject : '';
+    }
+  }).catch(error => console.error(error));
+}
+
+
 
   goToHome() {
     this.route.navigateByUrl('/home');
@@ -93,21 +111,26 @@ export class ProfilePage implements OnInit {
   updatePreferences(): void {
     if (!this.user) return;
     
-    // Assuming the role will be set based on what options are selected
-    let role = this.isTeaching && this.isLearning ? 'both' : this.isTeaching ? 'teacher' : 'learner';
+    // Prepare roles based on selections
+    let roles = [];
+    if (this.isTeaching) roles.push('teacher');
+    if (this.isLearning) roles.push('learner');
+  
+    // Prepare interests based on selections
     let interests = [];
-    if (this.selectedTeachingOption) interests.push(this.selectedTeachingOption);
-    if (this.selectedLearningOption) interests.push(this.selectedLearningOption);
+    if (this.selectedTeachingOption) interests.push({ type: 'teach', subject: this.selectedTeachingOption });
+    if (this.selectedLearningOption) interests.push({ type: 'learn', subject: this.selectedLearningOption });
   
     const preferences = {
-      role: role, // Use a string that indicates the user's role or roles
-      interests: interests, // Combine teaching and learning options into a single array
+      roles: roles, // Store roles as an array
+      interests: interests, // Store interests as an array of objects
     };
-    
+  
     this.databaseService.updateUserPreferences(this.user.uid, preferences).then(() => {
       console.log('Preferences updated');
     }).catch(error => console.error('Error updating preferences:', error));
   }
+  
   
 
   storeFile(event: any, type: 'notes' | 'video'): void {

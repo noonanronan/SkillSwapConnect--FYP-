@@ -28,12 +28,30 @@ export class DatabaseService {
   }
 
   // Updates user preferences including their role and interests
-  updateUserPreferences(uid: string, preferences: { role: string; interests: string[] }): Promise<void> {
+  updateUserPreferences(uid: string, preferences: { roles: string[]; interests: any[] }): Promise<void> {
     return this.db.object(`users/${uid}`).update(preferences);
   }
 
   // Fetches user preferences from the database
   getUserPreferences(uid: string): Promise<any> {
-    return this.db.database.ref(`/users/${uid}`).once('value').then(snapshot => snapshot);
+    return this.db.database.ref(`/users/${uid}`).once('value');
+  }  
+
+  
+
+  // Searches users by their selected teaching option
+  searchUsersBySubject(subject: string): Promise<any[]> {
+    return this.db.list('/users', ref => ref.orderByChild('selectedTeachingOption').equalTo(subject)).valueChanges().toPromise();
   }
+
+  // Gets detailed user information by their ID
+  getUserDetails(userId: string): Promise<any> {
+    return this.db.database.ref(`users/${userId}`).once('value').then(snapshot => snapshot.val())
+      .catch(error => {
+        console.error("Error fetching user details:", error);
+        throw error;
+      });
+  }
+
+  // Removed getUsersBySubject method using Firestore's collection since it's not applicable here
 }
