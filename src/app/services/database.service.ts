@@ -41,7 +41,18 @@ export class DatabaseService {
 
   // Searches users by their selected teaching option
   searchUsersBySubject(subject: string): Promise<any[]> {
-    return this.db.list('/users', ref => ref.orderByChild('selectedTeachingOption').equalTo(subject)).valueChanges().toPromise();
+    console.log(`Querying for subject: ${subject}`);
+    return this.db.list('/users', ref => ref.orderByChild('selectedTeachingOption').equalTo(subject))
+      .valueChanges()
+      .toPromise()
+      .then(users => {
+        console.log(`Found users:`, users);
+        return users;
+      })
+      .catch(error => {
+        console.error("Error fetching users by subject:", error);
+        throw error;
+      });
   }
 
   // Gets detailed user information by their ID
@@ -53,5 +64,4 @@ export class DatabaseService {
       });
   }
 
-  // Removed getUsersBySubject method using Firestore's collection since it's not applicable here
 }

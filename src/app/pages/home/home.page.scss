@@ -2,7 +2,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  // justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
   height: 100vh; /* Full viewport height */
   max-width: 1200px;
@@ -20,7 +19,7 @@
   color: #fff;
   position: fixed;
   top: 0;
-  z-index: 1001; /* Higher than the ion-header */
+  z-index: 10; /* Higher than the ion-header */
 }
 
 .app-header .logo img {
@@ -46,7 +45,6 @@
 
 /* Side Menu Content */
 ion-menu {
-  display: flex;
   flex-direction: column;
   justify-content: space-between; /* Ensure children are spread out */
   height: 100%; /* Full height */
@@ -89,7 +87,7 @@ ion-menu ion-button {
 /* Content area */
 .content-area {
   padding: 20px;
-  margin-top: 20px; // Spacing from the profile card 
+  margin-top: 200px;
 }
 
 .content-area h2 {
@@ -100,38 +98,10 @@ ion-menu ion-button {
 }
 
 
-
-/* Footer */
-.app-footer {
-  padding: 20px;
-  background-color: #ffe5b4;
-  color: #fff;
-  text-align: center;
-  position: fixed; // Fixed at the bottom 
-  bottom: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-/* Ensure content is pushed down by the footer */
-body {
-  margin-bottom: 60px; // Height of the footer 
+ion-list {
+  max-height: 100px; /* Adjust the height as needed */
+  overflow-y: auto;  /* Enable vertical scrolling */
 }
 
 
-
-.box {
-  border: 2px solid #ddd; /* Adds a border to each box */
-  border-radius: 8px; /* Rounded corners for the box */
-  padding: 20px; /* Spacing inside the box */
-  margin-bottom: 20px; /* Spacing between boxes */
-  width: 80%; /* Width of the box */
-  text-align: left; /* Align text to the left */
-  background-color: #f9f9f9; /* Light background for the box */
-}
-
-.box h3 {
-  margin-top: 0; /* Removes the top margin from the title */
-  color: #4169e1; /* Color of the title text */
-}
 
