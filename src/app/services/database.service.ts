@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import firebase from 'firebase/compat/app';
+import { User } from 'src/app/services/user.model'; 
 
 @Injectable({
   providedIn: 'root'
@@ -39,21 +40,24 @@ export class DatabaseService {
 
   
 
-  // Searches users by their selected teaching option
-  searchUsersBySubject(subject: string): Promise<any[]> {
-    console.log(`Querying for subject: ${subject}`);
-    return this.db.list('/users', ref => ref.orderByChild('selectedTeachingOption').equalTo(subject))
-      .valueChanges()
-      .toPromise()
-      .then(users => {
-        console.log(`Found users:`, users);
-        return users;
-      })
-      .catch(error => {
-        console.error("Error fetching users by subject:", error);
-        throw error;
-      });
+  // Method to fetch users teaching a specific subject
+  searchUsersBySubject(subject: string, callback: (users: User[]) => void): void {
+    this.db.list<User>('/users').valueChanges().subscribe(users => {
+      const filteredUsers = users.filter(user => 
+        user.interests?.some(interest => 
+          interest.subject === subject && interest.type === 'teach'
+        )
+      );
+      console.log('Filtered users:', filteredUsers);
+      callback(filteredUsers); // Invoke the callback with the filtered users
+    }, error => {
+      console.error("Error fetching users by subject:", error);
+    });
   }
+  
+
+
+  
 
   // Gets detailed user information by their ID
   getUserDetails(userId: string): Promise<any> {

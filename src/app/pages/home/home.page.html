@@ -50,9 +50,6 @@
       <!-- Main Content Area -->
       <main class="content-area">
         
-        
-        
-
         <ion-searchbar (ionInput)="setFilteredItems($event)"></ion-searchbar>
         <ion-list>
           <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
@@ -60,7 +57,6 @@
           </ion-item>
         </ion-list>
 
-        
       </main>
     </div>
   </ion-app>

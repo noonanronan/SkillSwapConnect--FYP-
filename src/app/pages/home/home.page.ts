@@ -78,9 +78,12 @@ export class HomePage implements OnInit, OnDestroy {
   
     // Function to handle subject selection
     onSubjectSelect(subject: string): void {
+      // Log the subject to ensure this method is called
+      console.log(`Subject selected: ${subject}`);
       // Navigate to the search results page with the selected subject
-      this.router.navigateByUrl(`/search-results?subject=${encodeURIComponent(subject)}`);
-    }
+      this.router.navigate(['/search-results'], { queryParams: { subject: subject } });
+}
+
   
     triggerFileInput() {
       this.fileInput.nativeElement.click();
