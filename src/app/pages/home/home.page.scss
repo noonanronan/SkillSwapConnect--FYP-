@@ -40,14 +40,14 @@
 }
 
 .app-header button:hover {
-  background-color: #ffe5b4; /* Darker shade on hover */
+  background-color: #ffe5b4; // Darker shade on hover 
 }
 
 /* Side Menu Content */
 ion-menu {
   flex-direction: column;
-  justify-content: space-between; /* Ensure children are spread out */
-  height: 100%; /* Full height */
+  justify-content: space-between; // Ensure children are spread out 
+  height: 100%; // Full height 
 }
 
 .menu-top-spacing {
@@ -87,7 +87,7 @@ ion-menu ion-button {
 /* Content area */
 .content-area {
   padding: 20px;
-  margin-top: 200px;
+  margin-top: 100px;
 }
 
 .content-area h2 {
@@ -99,8 +99,8 @@ ion-menu ion-button {
 
 
 ion-list {
-  max-height: 100px; /* Adjust the height as needed */
-  overflow-y: auto;  /* Enable vertical scrolling */
+  max-height: 200px; // Adjust the height as needed 
+  overflow-y: auto;  // Enable vertical scrolling 
 }
 
 

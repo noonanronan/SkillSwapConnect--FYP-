@@ -6,9 +6,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users">
+    <ion-item *ngFor="let user of users" (click)="goToUserDetail(user)">
+      <ion-avatar slot="start">
+        <img [src]="user.photoURL || 'assets/default-profile.png'">
+      </ion-avatar>
       <ion-label>
-        {{ user.displayName }}
+        <h2>{{ user.displayName }}</h2>
+        <p>{{ user.bio }}</p>
       </ion-label>
     </ion-item>
   </ion-list>

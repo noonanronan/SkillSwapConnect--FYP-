@@ -22,3 +22,9 @@ Thursday 30 November 2023  12m 8s(Teams)
 
 Thursday 7 December 2023 9m 11s (Teams)
 * Talked about presentation
+
+Wednesday 31st January 2024 7m 18s (Teams)
+* Talked about getting back into the project after are Christmas exams
+
+Wednesday 7th February 2024 10m 38s (Teams)
+* Adding to Dissertation - What would I like to do with the project if I even had more time

@@ -73,8 +73,6 @@ loadUserPreferences(uid: string): void {
   }).catch(error => console.error(error));
 }
 
-
-
   goToHome() {
     this.route.navigateByUrl('/home');
   }

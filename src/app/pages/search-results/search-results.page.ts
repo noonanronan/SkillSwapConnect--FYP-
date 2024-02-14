@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/services/user.model';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-results',
@@ -16,7 +17,8 @@ export class SearchResultsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private databaseService: DatabaseService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -28,5 +30,9 @@ export class SearchResultsPage implements OnInit {
       this.users = filteredUsers;
       this.changeDetectorRef.detectChanges(); // Trigger change detection to update the UI
     });
+  }
+
+  goToUserDetail(user: User) {
+    this.router.navigateByUrl(`/user-detail/${user.uid}`); // Adjust the route as per your routing configuration
   }
 }

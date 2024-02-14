@@ -1,9 +1,3 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>UserDetail</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -12,4 +6,18 @@
   </ion-header>
 </ion-content>
 
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ userDetails.displayName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="user-details">
+    <img [src]="userDetails.photoURL || 'assets/default-profile.png'" alt="Profile Image">
+    <h2>{{ userDetails.displayName }}</h2>
+    <p>{{ userDetails.bio }}</p>
+  </div>
+</ion-content>
 

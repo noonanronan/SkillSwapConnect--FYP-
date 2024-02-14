@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import firebase from 'firebase/compat/app';
 import { User } from 'src/app/services/user.model'; 
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,14 +43,21 @@ export class DatabaseService {
 
   // Method to fetch users teaching a specific subject
   searchUsersBySubject(subject: string, callback: (users: User[]) => void): void {
-    this.db.list<User>('/users').valueChanges().subscribe(users => {
+    this.db.list<User>('/users').snapshotChanges().pipe(
+      map(actions => actions.map(a => ({
+        uid: a.payload.key,
+        ...a.payload.val() as User,
+        photoURL: a.payload.val().photoURL || 'assets/default-profile.png' // Uses a default photoURL if not present
+      })))
+    ).subscribe(users => {
+      // Filter and callback logic as before
       const filteredUsers = users.filter(user => 
         user.interests?.some(interest => 
           interest.subject === subject && interest.type === 'teach'
         )
       );
       console.log('Filtered users:', filteredUsers);
-      callback(filteredUsers); // Invoke the callback with the filtered users
+      callback(filteredUsers); // Use the callback to pass filtered users
     }, error => {
       console.error("Error fetching users by subject:", error);
     });
