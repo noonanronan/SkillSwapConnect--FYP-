@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User } from 'firebase/auth';
 import { AutheticationService } from 'src/app/services/authetication.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ContentUploadService } from 'src/app/services/content-upload.service';
+import { AddImageService } from '../../services/add-image.service';
 
 @Component({
   selector: 'app-profile',
@@ -29,10 +30,13 @@ export class ProfilePage implements OnInit {
   selectedNotesFile: File | null = null;
   selectedVideoFile: File | null = null;
 
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+
   constructor(
     public route: Router, 
     public authService: AutheticationService,
     private databaseService: DatabaseService,
+    private addImageService : AddImageService,
     private contentUploadService: ContentUploadService
   ) {}
 
@@ -45,6 +49,24 @@ export class ProfilePage implements OnInit {
   });
 }
 
+async onFileSelected(event) {
+  const file = event.target.files[0];
+  if (file) {
+    try {
+      // Assuming you have a method to upload the image and update the user profile
+      await this.addImageService.addProfileImage(file, this.user.uid);
+      // After uploading, you might want to update the displayed user photoURL
+      // This might involve fetching the updated user data or updating the local state
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
+}
+
+
+triggerFileInput() {
+  this.fileInput.nativeElement.click();
+}
 
 loadUserPreferences(uid: string): void {
   this.databaseService.getUserPreferences(uid).then(snapshot => {
@@ -161,4 +183,6 @@ loadUserPreferences(uid: string): void {
       console.error(`Error uploading ${type}:`, error);
     }
   }
+
+  
 }

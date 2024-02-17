@@ -33,6 +33,6 @@ export class SearchResultsPage implements OnInit {
   }
 
   goToUserDetail(user: User) {
-    this.router.navigateByUrl(`/user-detail/${user.uid}`); // Adjust the route as per your routing configuration
+    this.router.navigateByUrl(`/user-detail/${user.uid}`); 
   }
 }

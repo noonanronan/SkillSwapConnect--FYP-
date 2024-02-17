@@ -32,8 +32,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'user-detail',
-    loadChildren: () => import('./pages/UserDetails/user-detail/user-detail.module').then( m => m.UserDetailPageModule)
+    path: 'user-detail/:id', // Updated to accept a dynamic segment
+    loadChildren: () => import('./pages/UserDetails/user-detail/user-detail.module').then(m => m.UserDetailPageModule)
   },
   {
     path: 'search-results',
