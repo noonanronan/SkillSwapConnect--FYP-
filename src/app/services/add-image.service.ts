@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../../environments/environment'; 
+import { DatabaseService } from 'src/app/services/database.service'; // Correct path is essential
 
 
 @Injectable({
@@ -10,12 +11,14 @@ import { environment } from '../../environments/environment';
 export class AddImageService {
   private storage = getStorage(initializeApp(environment.firebaseConfig));
 
-  constructor() { }
+  constructor(private databaseService: DatabaseService) { }
 
-  async addProfileImage(file: File): Promise<string> {
+  async addProfileImage(file: File, userId: string): Promise<void> {
     const storageRef = ref(this.storage, `profile_images/${file.name}`);
     await uploadBytes(storageRef, file); // Upload the file
-    return getDownloadURL(storageRef); // Get the download URL
+    const downloadURL = await getDownloadURL(storageRef); // Get the download URL
+    // Update the user's profile with the new image URL
+    await this.databaseService.updateUserPhotoURL(userId, downloadURL);
   }
 }
 

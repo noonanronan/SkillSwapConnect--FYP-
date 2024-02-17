@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class DatabaseService {
   constructor(private db: AngularFireDatabase) {}
-
+  
   // Updates the user's biography information in the database
   updateUserBio(uid: string, bio: string): Promise<void> {
     return this.db.object(`users/${uid}`).update({ bio });
@@ -39,8 +39,6 @@ export class DatabaseService {
     return this.db.database.ref(`/users/${uid}`).once('value');
   }  
 
-  
-
   // Method to fetch users teaching a specific subject
   searchUsersBySubject(subject: string, callback: (users: User[]) => void): void {
     this.db.list<User>('/users').snapshotChanges().pipe(
@@ -63,17 +61,14 @@ export class DatabaseService {
     });
   }
   
-
-
-  
-
   // Gets detailed user information by their ID
   getUserDetails(userId: string): Promise<any> {
-    return this.db.database.ref(`users/${userId}`).once('value').then(snapshot => snapshot.val())
-      .catch(error => {
-        console.error("Error fetching user details:", error);
-        throw error;
-      });
+    return this.db.database.ref(`users/${userId}`).once('value').then(snapshot => snapshot.val());
   }
 
+  // Method to update the user's profile image URL
+  async updateUserPhotoURL(uid: string, photoURL: string): Promise<void> {
+    const userRef = this.db.object(`users/${uid}`);
+    await userRef.update({ photoURL });
+  }
 }

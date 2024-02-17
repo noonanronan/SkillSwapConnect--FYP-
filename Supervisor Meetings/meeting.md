@@ -28,3 +28,6 @@ Wednesday 31st January 2024 7m 18s (Teams)
 
 Wednesday 7th February 2024 10m 38s (Teams)
 * Adding to Dissertation - What would I like to do with the project if I even had more time
+
+Wednesday 14th February 2024 15m 38s (Teams)
+* Future work on project - Dissertation - Kafka messaging system 

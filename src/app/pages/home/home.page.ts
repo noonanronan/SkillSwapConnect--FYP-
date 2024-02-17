@@ -1,23 +1,30 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'; 
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AutheticationService } from '../../services/authetication.service';
 import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
 import { AddImageService } from '../../services/add-image.service';
 import { DatabaseService } from 'src/app/services/database.service';
 
-
+interface UserProfile {
+  uid: string;
+  displayName: string;
+  email: string;
+  photoURL?: string;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
+
 export class HomePage implements OnInit, OnDestroy {
-  user: User | null = null;
+  user: UserProfile | null = null; // To use the interface
   private authSubscription: Subscription;
 
-  // New property for filtered subjects
+  // Property for filtered subjects
   filteredSubjects: string[] = [];
   selectedSubject: string;
   teachingOptions: string[] = [
@@ -28,11 +35,9 @@ export class HomePage implements OnInit, OnDestroy {
   ];
 
   
-
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
   
-
   // The constructor initializes Router and AuthenticationService when this component is instantiated.
   constructor(
     public router: Router, 
@@ -46,14 +51,24 @@ export class HomePage implements OnInit, OnDestroy {
   
     ngOnInit(): void {
       this.authSubscription = this.authService.currentUser.subscribe(
-        (user) => {
-          this.user = user;
+        async (firebaseUser) => {
+          if (firebaseUser) {
+            const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
+            // Update the local user object with details from the Realtime Database
+            this.user = {
+              uid: firebaseUser.uid,
+              displayName: userDetails.displayName || 'User',
+              email: firebaseUser.email,
+              photoURL: userDetails.photoURL
+            };
+          }
         },
         (error) => {
           console.error('Error fetching user data:', error);
         }
       );
     }
+    
   
     ngOnDestroy(): void {
       if (this.authSubscription) {
@@ -61,8 +76,6 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
 
-    
-  
     // Function to filter subjects as the user types
     setFilteredItems(event: any) {
       const searchTerm = event.target.value.toLowerCase();
@@ -93,11 +106,13 @@ export class HomePage implements OnInit, OnDestroy {
       const file = event.target.files[0];
       if (file) {
         try {
-          const imageUrl = await this.addImageService.addProfileImage(file);
+          // Get the current user's ID
           const user = await this.authService.getProfile();
           if (user) {
-            await user.updateProfile({ photoURL: imageUrl });
-            this.authService.updateCurrentUser(user);
+            // Pass the file and user ID to the addProfileImage method
+            await this.addImageService.addProfileImage(file, user.uid);
+  
+          
           }
         } catch (error) {
           console.error('Error uploading file:', error);
