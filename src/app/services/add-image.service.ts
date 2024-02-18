@@ -13,12 +13,12 @@ export class AddImageService {
 
   constructor(private databaseService: DatabaseService) { }
 
-  async addProfileImage(file: File, userId: string): Promise<void> {
+  async addProfileImage(file: File, userId: string): Promise<string> { // Change return type to Promise<string>
     const storageRef = ref(this.storage, `profile_images/${file.name}`);
     await uploadBytes(storageRef, file); // Upload the file
     const downloadURL = await getDownloadURL(storageRef); // Get the download URL
     // Update the user's profile with the new image URL
     await this.databaseService.updateUserPhotoURL(userId, downloadURL);
+    return downloadURL; // Return the download URL
   }
 }
-

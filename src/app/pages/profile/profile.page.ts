@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { User } from 'firebase/auth';
 import { AutheticationService } from 'src/app/services/authetication.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { AddImageService } from '../../services/add-image.service';
 })
 
 export class ProfilePage implements OnInit {
+  updatedPhotoURL: string;
   user: User | null = null;
   bio: string = '';
   // Properties to track if the user wants to teach or learn
@@ -37,7 +38,8 @@ export class ProfilePage implements OnInit {
     public authService: AutheticationService,
     private databaseService: DatabaseService,
     private addImageService : AddImageService,
-    private contentUploadService: ContentUploadService
+    private contentUploadService: ContentUploadService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -51,17 +53,19 @@ export class ProfilePage implements OnInit {
 
 async onFileSelected(event) {
   const file = event.target.files[0];
-  if (file) {
+  if (file && this.user) {
     try {
-      // Assuming you have a method to upload the image and update the user profile
-      await this.addImageService.addProfileImage(file, this.user.uid);
-      // After uploading, you might want to update the displayed user photoURL
-      // This might involve fetching the updated user data or updating the local state
+      const newPhotoURL = await this.addImageService.addProfileImage(file, this.user.uid);
+      console.log(newPhotoURL); // Log the URL to inspect it
+      this.updatedPhotoURL = newPhotoURL + `?t=${new Date().getTime()}`; // Apply cache-busting
+      this.changeDetectorRef.detectChanges(); // Trigger change detection
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   }
 }
+
+
 
 
 triggerFileInput() {
