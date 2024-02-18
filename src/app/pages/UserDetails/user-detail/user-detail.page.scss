@@ -1,0 +1,53 @@
+.user-profile {
+    text-align: center;
+    margin: 20px 0;
+  
+    .profile-pic {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  
+    h2 {
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+  
+    .bio {
+      font-size: 1em;
+      color: gray;
+    }
+  }
+  
+  .materials-segment {
+    margin: 20px 0;
+  }
+  
+  .material-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  
+    .material-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+  
+      video {
+        width: 100%;
+        height: auto;
+      }
+  
+      a {
+        color: #387ef5;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  

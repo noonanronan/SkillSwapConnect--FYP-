@@ -24,3 +24,11 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+.user-details-modal .modal-wrapper {
+    --width: 90%; // Adjust the width of the modal
+    --height: 80%; // Adjust the height of the modal
+    max-height: 80%; // Prevent it from being too tall on large screens
+    border-radius: 20px; // Optional: if you want rounded corners
+  }
+  

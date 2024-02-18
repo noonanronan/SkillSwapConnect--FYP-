@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
 
-// Add an interface for teaching materials if you haven't already
-interface TeachingMaterial {
-  title: string;
-  description?: string;
-  url: string; // Assuming there's a URL to the material
-}
 
 @Component({
   selector: 'app-user-detail',
@@ -17,7 +11,8 @@ interface TeachingMaterial {
 export class UserDetailPage implements OnInit {
   userId: string;
   userDetails: any;
-  teachingMaterials: TeachingMaterial[] = []; // Initialize as empty array
+  teachingMaterials: any = { videos: [], notes: [] }; // Adjusted to include videos and notes
+  segmentValue = 'videos'; // Default to videos
 
   constructor(
     private route: ActivatedRoute,
@@ -32,10 +27,9 @@ export class UserDetailPage implements OnInit {
   fetchData() {
     this.databaseService.getUserDetails(this.userId).then(details => {
       this.userDetails = details;
-      console.log(this.userDetails);
-      // Assuming the teaching materials are part of the userDetails or need another call
-      // Adapt the following to your data structure and fetching logic
-      this.teachingMaterials = details.teachingMaterials || [];
+      // Example structure, adjust according to your data
+      this.teachingMaterials.videos = details.teachingMaterials.videos || [];
+      this.teachingMaterials.notes = details.teachingMaterials.notes || [];
     }).catch(error => {
       console.error('Error fetching user details:', error);
     });

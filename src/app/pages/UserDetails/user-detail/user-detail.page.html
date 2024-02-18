@@ -1,23 +1,37 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">UserDetail</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
-
-
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ userDetails.displayName }}</ion-title>
+    <ion-title>User Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="user-details">
-    <img [src]="userDetails.photoURL || 'assets/default-profile.png'" alt="Profile Image">
+  <div class="user-profile" *ngIf="userDetails" >
+    <img [src]="userDetails?.photoURL || 'assets/default-profile.png'" alt="Profile Image" class="profile-pic">
+
     <h2>{{ userDetails.displayName }}</h2>
-    <p>{{ userDetails.bio }}</p>
+    <p class="bio">{{ userDetails.bio }}</p>
+  </div>
+
+  <ion-segment [(ngModel)]="segmentValue" class="materials-segment">
+    <ion-segment-button value="videos">
+      <ion-label>Videos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="notes">
+      <ion-label>Notes</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segmentValue">
+    <div *ngSwitchCase="'videos'" class="material-container">
+      <div *ngFor="let video of teachingMaterials.videos" class="material-card">
+        <video [src]="video.url" controls></video>
+        <p>{{ video.title }}</p>
+      </div>
+    </div>
+    <div *ngSwitchCase="'notes'" class="material-container">
+      <div *ngFor="let note of teachingMaterials.notes" class="material-card">
+        <a [href]="note.url" target="_blank">{{ note.title }}</a>
+      </div>
+    </div>
   </div>
 </ion-content>
-
