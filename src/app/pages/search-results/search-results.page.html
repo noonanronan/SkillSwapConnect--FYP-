@@ -1,18 +1,25 @@
+<!-- Defines the page header and its title -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Search Results</ion-title>
+    <ion-title>Search Results</ion-title> <!-- Page title -->
   </ion-toolbar>
 </ion-header>
 
+<!-- Main content of the page -->
 <ion-content>
+  <!-- List of search results -->
   <ion-list>
+    <!-- Loop over each user in the users array to display their information -->
     <ion-item *ngFor="let user of users" lines="full" detail="true" (click)="goToUserDetail(user)">
+      <!-- User avatar -->
       <ion-avatar slot="start">
+        <!-- User photo, falls back to a default if not available -->
         <img [src]="user.photoURL || 'assets/default-profile.png'">
       </ion-avatar>
+      <!-- User details -->
       <ion-label>
-        <h2>{{ user.displayName }}</h2>
-        <p>{{ user.bio }}</p>
+        <h2>{{ user.displayName }}</h2> <!-- Display user's name -->
+        <p>{{ user.bio }}</p> <!-- Display user's bio -->
       </ion-label>
     </ion-item>
   </ion-list>

@@ -13,24 +13,25 @@ import { AddImageService } from '../../services/add-image.service';
 })
 
 export class ProfilePage implements OnInit {
-  updatedPhotoURL: string;
-  user: User | null = null;
-  bio: string = '';
-  // Properties to track if the user wants to teach or learn
+  updatedPhotoURL: string; // Stores the updated photo URL after a successful upload
+  user: User | null = null; // Currently authenticated user
+  bio: string = ''; // User bio, editable and saved to the database
+  // Flags to indicate whether the user is teaching or learning
   isTeaching = false;
   isLearning = false;
-  selectedTeachingOption: string = ''; // The teaching option selected by the user
-  selectedLearningOption: string = ''; // The learning option selected by the user
+  selectedTeachingOption: string = ''; // User's selected teaching subject
+  selectedLearningOption: string = ''; // User's selected learning subject
   teachingOptions: string[] = ['Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
   'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
   'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
-  'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy']; 
-  learningOptions: string[] = this.teachingOptions;
+  'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy']; // Available teaching options
+  learningOptions: string[] = this.teachingOptions; // Learning options mirror teaching options
 
   // Properties to track selected files
   selectedNotesFile: File | null = null;
   selectedVideoFile: File | null = null;
 
+  // Reference to the hidden file input for profile image upload
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -43,77 +44,65 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.authService.currentUser.subscribe(user => {
-    this.user = user;
-    if (user) {
-      this.loadUserPreferences(user.uid);
-    }
-  });
-}
+    // Subscribe to auth service to get and set the current user
+    this.authService.currentUser.subscribe(user => {
+      this.user = user;
+      if (user) {
+        this.loadUserPreferences(user.uid); // Load user preferences on init
+      }
+    });
+  }
 
-async onFileSelected(event) {
-  const file = event.target.files[0];
-  if (file && this.user) {
-    try {
-      const newPhotoURL = await this.addImageService.addProfileImage(file, this.user.uid);
-      console.log(newPhotoURL); // Log the URL to inspect it
-      this.updatedPhotoURL = newPhotoURL + `?t=${new Date().getTime()}`; // Apply cache-busting
-      this.changeDetectorRef.detectChanges(); // Trigger change detection
-    } catch (error) {
-      console.error('Error uploading file:', error);
+  async onFileSelected(event) {
+    // Handles file selection and uploads the selected file
+    const file = event.target.files[0];
+    if (file && this.user) {
+      try {
+        const newPhotoURL = await this.addImageService.addProfileImage(file, this.user.uid);
+        this.updatedPhotoURL = newPhotoURL + `?t=${new Date().getTime()}`; // Cache-busting technique
+        this.changeDetectorRef.detectChanges(); // Manually trigger change detection
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     }
   }
-}
 
+  triggerFileInput() {
+    // Programmatically clicks the file input for uploading a new profile image
+    this.fileInput.nativeElement.click();
+  }
 
-
-
-triggerFileInput() {
-  this.fileInput.nativeElement.click();
-}
-
-loadUserPreferences(uid: string): void {
-  this.databaseService.getUserPreferences(uid).then(snapshot => {
-    const userData = snapshot.val();
-    this.bio = userData.bio || '';
-
-    // Reset states
-    this.isTeaching = false;
-    this.isLearning = false;
-    this.selectedTeachingOption = '';
-    this.selectedLearningOption = '';
-
-    // Check and apply roles
-    if (userData.roles && userData.roles.includes('teacher')) {
-      this.isTeaching = true;
-      // Find the teaching subject from interests if it exists
-      const teachInterest = userData.interests?.find(i => i.type === 'teach');
-      this.selectedTeachingOption = teachInterest ? teachInterest.subject : '';
-    }
-    if (userData.roles && userData.roles.includes('learner')) {
-      this.isLearning = true;
-      // Find the learning subject from interests if it exists
-      const learnInterest = userData.interests?.find(i => i.type === 'learn');
-      this.selectedLearningOption = learnInterest ? learnInterest.subject : '';
-    }
-  }).catch(error => console.error(error));
-}
+  loadUserPreferences(uid: string): void {
+    // Loads user preferences such as bio, teaching/learning status and options
+    this.databaseService.getUserPreferences(uid).then(snapshot => {
+      const userData = snapshot.val();
+      this.bio = userData.bio || '';
+      // Reset states based on fetched preferences
+      this.isTeaching = userData.roles?.includes('teacher');
+      this.isLearning = userData.roles?.includes('learner');
+      // Determine selected teaching and learning options based on user interests
+      this.selectedTeachingOption = userData.interests?.find(i => i.type === 'teach')?.subject || '';
+      this.selectedLearningOption = userData.interests?.find(i => i.type === 'learn')?.subject || '';
+    }).catch(error => console.error(error));
+  }
 
   goToHome() {
+    // Navigate back to the home page
     this.route.navigateByUrl('/home');
   }
 
-  // Method to handle logout process.
   async logout(): Promise<void> {
+    // Logout the current user and navigate to the landing page
     try {
-      await this.authService.signOut(); // Attempt to sign out using the authentication service.
-      this.route.navigate(['/landing']); // If sign out is successful, navigate to the landing page.
+      await this.authService.signOut();
+      this.route.navigate(['/landing']);
     } catch (error) {
-      console.error('Logout error:', error); // If there's an error log the error to the console.
+      console.error('Logout error:', error);
     }
   }
 
   updateBio(): void {
+    // Updates the user's bio in the database
     if (this.user) {
       this.databaseService.updateUserBio(this.user.uid, this.bio).then(() => {
         console.log('Bio updated:', this.bio);
@@ -121,43 +110,33 @@ loadUserPreferences(uid: string): void {
     }
   }
 
-
   updateRole(role: 'teach' | 'learn', isSelected: boolean): void {
-    if (role === 'teach') {
-      this.isTeaching = isSelected;
-    } else if (role === 'learn') {
-      this.isLearning = isSelected;
-    }
-    // No longer automatically disabling the other role
-    this.updatePreferences();
+    // Updates the user's role (teach/learn) based on selection
+    this.isTeaching = role === 'teach' ? isSelected : this.isTeaching;
+    this.isLearning = role === 'learn' ? isSelected : this.isLearning;
+    this.updatePreferences(); // Update user preferences after role change
   }
 
   updatePreferences(): void {
+    // Save the updated preferences (roles and interests) to the database
     if (!this.user) return;
-    
-    // Prepare roles based on selections
     let roles = [];
-    if (this.isTeaching) roles.push('teacher');
-    if (this.isLearning) roles.push('learner');
-  
-    // Prepare interests based on selections
     let interests = [];
-    if (this.selectedTeachingOption) interests.push({ type: 'teach', subject: this.selectedTeachingOption });
-    if (this.selectedLearningOption) interests.push({ type: 'learn', subject: this.selectedLearningOption });
-  
-    const preferences = {
-      roles: roles, // Store roles as an array
-      interests: interests, // Store interests as an array of objects
-    };
-  
-    this.databaseService.updateUserPreferences(this.user.uid, preferences).then(() => {
-      console.log('Preferences updated');
-    }).catch(error => console.error('Error updating preferences:', error));
+    if (this.isTeaching) {
+      roles.push('teacher');
+      interests.push({ type: 'teach', subject: this.selectedTeachingOption });
+    }
+    if (this.isLearning) {
+      roles.push('learner');
+      interests.push({ type: 'learn', subject: this.selectedLearningOption });
+    }
+    this.databaseService.updateUserPreferences(this.user.uid, { roles, interests })
+      .then(() => console.log('Preferences updated'))
+      .catch(error => console.error('Error updating preferences:', error));
   }
-  
-  
 
   storeFile(event: any, type: 'notes' | 'video'): void {
+    // Stores the selected file temporarily before upload
     const file: File = event.target.files[0];
     if (type === 'notes') {
       this.selectedNotesFile = file;
@@ -167,6 +146,7 @@ loadUserPreferences(uid: string): void {
   }
 
   async uploadMaterials(): Promise<void> {
+    // Uploads the stored teaching materials (notes and videos)
     if (this.selectedNotesFile) {
       await this.uploadFile(this.selectedNotesFile, 'notes');
       this.selectedNotesFile = null;
@@ -178,15 +158,15 @@ loadUserPreferences(uid: string): void {
   }
 
   private async uploadFile(file: File, type: 'notes' | 'video'): Promise<void> {
+    // Helper method to upload a single file and update the database with the file's URL
     if (!this.user || !this.selectedTeachingOption) return;
     const path = `teaching_materials/${this.selectedTeachingOption}/${type}`;
     try {
       const downloadURL = await this.contentUploadService.uploadContent(file, path);
+      await this.databaseService.updateTeachingMaterial(this.user.uid, downloadURL, type);
       console.log(`${type} uploaded successfully:`, downloadURL);
     } catch (error) {
       console.error(`Error uploading ${type}:`, error);
     }
   }
-
-  
 }

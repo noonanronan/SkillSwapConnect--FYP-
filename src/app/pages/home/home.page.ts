@@ -6,6 +6,7 @@ import { User } from 'firebase/auth';
 import { AddImageService } from '../../services/add-image.service';
 import { DatabaseService } from 'src/app/services/database.service';
 
+/* Interface to define the structure of user profile data */
 interface UserProfile {
   uid: string;
   displayName: string;
@@ -18,101 +19,100 @@ interface UserProfile {
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-
-
 export class HomePage implements OnInit, OnDestroy {
-  user: UserProfile | null = null; // To use the interface
-  private authSubscription: Subscription;
+  user: UserProfile | null = null; // Holds the current user's profile data
+  private authSubscription: Subscription; // Subscription to track authentication changes
 
-  // Property for filtered subjects
+  /* Properties for managing the list of subjects and filtered list based on search */
   filteredSubjects: string[] = [];
   selectedSubject: string;
   teachingOptions: string[] = [
+    /* List of options for teaching subjects */
     'Music', 'Sports', 'Programming', 'Languages', 'Cooking', 
     'Art', 'Dance', 'Photography', 'Writing', 'Gaming', 
     'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
     'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy'
   ];
 
-  
-  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>; // Reference to the file input element
 
-  
-  // The constructor initializes Router and AuthenticationService when this component is instantiated.
+  /* Constructor to inject services */
   constructor(
     public router: Router, 
     public authService: AutheticationService,
-    private addImageService : AddImageService,
+    private addImageService: AddImageService,
     private databaseService: DatabaseService,
-    )  {
-      // Initialize filteredSubjects with teachingOptions
-      this.filteredSubjects = this.teachingOptions.slice();
-    }
-  
-    ngOnInit(): void {
-      this.authSubscription = this.authService.currentUser.subscribe(
-        async (firebaseUser) => {
-          if (firebaseUser) {
-            const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
-            // Update the local user object with details from the Realtime Database
-            this.user = {
-              uid: firebaseUser.uid,
-              displayName: userDetails.displayName || 'User',
-              email: firebaseUser.email,
-              photoURL: userDetails.photoURL
-            };
-          }
-        },
-        (error) => {
-          console.error('Error fetching user data:', error);
+  ) {
+    // Initialize the filtered subjects list with all teaching options
+    this.filteredSubjects = this.teachingOptions.slice();
+  }
+
+  ngOnInit(): void {
+    // Subscribe to the authentication service to receive user data
+    this.authSubscription = this.authService.currentUser.subscribe(
+      async (firebaseUser) => {
+        if (firebaseUser) {
+          // Fetch additional user details from the database
+          const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
+          // Update local user profile data
+          this.user = {
+            uid: firebaseUser.uid,
+            displayName: userDetails.displayName || 'User',
+            email: firebaseUser.email,
+            photoURL: userDetails.photoURL
+          };
         }
-      );
-    }
-    
-  
-    ngOnDestroy(): void {
-      if (this.authSubscription) {
-        this.authSubscription.unsubscribe();
+      },
+      (error) => {
+        console.error('Error fetching user data:', error);
       }
-    }
+    );
+  }
 
-    // Function to filter subjects as the user types
-    setFilteredItems(event: any) {
-      const searchTerm = event.target.value.toLowerCase();
-  
-      if (!searchTerm) {
-        this.filteredSubjects = this.teachingOptions;
-      } else {
-        this.filteredSubjects = this.teachingOptions.filter(subject => {
-          return subject.toLowerCase().includes(searchTerm.toLowerCase());
-        });
-      }
+  ngOnDestroy(): void {
+    // Unsubscribe from the authentication service on component destruction
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
-  
-    // Function to handle subject selection
-    onSubjectSelect(subject: string): void {
-      // Log the subject to ensure this method is called
-      console.log(`Subject selected: ${subject}`);
-      // Navigate to the search results page with the selected subject
-      this.router.navigate(['/search-results'], { queryParams: { subject: subject } });
-}
+  }
 
-  
-    triggerFileInput() {
-      this.fileInput.nativeElement.click();
+  /* Filters the subjects based on the user's search input */
+  setFilteredItems(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    // If the search term is empty, reset the list to show all options
+    if (!searchTerm) {
+      this.filteredSubjects = this.teachingOptions;
+    } else {
+      // Filter the list based on the search term
+      this.filteredSubjects = this.teachingOptions.filter(subject => {
+        return subject.toLowerCase().includes(searchTerm.toLowerCase());
+      });
     }
-  
-    async onFileSelected(event) {
-      const file = event.target.files[0];
-      if (file) {
-        try {
-          // Get the current user's ID
-          const user = await this.authService.getProfile();
-          if (user) {
-            // Pass the file and user ID to the addProfileImage method
-            await this.addImageService.addProfileImage(file, user.uid);
-  
-          
+  }
+
+  /* Handles the selection of a subject */
+  onSubjectSelect(subject: string): void {
+    console.log(`Subject selected: ${subject}`);
+    // Navigate to the search results page with the selected subject as a query parameter
+    this.router.navigate(['/search-results'], { queryParams: { subject: subject } });
+  }
+
+  /* Triggers the file input to open the file picker */
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  /* Handles file selection for profile image upload */
+  async onFileSelected(event) {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        // Get the current user's profile
+        const user = await this.authService.getProfile();
+        if (user) {
+          // Upload the selected file as the
+           // profile image using the AddImageService
+           await this.addImageService.addProfileImage(file, user.uid);
           }
         } catch (error) {
           console.error('Error uploading file:', error);
@@ -120,10 +120,12 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
   
+    /* Navigates to the user's profile page */
     goToProfile() {
       this.router.navigateByUrl('/profile');
     }
   
+    /* Logs out the current user and navigates to the landing page */
     async logout(): Promise<void> {
       try {
         await this.authService.signOut();
@@ -133,6 +135,7 @@ export class HomePage implements OnInit, OnDestroy {
       }
     }
   
+    // Test method to demonstrate event binding (Using for debugging)
     testClick(): void {
       console.log('Input clicked');
     }

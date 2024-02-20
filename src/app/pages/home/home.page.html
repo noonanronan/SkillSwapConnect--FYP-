@@ -1,64 +1,71 @@
+<!-- Root container element -->
 <div class="container">
-
+  <!-- App Header with Toolbar -->
   <ion-header>
     <ion-toolbar>
-      
+      <!-- Toolbar is left intentionally empty to match the design -->
     </ion-toolbar>
   </ion-header>
   
-  <!-- Header -->
+  <!-- Main header with navigation logo and logout functionality -->
   <header class="app-header">
+    <!-- Menu button that opens side menu -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <!-- Logo section -->
     <div class="logo">
       <img src="assets/logo.png"/>
     </div>
+    <!-- Logout button -->
     <button (click)="logout()">Logout</button>
   </header>
 
   <ion-app>
+    <!-- Side menu for navigation -->
     <ion-menu contentId="main-content" side="start">
+      <!-- Menu header -->
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
+      <!-- Menu content area -->
       <ion-content>
         <!-- User Profile Card -->
         <section class="profile-card menu-top-spacing" *ngIf="user">
-          <!-- User Profile button -->
+          <!-- Button to go to user profile -->
           <ion-button class="profile-icon-button" style="--background:#0000;" (click)="goToProfile()">
             <ion-icon name="person-circle"></ion-icon>
           </ion-button>        
-          <!-- User profile picture -->
+          <!-- Display user profile picture -->
           <img [src]="user?.photoURL || 'assets/icon/default.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
-
-          <!-- Hidden File Input -->
+          <!-- Hidden input for file upload -->
           <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
-
-          <!-- User name -->
+          <!-- Display user's name -->
           <h2>{{ user?.displayName || 'User' }}</h2>
+          <!-- Display user's email -->
           <p>{{ user?.email }}</p>
-          <!-- Logout button -->
-          <ion-button style="background-color: #ffe5b4;" (click)="logout()">Logout</ion-button>
+          <!-- Button to logout -->
+          <ion-button (click)="logout()">Logout</ion-button>
         </section>
       </ion-content>
     </ion-menu>
   
+    <!-- Main content container -->
     <div class="container" id="main-content">
-      <!-- Main Content Area -->
+      <!-- Area for displaying the main content -->
       <main class="content-area">
-        
+        <!-- Search bar component -->
         <ion-searchbar (ionInput)="setFilteredItems($event)"></ion-searchbar>
+        <!-- List of subjects -->
         <ion-list>
+          <!-- Iterate over filtered subjects and display them as items -->
           <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
             {{ subject }}
           </ion-item>
         </ion-list>
-
       </main>
     </div>
   </ion-app>
-
 </div>

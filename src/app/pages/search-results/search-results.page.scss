@@ -1,49 +1,56 @@
+/* Styling for the header of the page */
 ion-header {
-    --background: #f8f8f8;
+    --background: #f8f8f8; // Light grey background 
   }
   
+  /* Styling for the toolbar within the header */
   ion-toolbar {
-    --background: #ffffff;
-    --color: #333;
+    --background: #ffffff; // White background  
+    --color: #333; // Dark grey text color for good readability 
   }
   
+  /* Styling for the title within the toolbar */
   ion-title {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.2em; // Slightly larger font size for the title 
+    font-weight: bold; // Bold font weight 
   }
   
+  /* Styling for the list of items */
   ion-list {
-    margin-top: 20px;
+    margin-top: 20px; // Space above the list for separation from other content 
   }
   
+  /* Styling for individual items within the list */
   ion-item {
-    --border-color: #e0e0e0;
-    --border-style: solid;
-    --border-width: 0.5px;
-    --background: #ffffff;
-    --border-radius: 8px;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease-in-out;
+    --border-color: #e0e0e0; // Light grey border color
+    --border-style: solid; // Solid border style 
+    --border-width: 0.5px; // Thin border width 
+    --background: #ffffff; // White background for each item 
+    --border-radius: 8px; // Rounded corners for each item 
+    margin-bottom: 10px; // Space below each item for separation 
+    transition: transform 0.3s ease-in-out; // Smooth transition for hover effect 
   
     &:hover {
-      transform: scale(1.02);
+      transform: scale(1.02); // Slightly enlarge item on hover for a subtle effect 
     }
   }
   
+  /* Styling for the avatar within each item */
   ion-avatar {
-    --border-radius: 50%;
-    border: 2px solid #dedede;
+    --border-radius: 50%; // Circle shape for the avatar 
+    border: 2px solid #dedede; // Light grey border around the avatar 
   }
   
+  /* Styling for the label within each item, containing the user's name and bio */
   ion-label {
     h2 {
-      color: #4a4a4a;
-      margin-bottom: 5px;
+      color: #4a4a4a; // Dark grey color for the name
+      margin-bottom: 5px; // Space below the name before the bio starts 
     }
   
     p {
-      font-size: 0.8em;
-      color: #6b6b6b;
+      font-size: 0.8em; // Smaller font size for the bio 
+      color: #6b6b6b; // Medium grey color for the bio 
     }
   }
   

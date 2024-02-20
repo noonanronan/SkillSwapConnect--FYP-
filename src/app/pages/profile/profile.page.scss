@@ -34,52 +34,46 @@ ion-content {
 }
 
 
-  .app-header .left-header,
-  .app-header .right-header {
-    // Flex basis allows the elements to grow or shrink to fit the content's width
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-
-  .app-header .left-header {
-      justify-content: flex-start;
-    }
-    
-    .app-header .right-header {
-      justify-content: flex-end;
-    }
-
-.app-header ion-button {
-  --background: transparent;
-  --color: #fff;
+  /* Header sections for alignment */
+.app-header .left-header,
+.app-header .right-header {
+  flex: 1;
+  display: flex;
+  align-items: center; // Center items vertically 
 }
 
+.app-header .left-header {
+  justify-content: flex-start; // Align items to the left 
+}
+    
+.app-header .right-header {
+  justify-content: flex-end; // Align items to the right 
+}
 
 .app-header .logo {
-  flex-grow: 2; // Allows the logo to take up the available space
+  flex-grow: 2; // Allow the logo to occupy the maximum available space 
   display: flex;
-  justify-content: center; // Centers the logo within the .logo div
+  justify-content: center; // Center the logo horizontally 
 }
 
 .app-header .logo img {
-  height: 90px;
-  width: auto;
+  height: 90px; // Set logo height 
+  width: auto; // Adjust width automatically to maintain aspect ratio 
 }
 
 .app-header button {
-  background-color: #4169e1; // Blue colour 
-  color: #fff;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  background-color: #4169e1; // Match button background with the header 
+  color: #fff; // Button text color white 
+  padding: 12px 24px; // Add padding for a larger clickable area 
+  border: none; // Remove default button border 
+  border-radius: 5px; // Round button corners 
+  cursor: pointer; // Change cursor to pointer to show that it can be clicked
+  font-weight: bold; // Make button text bold 
+  transition: background-color 0.3s ease; // Smooth background color transition on hover 
 }
 
 ion-header, ion-toolbar {
-  --background: #4169e1; 
+  --background: #4169e1; // Set Ionic header and toolbar background color 
 }
 
 /* Overall Container */
@@ -105,8 +99,6 @@ ion-header, ion-toolbar {
   align-items: center; // Center items horizontally
   
 }
-
-
 
 /* User profile image */
 .left-section .profile-pic {
@@ -162,38 +154,40 @@ ion-header, ion-toolbar {
   background-color: #f9f9f9; // Light background
   box-sizing: border-box; // Include padding and border in width calculation
 
+  /* Upload Section Styling */
   .upload-section {
-    margin-top: 15px;
+    margin-top: 15px; // Space above each upload section 
     label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      display: block; // Ensure the label is on its own line 
+      margin-bottom: 5px; // Space below the label 
+      font-weight: bold; // Bold label text 
     }
     input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      width: 100%; // Full width of the container 
+      padding: 8px; // Padding for easier interaction 
+      border: 1px solid #ddd; // Light grey border for definition 
+      border-radius: 4px; // Slightly rounded corners 
     }
   }
 
+  /* Upload Button Styling */
   .upload-button {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #ffe5b4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.3s ease;
+    display: block; // Ensure the button is on its own line 
+    width: 100%; // Full width 
+    margin-top: 20px; // Space above the button 
+    padding: 10px 20px; // Padding inside the button 
+    background-color: #ffe5b4; // Light orange background for visibility 
+    color: white; // White text
+    border: none; // Remove default border 
+    border-radius: 5px; // Rounded corners 
+    cursor: pointer; // Change cursor to show that its clickable
+    font-size: 16px; // Larger font size for readability 
+    font-weight: bold; // Bold text 
+    text-align: center; // Center text within the button
+    transition: background-color 0.3s ease; // Transition (0.3) for hover effect
 
     &:hover {
-      background-color: darken(#ffe5b4, 10%);
+      background-color: darken(#ffe5b4, 10%); // Darken button on hover
     }
   }
 }

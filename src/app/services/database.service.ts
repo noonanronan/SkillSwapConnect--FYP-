@@ -71,4 +71,12 @@ export class DatabaseService {
     const userRef = this.db.object(`users/${uid}`);
     await userRef.update({ photoURL });
   }
+
+  async updateTeachingMaterial(uid: string, materialUrl: string, materialType: 'notes' | 'video'): Promise<void> {
+    const materialsRef = this.db.object(`users/${uid}/teachingMaterials/${materialType}`);
+    const materials = (await materialsRef.query.ref.once('value')).val() || [];
+    materials.push(materialUrl);
+    
+    await materialsRef.set(materials);
+  }
 }

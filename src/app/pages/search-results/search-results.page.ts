@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-results.page.scss'],
 })
 export class SearchResultsPage implements OnInit {
-  subject: string;
-  users: User[]; // Use the User interface for type definition
+  subject: string; // Holds the search query parameter value
+  users: User[]; // Array to store users matching the search criteria
 
   constructor(
     private route: ActivatedRoute,
@@ -22,17 +22,19 @@ export class SearchResultsPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Retrieve the 'subject' query parameter from the current route
     this.subject = this.route.snapshot.queryParamMap.get('subject');
     console.log(`Looking up users for subject: ${this.subject}`);
     
-    // Pass a callback function to update the component's state
+    // Fetch users from the database who are associated with the selected subject
     this.databaseService.searchUsersBySubject(this.subject, (filteredUsers) => {
-      this.users = filteredUsers;
-      this.changeDetectorRef.detectChanges(); // Trigger change detection to update the UI
+      this.users = filteredUsers; // Assign fetched users to the local array
+      this.changeDetectorRef.detectChanges(); // Manually trigger change detection to ensure UI updates
     });
   }
 
   goToUserDetail(user: User) {
+    // Navigate to the user detail page, passing the user's UID in the URL
     this.router.navigateByUrl(`/user-detail/${user.uid}`); 
   }
 }

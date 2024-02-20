@@ -1,17 +1,23 @@
+<!-- Header section with title -->
 <ion-header>
   <ion-toolbar>
     <ion-title>User Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Main content area -->
 <ion-content>
-  <div class="user-profile" *ngIf="userDetails" >
+  <!-- Display user details if userDetails object is available -->
+  <div class="user-profile" *ngIf="userDetails">
+    <!-- User profile image with fallback to default image -->
     <img [src]="userDetails?.photoURL || 'assets/default-profile.png'" alt="Profile Image" class="profile-pic">
-
+    <!-- Display user's display name -->
     <h2>{{ userDetails.displayName }}</h2>
+    <!-- Display user's bio -->
     <p class="bio">{{ userDetails.bio }}</p>
   </div>
 
+  <!-- Segment buttons for switching between videos and notes -->
   <ion-segment [(ngModel)]="segmentValue" class="materials-segment">
     <ion-segment-button value="videos">
       <ion-label>Videos</ion-label>
@@ -21,16 +27,20 @@
     </ion-segment-button>
   </ion-segment>
 
+  <!-- Container for videos or notes based on selected segment -->
   <div [ngSwitch]="segmentValue">
+    <!-- Videos container -->
     <div *ngSwitchCase="'videos'" class="material-container">
-      <div *ngFor="let video of teachingMaterials.videos" class="material-card">
-        <video [src]="video.url" controls></video>
-        <p>{{ video.title }}</p>
+      <!-- Loop through each video URL and display a video player -->
+      <div *ngFor="let videoUrl of teachingMaterials.videos" class="material-card">
+        <video [src]="videoUrl" controls></video>
       </div>
     </div>
+    <!-- Notes container -->
     <div *ngSwitchCase="'notes'" class="material-container">
-      <div *ngFor="let note of teachingMaterials.notes" class="material-card">
-        <a [href]="note.url" target="_blank">{{ note.title }}</a>
+      <!-- Loop through each note URL and display a link to view the note -->
+      <div *ngFor="let notesUrl of teachingMaterials.notes" class="material-card">
+        <a [href]="notesUrl" target="_blank">View Note</a>
       </div>
     </div>
   </div>

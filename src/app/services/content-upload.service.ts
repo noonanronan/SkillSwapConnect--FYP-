@@ -16,4 +16,5 @@ export class ContentUploadService {
     await uploadBytes(storageRef, file); // Upload the file
     return getDownloadURL(storageRef); // Get the download URL
   }
+
 }
