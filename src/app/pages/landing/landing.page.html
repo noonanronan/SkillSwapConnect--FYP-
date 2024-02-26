@@ -1,36 +1,8 @@
+<!-- Landing Page Content -->
 <ion-content class="custom-landing-page">
-  <!-- Feature Section -->
-  <div class="feature-section">
-    <ion-card class="feature-card" (click)="showSkillMessage()">
-      <ion-card-header>
-        <ion-button class="feature-cta-button">Skill</ion-button>
-      </ion-card-header>
-      <ion-card-content>
-        <div *ngIf="skillMessage" class="message" style="background-color: #304875;">{{ skillMessage }}</div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="feature-card" (click)="showSwapMessage() ">
-      <ion-card-header>
-        <ion-button class="feature-cta-button">Swap</ion-button>
-      </ion-card-header>
-      <ion-card-content>
-        <div *ngIf="swapMessage" class="message" style="background-color: #304875;">{{ swapMessage }}</div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="feature-card" (click)="showConnectMessage()">
-      <ion-card-header>
-        <ion-button class="feature-cta-button">Connect</ion-button>
-      </ion-card-header>
-      <ion-card-content>
-        <div *ngIf="connectMessage" class="message" style="background-color: #304875;">{{ connectMessage }}</div>
-      </ion-card-content>
-    </ion-card>
-  </div>
-
   <!-- CTA Button Section -->
   <div class="cta-section">
+    <!-- Get Started button -->
     <ion-button class="cta-button" shape="round" [routerLink]="['/login']">
       Get Started
     </ion-button>

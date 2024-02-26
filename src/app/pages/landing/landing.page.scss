@@ -1,66 +1,32 @@
-
+/* landing page - Styling */
 .custom-landing-page {
-  --background: url('/assets/background-landing.png') 0 0/100% 100% no-repeat; // BG image
-  background-size: cover; // Cover the entire area
-  background-position: center; // Center the image
-  background-repeat: no-repeat; // Prevent repeating the image
+  --background: url('/assets/landing.png') 0 0/100% 100% no-repeat; // Set the background image
+  background-size: cover; // Covers the entire content area
+  background-position: center; // Center the background image
+  background-repeat: no-repeat; // Prevent the background image from repeating
 
-  .feature-section {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-top: 20px;
-  
-    .feature-card {
-      width: calc(33.333% - 20px); // Subtract the total margin from the width
-      margin: 0; // Remove margin
-      padding: 0; // Remove padding
-      background-color: #304875;
-
-      ion-card-header {
-        text-align: center;
-        background: transparent; // Make the background transparent
-        color: #304875; 
-      }
-
-      .feature-cta-button {
-        background-color: #304875; // button color to match the background
-        color: #304875; 
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-          background-color: darken(#304875, 10%);
-        }
-      }
-    }
-  }
-
+  /* Section for the 'Get Started' button */
   .cta-section {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
+    position: absolute; // Position the section absolutely within the ion-content
+    right: 9.8%; // Align to the right side of the page with a 9.8% offset from the right edge - (Must be changed later for Mobiles)
+    top: 50%; // Center vertically
+    transform: translateY(-50%); // Adjust for exact vertical centering
+    text-align: center; // Center the text (and button) horizontally
 
+    /* Style for the 'Get Started' button */
     .cta-button {
-      max-width: 90%;
-      font-weight: bold;
-      background-color: #304875;
-      color: #304875;
-      font-size: 1.2em;
-      padding: 15px 30px;
-      border: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease;
+      font-weight: bold; // Button text Bold
+      background-color: #304875; // Set the button color
+      color: #fff; // Set the text color for contrast
+      font-size: 1.2em; // Increase the font size for visibility
+      padding: 15px 30px; // Adds padding around the text
+      border: none; // Remove any default borders
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Applies a shadow
+      transition: transform 0.3s ease; // Animate the transform property
 
       &:active {
-        transform: scale(0.95);
+        transform: scale(0.95); // Scale down button when active/clicked
       }
     }
   }
 }
-
