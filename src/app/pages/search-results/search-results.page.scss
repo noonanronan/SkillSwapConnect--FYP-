@@ -1,7 +1,18 @@
 /* Styling for the header of the page */
 ion-header {
-    --background: #f8f8f8; // Light grey background 
+  background-color: #4169e1; // Royale Blue
+  ion-toolbar {
+    --background: transparent; // Makes the toolbar background transparent
+
+    ion-title {
+      color: #fff; // Sets the title color to white for better contrast
+      font-size: 22px; // 22Px font sizw
+      text-transform: uppercase; // Uppercase title for a more better appearance
+      font-weight: bold; // Bold title 
+      text-align: center; // Centers the title text
+    }
   }
+}
   
   /* Styling for the toolbar within the header */
   ion-toolbar {
