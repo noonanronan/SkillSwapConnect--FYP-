@@ -67,6 +67,24 @@ ion-header {
           text-decoration: underline; // Underline on hover for better user feedback
         }
       }
+
     }
   }
+
+  /* Back button */
+.back-button {
+  background: none; // Removes any default styling
+  border: none;
+  cursor: pointer;
+
+  img {
+    width: 24px; // Adjust as needed
+    height: auto;
+    display: block; // Ensure the icon is centered within the button
+  }
+
+  &:hover {
+    opacity: 0.8; // Slight visual feedback on hover
+  }
+}
   
