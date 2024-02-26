@@ -49,9 +49,21 @@ export class ProfilePage implements OnInit {
       this.user = user;
       if (user) {
         this.loadUserPreferences(user.uid); // Load user preferences on init
+        this.loadUserProfilePhoto(user.uid); // Fetch photo URL
       }
     });
   }
+
+  async loadUserProfilePhoto(uid: string): Promise<void> {
+    try {
+      const userDetails = await this.databaseService.getUserDetails(uid);
+      this.updatedPhotoURL = userDetails.photoURL; 
+      this.changeDetectorRef.detectChanges(); // Trigger change detection to update the view
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  }
+  
 
   async onFileSelected(event) {
     // Handles file selection and uploads the selected file
