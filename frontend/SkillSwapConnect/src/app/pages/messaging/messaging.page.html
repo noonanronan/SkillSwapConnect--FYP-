@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Messaging</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="sendMessage()">
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="message" name="message" placeholder="Type your message here" required></ion-input>
+    </ion-item>
+    <ion-button type="submit" expand="block">Send Message</ion-button>
+  </form>
+</ion-content>
