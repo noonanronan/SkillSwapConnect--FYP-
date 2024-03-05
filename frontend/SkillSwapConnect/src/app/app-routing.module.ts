@@ -40,10 +40,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/search-results/search-results.module').then( m => m.SearchResultsPageModule)
   },
   {
+    path: 'user-listing',
+    loadChildren: () => import('./pages/user-listing/user-listing.module').then( m => m.UserListingPageModule)
+  },
+  {
     path: 'messaging',
     loadChildren: () => import('./pages/messaging/messaging.module').then( m => m.MessagingPageModule)
   },
-  
+
 ];
 
 @NgModule({

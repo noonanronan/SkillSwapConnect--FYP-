@@ -76,8 +76,8 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  openMessagingPage() {
-    this.router.navigateByUrl('/messaging');
+  openUserListingPage() {
+    this.router.navigateByUrl('/user-listing');
   }
 
   /* Filters the subjects based on the user's search input */

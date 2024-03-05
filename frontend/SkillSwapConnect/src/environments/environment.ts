@@ -4,13 +4,14 @@ export const environment = {
 
   // Firebase configuration details.
   firebaseConfig : {
-    apiKey: "AIzaSyDY6P9SuIUjp-Pxy0aFWZ9VEE0YIBZcL94",
-    authDomain: "skillswapconnect-aee3c.firebaseapp.com",
-    projectId: "skillswapconnect-aee3c",
-    storageBucket: "skillswapconnect-aee3c.appspot.com",
-    messagingSenderId: "1094199214490",
-    appId: "1:1094199214490:web:8a9b3f3557c906c99ffa23",
-    measurementId: "G-GWM8HK0FBC",
-    databaseURL: "https://skillswapconnect-aee3c-default-rtdb.europe-west1.firebasedatabase.app/"
+    apiKey: "AIzaSyBd7Pv2TwPGGJvvIoMo5OIIQbMn-Ddh9Do",
+    authDomain: "finalproject-398be.firebaseapp.com",
+    databaseURL: "https://finalproject-398be-default-rtdb.firebaseio.com",
+    projectId: "finalproject-398be",
+    storageBucket: "finalproject-398be.appspot.com",
+    messagingSenderId: "418126660321",
+    appId: "1:418126660321:web:d20faddc2dd5aad4bbeda0",
+    measurementId: "G-R1KW2RK0JV"
   }
 };
+

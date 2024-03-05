@@ -1,0 +1,22 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <ion-title>Users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="user-listing">
+    <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="onSearchQueryChange()" placeholder="Search users..."></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let user of filteredUsers" (click)="onUserSelect(user)">
+        <ion-avatar slot="start">
+          <img [src]="user.photoURL || 'assets/default-profile.png'">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ user.displayName }}</h2>
+          <p>{{ user.email }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -10,6 +10,18 @@ import { map } from 'rxjs/operators';
 })
 export class DatabaseService {
   constructor(private db: AngularFireDatabase) {}
+
+  // Method to fetch all users in DatabaseService
+  async getAllUsers(): Promise<any[]> {
+    const snapshot = await this.db.database.ref('/users').once('value');
+    const usersObject = snapshot.val();
+    const usersArray = Object.keys(usersObject).map(key => ({
+      ...usersObject[key],
+      uid: key // Add the UID to the user object
+    }));
+    return usersArray;
+  }
+
   
   // Updates the user's biography information in the database
   updateUserBio(uid: string, bio: string): Promise<void> {

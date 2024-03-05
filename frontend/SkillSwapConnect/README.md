@@ -14,7 +14,7 @@ Follow these steps to run the app locally on your machine:
 ```
 
     1. Clone the repository to your local machine using Git: 
-    * Clone repo - git clone https://github.com/DanielCreggOrganization/acpad-project-2023-RazzaNoonan.git
+    * Clone repo - git clone https://github.com/RazzaNoonan/SkillSwapConnect--FYP-.git
 
     2. Change directory to the app - cd Libary-App
 
@@ -26,6 +26,11 @@ Follow these steps to run the app locally on your machine:
     * npm install firebase
     * npm install firebase @angular/fire --force
     * npm install kafkajs
+    * npm install @angular/fire/compat/firestore
+    * npm install sockjs-client webstomp-client --save --legacy-peer-deps
+
+
+
 
 
 
@@ -34,7 +39,7 @@ Follow these steps to run the app locally on your machine:
 
 
 
-## Project Requirments above and beyond
+## Project Requirements above and beyond
 
 
 

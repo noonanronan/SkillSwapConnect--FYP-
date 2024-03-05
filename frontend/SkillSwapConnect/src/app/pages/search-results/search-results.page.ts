@@ -5,6 +5,7 @@ import { User } from 'src/app/services/user.model';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.page.html',

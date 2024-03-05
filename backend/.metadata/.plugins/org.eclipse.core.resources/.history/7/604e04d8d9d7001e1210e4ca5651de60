@@ -1,0 +1,10 @@
+package io.github.RazzaNoonan.messagingservice;
+
+public class ChatMessage {
+    private String senderId;
+    private String receiverId;
+    private String message;
+    private long timestamp;
+
+    // Constructors, getters, and setters
+}
