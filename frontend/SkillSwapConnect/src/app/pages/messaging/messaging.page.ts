@@ -1,39 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { ChatWebSocketService } from 'src/app/services/chat-web-socket.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { SimpleWebSocketService } from 'src/app/services/simple-web-socket.service';
 
 @Component({
   selector: 'app-messaging',
   templateUrl: './messaging.page.html',
   styleUrls: ['./messaging.page.scss'],
 })
-export class MessagingPage implements OnInit {
+export class MessagingPage implements OnInit, OnDestroy {
   message = '';
   messages: any[] = [];
 
-  constructor(private chatWebSocketService: ChatWebSocketService) {}
+  constructor(private simpleWebSocketService: SimpleWebSocketService) {}
 
   ngOnInit() {
-    this.chatWebSocketService.connect();
-    this.chatWebSocketService.onMessage().subscribe(message => {
-        this.messages.push(message);
+    this.simpleWebSocketService.connect('ws://localhost:8080/ws'); // Ensure this matches your backend WebSocket endpoint
+
+    this.simpleWebSocketService.messages$.subscribe((message) => {
+      this.messages.push(message);
     });
   }
 
   sendMessage() {
     if (this.message.trim()) {
-        this.chatWebSocketService.sendMessage(this.message).subscribe({
-            next: () => {
-                console.log('Message sent successfully');
-                this.messages.push({ text: this.message, senderId: 'You' }); // Temporarily display your message
-                this.message = ''; // Clear the input field on success
-            },
-            error: (error) => {
-                console.error('Error sending message:', error);
-                // Optionally, inform the user that sending the message failed
-            }
-        });
+      this.simpleWebSocketService.sendMessage({ text: this.message });
+      this.message = ''; // Clear the message input after sending
     }
-}
+  }
 
+  ngOnDestroy(): void {
+    this.simpleWebSocketService.disconnect();
+  }
 }
