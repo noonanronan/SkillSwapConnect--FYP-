@@ -13,19 +13,24 @@ export class MessagingPage implements OnInit, OnDestroy {
   constructor(private simpleWebSocketService: SimpleWebSocketService) {}
 
   ngOnInit() {
-    this.simpleWebSocketService.connect('ws://localhost:8080/ws'); // Ensure this matches your backend WebSocket endpoint
-
+    this.simpleWebSocketService.connect('ws://localhost:8080/ws');
     this.simpleWebSocketService.messages$.subscribe((message) => {
+      // Assume the message already includes a timestamp from the server
       this.messages.push(message);
     });
   }
 
   sendMessage() {
     if (this.message.trim()) {
-      this.simpleWebSocketService.sendMessage({ text: this.message });
+      const messageWithTimestamp = {
+        text: this.message,
+        timestamp: new Date() // Add the current time as the timestamp
+      };
+      this.simpleWebSocketService.sendMessage(messageWithTimestamp);
       this.message = ''; // Clear the message input after sending
     }
   }
+  
 
   ngOnDestroy(): void {
     this.simpleWebSocketService.disconnect();

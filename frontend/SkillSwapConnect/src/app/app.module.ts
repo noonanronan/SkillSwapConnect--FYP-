@@ -18,6 +18,8 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { DatePipe } from '@angular/common'; // Import DatePipe
+
 @NgModule({
   declarations: [
     AppComponent
@@ -31,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     IonicModule.forRoot(), // Add IonicModule to your imports
   ],
-  providers: [AutheticationService],
+  providers: [AutheticationService, DatePipe],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] // The CUSTOM_ELEMENTS_SCHEMA
 })
