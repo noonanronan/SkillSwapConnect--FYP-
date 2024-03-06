@@ -1,0 +1,40 @@
+package io.github.RazzaNoonan.messagingservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+public class KafkaMessageListener {
+
+    private final Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+
+    @Autowired
+    private MyHandler myHandler; // Assuming MyHandler has methods to manage sessions
+
+    @KafkaListener(topics = "YourKafkaTopic", groupId = "yourGroupId")
+    public void listen(String message) {
+        sessions.forEach((sessionId, session) -> {
+            try {
+                if (session.isOpen()) {
+                    session.sendMessage(new TextMessage(message));
+                }
+            } catch (Exception e) {
+                // Handle exceptions, possibly removing the session if it's not open
+            }
+        });
+    }
+
+    public void addSession(WebSocketSession session) {
+        sessions.put(session.getId(), session);
+    }
+
+    public void removeSession(WebSocketSession session) {
+        sessions.remove(session.getId());
+    }
+}

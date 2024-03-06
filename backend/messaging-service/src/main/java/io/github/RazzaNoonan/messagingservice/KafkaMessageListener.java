@@ -8,7 +8,7 @@ public class KafkaMessageListener {
 
     @KafkaListener(topics = "YourKafkaTopic", groupId = "yourGroupId")
     public void listen(String message) {
-        // Logic to distribute messages to WebSocket clients
-        // This might involve finding the right session(s) and sending the message
+        // Use MyHandler to broadcast the message to all connected WebSocket clients
+        MyHandler.broadcastMessage(message);
     }
 }

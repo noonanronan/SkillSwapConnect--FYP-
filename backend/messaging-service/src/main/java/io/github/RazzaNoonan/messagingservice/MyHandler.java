@@ -1,12 +1,14 @@
 package io.github.RazzaNoonan.messagingservice;
 
-import java.util.concurrent.ExecutionException;
+import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import org.springframework.kafka.core.KafkaTemplate;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
@@ -16,19 +18,28 @@ public class MyHandler extends TextWebSocketHandler {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    // Store sessions using a thread-safe collection
+    private static final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        super.afterConnectionEstablished(session);
         System.out.println("New WebSocket connection established");
-
-        // Extract the token from the query parameters
+        
         String token = getTokenFromSession(session);
-        if (token != null) {
-            verifyToken(token, session);
+        if (token != null && verifyToken(token, session)) {
+            sessions.put(session.getId(), session);
         } else {
-            System.out.println("Token not found in session parameters.");
-            // Optionally close the session if no token is provided
+            System.out.println("Token not found or invalid. Closing session.");
             session.close();
         }
+    }
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        super.afterConnectionClosed(session, status);
+        sessions.remove(session.getId());
+        System.out.println("WebSocket connection closed. Session ID: " + session.getId());
     }
 
     private String getTokenFromSession(WebSocketSession session) {
@@ -45,38 +56,39 @@ public class MyHandler extends TextWebSocketHandler {
         return null;
     }
 
-    private void verifyToken(String token, WebSocketSession session) {
+    private boolean verifyToken(String token, WebSocketSession session) {
         try {
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdTokenAsync(token).get();
-            String uid = decodedToken.getUid();
-            // Here, associate the WebSocket session with the UID
-            session.getAttributes().put("uid", uid);
-            System.out.println("Token verified successfully for UID: " + uid);
-        } catch (InterruptedException | ExecutionException e) {
+            session.getAttributes().put("uid", decodedToken.getUid());
+            System.out.println("Token verified successfully for UID: " + decodedToken.getUid());
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
-            try {
-                System.out.println("Invalid token, closing the session.");
-                session.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            return false;
         }
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         System.out.println("New message received: " + message.getPayload());
-
-        // Instead of just echoing the message back, publish it to a Kafka topic
         publishMessageToKafka("YourKafkaTopic", message.getPayload());
-
-        // If need construct a JSON response or handle the message differently
-        // String jsonResponse = "{\"text\":\"Echo: " + message.getPayload() + "\"}";
-        // session.sendMessage(new TextMessage(jsonResponse));
     }
 
     private void publishMessageToKafka(String topic, String message) {
         kafkaTemplate.send(topic, message);
         System.out.println("Message published to Kafka topic: " + topic);
+    }
+
+    public static void broadcastMessage(String message) {
+        TextMessage textMessage = new TextMessage(message);
+        sessions.values().forEach(session -> {
+            try {
+                if (session.isOpen()) {
+                    session.sendMessage(textMessage);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

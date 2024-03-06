@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="org.springframework.web.socket.WebSocketSession"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.deser.std.StringDeserializer"/>
+    <fullyQualifiedTypeName name="com.google.api.client.util.Value"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ser.std.StringSerializer"/>
 </qualifiedTypeNameHistroy>
