@@ -62,4 +62,10 @@ export class AutheticationService {
   async getProfile(): Promise<firebase.User | null> {
     return await this.ngFireAuth.currentUser;
   }
+
+  async getIdToken(): Promise<string> {
+    const user = await this.ngFireAuth.currentUser;
+    if (!user) throw new Error('User not authenticated');
+    return user.getIdToken();
+  }
 }

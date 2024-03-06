@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { AutheticationService } from './authetication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,46 +10,57 @@ export class SimpleWebSocketService {
   private messagesSubject = new Subject<any>();
   public messages$: Observable<any> = this.messagesSubject.asObservable();
   private reconnectAttempts = 0;
-  private readonly maxReconnectAttempts = 5; // Max number of reconnect attempts
-  private readonly reconnectDelay = 3000; // Delay between reconnect attempts in milliseconds
+  private readonly maxReconnectAttempts = 5;
+  private readonly reconnectDelay = 3000;
   private messageQueue: any[] = [];
 
-  constructor() {}
+  constructor(private authService: AutheticationService) {}
 
-  public connect(url: string): void {
-    if (this.webSocket) {
-      this.webSocket.close();
-    }
+  public async connect(url: string): Promise<void> {
+    try {
+      const token = await this.authService.getIdToken();
+      const wsUrl = `${url}?token=${token}`; // Append token to WebSocket URL
 
-    this.webSocket = new WebSocket(url);
-    this.webSocket.onopen = () => {
-      console.log('WebSocket connection established');
-      this.reconnectAttempts = 0; // Reset reconnect attempts on successful connection
-      this.clearMessageQueue(); // Optionally, send queued messages upon successful reconnection
-    };
-
-    this.webSocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      this.messagesSubject.next(data);
-    };
-
-    this.webSocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    this.webSocket.onclose = (event) => {
-      console.log('WebSocket connection closed', event.reason);
-      if (!event.wasClean && this.reconnectAttempts < this.maxReconnectAttempts) {
-        setTimeout(() => this.connect(url), this.reconnectDelay);
-        this.reconnectAttempts++;
+      if (this.webSocket) {
+        this.webSocket.close();
       }
-    };
+
+      this.webSocket = new WebSocket(wsUrl);
+      this.webSocket.onopen = () => {
+        console.log('WebSocket connection established');
+        this.reconnectAttempts = 0;
+        this.clearMessageQueue();
+      };
+
+      this.webSocket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          this.messagesSubject.next(data); // Push the parsed JSON data to subscribers
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      };
+
+      this.webSocket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      this.webSocket.onclose = (event) => {
+        console.log('WebSocket connection closed', event.reason);
+        if (!event.wasClean && this.reconnectAttempts < this.maxReconnectAttempts) {
+          setTimeout(() => this.connect(url), this.reconnectDelay);
+          this.reconnectAttempts++;
+        }
+      };
+    } catch (error) {
+      console.error("Error obtaining ID token for WebSocket connection:", error);
+    }
   }
 
   public sendMessage(message: any): void {
-    if (this.webSocket.readyState === WebSocket.OPEN) {
+    if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
       console.log('Sending message to server:', message);
-      this.webSocket.send(JSON.stringify(message)); // Send the message object as JSON
+      this.webSocket.send(JSON.stringify(message));
     } else {
       console.error('WebSocket is not open. Queuing message.');
       this.messageQueue.push(message);
@@ -58,7 +70,7 @@ export class SimpleWebSocketService {
   private clearMessageQueue(): void {
     while (this.messageQueue.length > 0) {
       const message = this.messageQueue.shift();
-      this.sendMessage(message); // Send each queued message
+      this.sendMessage(message);
     }
   }
 
