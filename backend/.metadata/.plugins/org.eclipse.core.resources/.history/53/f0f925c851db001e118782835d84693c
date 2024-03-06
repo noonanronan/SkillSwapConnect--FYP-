@@ -1,0 +1,15 @@
+package io.github.RazzaNoonan.messagingservice;
+
+
+public class MessageRequest {
+    private String text; // This matches the JSON property you're sending from the frontend
+    
+    // Getter and Setter for 'text'
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+}

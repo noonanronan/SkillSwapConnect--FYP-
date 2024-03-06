@@ -5,6 +5,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class MyHandler extends TextWebSocketHandler {
+<<<<<<< HEAD
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
@@ -37,4 +38,18 @@ public class MyHandler extends TextWebSocketHandler {
 //    }
 
     // Additional methods for error handling, etc.
+=======
+    
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        System.out.println("New WebSocket connection established");
+    }
+
+    @Override
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        System.out.println("New message received: " + message.getPayload());
+        // Echo the message back
+        session.sendMessage(new TextMessage("Echo: " + message.getPayload()));
+    }
+>>>>>>> main
 }

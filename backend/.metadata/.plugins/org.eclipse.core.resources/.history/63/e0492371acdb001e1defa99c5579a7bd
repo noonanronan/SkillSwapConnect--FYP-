@@ -1,0 +1,25 @@
+ package io.github.RazzaNoonan.messagingservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class WebSocketMessageController {
+
+    private final KafkaProducer kafkaProducer;
+
+    @Autowired
+    public WebSocketMessageController(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
+    }
+
+    @MessageMapping("/send")
+    @SendTo("/topic/public")
+    public ChatMessage receiveWebSocketMessage(ChatMessage message) {
+        System.out.println("Received WebSocket message: " + message.getText());
+        kafkaProducer.sendMessage(message.getText());
+        return message; // Echo back or handle accordingly
+    }
+}

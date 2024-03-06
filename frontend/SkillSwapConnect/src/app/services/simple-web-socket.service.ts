@@ -24,6 +24,7 @@ export class SimpleWebSocketService {
     this.webSocket.onopen = () => {
       console.log('WebSocket connection established');
       this.reconnectAttempts = 0; // Reset reconnect attempts on successful connection
+      this.clearMessageQueue(); // Optionally, send queued messages upon successful reconnection
     };
 
     this.webSocket.onmessage = (event) => {
@@ -47,23 +48,17 @@ export class SimpleWebSocketService {
   public sendMessage(message: any): void {
     if (this.webSocket.readyState === WebSocket.OPEN) {
       console.log('Sending message to server:', message);
-      this.webSocket.send(JSON.stringify(message));
-      // Optionally, clear the message queue upon successful sending
-      this.clearMessageQueue();
+      this.webSocket.send(JSON.stringify(message)); // Send the message object as JSON
     } else {
       console.error('WebSocket is not open. Queuing message.');
       this.messageQueue.push(message);
-      // Optionally, trigger a reconnection attempt here
     }
   }
   
-  
-
-
   private clearMessageQueue(): void {
     while (this.messageQueue.length > 0) {
       const message = this.messageQueue.shift();
-      this.sendMessage(message);
+      this.sendMessage(message); // Send each queued message
     }
   }
 

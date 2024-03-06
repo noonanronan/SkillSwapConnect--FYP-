@@ -1,0 +1,26 @@
+package io.github.RazzaNoonan.messagingservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MessageController {
+
+    @Autowired
+    private KafkaProducer kafkaProducer;
+
+    @PostMapping("/send")
+    public String sendMessage(@RequestBody MessageRequest messageRequest) {
+        String message = messageRequest.getMessage();
+        // Optionally log the received message for verification
+        System.out.println("Received HTTP message: " + message);
+        
+        // Send message to Kafka
+        kafkaProducer.sendMessage(message);
+        
+        // Response back to the client
+        return "Message received and sent to Kafka: " + message;
+    }
+}
