@@ -1,0 +1,32 @@
+package io.github.RazzaNoonan.messagingservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class WebSocketMessageController {
+
+    private final SimpMessageSendingOperations messagingTemplate;
+    private final KafkaProducer kafkaProducer;
+
+    // Use constructor injection for your beans
+    @Autowired
+    public WebSocketMessageController(SimpMessageSendingOperations messagingTemplate, KafkaProducer kafkaProducer) {
+        this.messagingTemplate = messagingTemplate;
+        this.kafkaProducer = kafkaProducer;
+    }
+
+    @MessageMapping("/send")
+    public void receiveMessage(@Payload MessageRequest messageRequest) {
+        System.out.println("Received WebSocket message: " + messageRequest.getText());
+
+        // Send the received message to Kafka
+        kafkaProducer.sendMessage(messageRequest.getText());
+
+        // Broadcast the received message to WebSocket subscribers
+        messagingTemplate.convertAndSend("/topic/public", messageRequest.getText());
+    }
+}
