@@ -1,0 +1,10 @@
+# Server port configuration
+server.port=8080
+
+# Logging level configuration
+logging.level.org.springframework.web=INFO
+logging.level.io.github.RazzaNoonan.messagingservice=DEBUG
+
+# Kafka configuration
+kafka.bootstrapAddress=broker1:9092,broker2:9092,broker3:9092
+

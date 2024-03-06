@@ -1,0 +1,6 @@
+# Server port configuration
+server.port=8080
+
+# Logging level configuration
+logging.level.org.springframework.web=INFO
+logging.level.io.github.RazzaNoonan.messagingservice=DEBUG

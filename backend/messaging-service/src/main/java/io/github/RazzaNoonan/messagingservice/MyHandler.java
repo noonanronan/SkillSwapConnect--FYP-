@@ -2,14 +2,19 @@ package io.github.RazzaNoonan.messagingservice;
 
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 
 public class MyHandler extends TextWebSocketHandler {
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -61,9 +66,17 @@ public class MyHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         System.out.println("New message received: " + message.getPayload());
-        // Construct a JSON response
-        String jsonResponse = "{\"text\":\"Echo: " + message.getPayload() + "\"}";
-        session.sendMessage(new TextMessage(jsonResponse));
+
+        // Instead of just echoing the message back, publish it to a Kafka topic
+        publishMessageToKafka("YourKafkaTopic", message.getPayload());
+
+        // If need construct a JSON response or handle the message differently
+        // String jsonResponse = "{\"text\":\"Echo: " + message.getPayload() + "\"}";
+        // session.sendMessage(new TextMessage(jsonResponse));
     }
 
+    private void publishMessageToKafka(String topic, String message) {
+        kafkaTemplate.send(topic, message);
+        System.out.println("Message published to Kafka topic: " + topic);
+    }
 }
