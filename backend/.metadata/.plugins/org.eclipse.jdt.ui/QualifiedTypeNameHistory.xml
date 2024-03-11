@@ -4,4 +4,5 @@
     <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.deser.std.StringDeserializer"/>
     <fullyQualifiedTypeName name="com.google.api.client.util.Value"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.databind.ser.std.StringSerializer"/>
+    <fullyQualifiedTypeName name="com.google.firebase.messaging.Message"/>
 </qualifiedTypeNameHistroy>

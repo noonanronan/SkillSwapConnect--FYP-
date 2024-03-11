@@ -6,9 +6,9 @@
 
 <ion-content>
   <ion-list>
-    <div *ngFor="let message of messages">
-      <p>{{ message.text }}</p> <!-- Display the text of each message -->
-      <small>{{ message.timestamp }}</small> <!-- Display the timestamp -->
+    <div *ngFor="let message of messages" [ngClass]="{'message-sent': isCurrentUser(message.senderId), 'message-received': !isCurrentUser(message.senderId)}">
+      <p>{{ message.text }}</p>
+      <small>{{ message.timestamp }}</small>
     </div>    
   </ion-list>
 

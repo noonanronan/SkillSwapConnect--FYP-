@@ -1,0 +1,56 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2024-03-06T22:38:18.294Z  INFO 27596 --- [           main] i.g.R.m.MessagingServiceApplication      : Starting MessagingServiceApplication using Java 21 with PID 27596 (C:\FinalYearProject\backend\messaging-service\target\classes started by ronan in C:\FinalYearProject\backend\messaging-service)
+2024-03-06T22:38:18.297Z DEBUG 27596 --- [           main] i.g.R.m.MessagingServiceApplication      : Running with Spring Boot v3.2.3, Spring v6.1.4
+2024-03-06T22:38:18.299Z  INFO 27596 --- [           main] i.g.R.m.MessagingServiceApplication      : No active profile set, falling back to 1 default profile: "default"
+2024-03-06T22:38:19.159Z  INFO 27596 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-03-06T22:38:19.170Z  INFO 27596 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-06T22:38:19.171Z  INFO 27596 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-03-06T22:38:19.235Z  INFO 27596 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-06T22:38:19.236Z  INFO 27596 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 880 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2024-03-06T22:38:19.347Z  WARN 27596 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'kafkaMessageListener': Unsatisfied dependency expressed through field 'myHandler': No qualifying bean of type 'io.github.RazzaNoonan.messagingservice.MyHandler' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2024-03-06T22:38:19.350Z  INFO 27596 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-03-06T22:38:19.360Z  INFO 27596 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-03-06T22:38:19.379Z ERROR 27596 --- [           main] o.s.b.d.LoggingFailureAnalysisReporter   :
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field myHandler in io.github.RazzaNoonan.messagingservice.KafkaMessageListener required a bean of type 'io.github.RazzaNoonan.messagingservice.MyHandler' that could not be found.
+
+The injection point has the following annotations:
+        - @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'io.github.RazzaNoonan.messagingservice.MyHandler' in your configuration.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.347 s
+[INFO] Finished at: 2024-03-06T22:38:19Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.3:run (default-cli) on project messaging-service: Process terminated with exit code: 1 -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+
+C:\FinalYearProject\backend\messaging-service>

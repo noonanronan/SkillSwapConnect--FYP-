@@ -68,4 +68,9 @@ export class AutheticationService {
     if (!user) throw new Error('User not authenticated');
     return user.getIdToken();
   }
+
+  async getCurrentUserId(): Promise<string | null> {
+    const user = await this.ngFireAuth.currentUser;
+    return user ? user.uid : null;
+  }
 }

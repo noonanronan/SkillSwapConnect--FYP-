@@ -1,0 +1,47 @@
+package io.github.RazzaNoonan.messagingservice;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.stereotype.Service;
+
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.messaging.Message;
+
+@Service
+public class FirestoreService {
+
+    private Firestore getFirestore() {
+        return FirestoreClient.getFirestore();
+    }
+
+    public void saveMessage(String conversationId, String senderId, String text) throws ExecutionException, InterruptedException {
+        // Create a new message object. This is a simplified representation.
+        Message message = new Message(senderId, text, System.currentTimeMillis());
+
+        // Add message to Firestore
+        getFirestore().collection("conversations").document(conversationId)
+                .collection("messages").document().set(message);
+    }
+
+    public List<Message> getMessages(String conversationId) throws ExecutionException, InterruptedException {
+        // Fetch messages for a conversation
+        ApiFuture<QuerySnapshot> future = getFirestore().collection("conversations").document(conversationId)
+                .collection("messages").orderBy("timestamp").get();
+
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        List<Message> messages = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            messages.add(document.toObject(Message.class));
+        }
+
+        return messages;
+    }
+    
+    // Define more methods as needed for managing conversations
+}

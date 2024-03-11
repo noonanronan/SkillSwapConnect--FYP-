@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
+import { AutheticationService } from 'src/app/services/authetication.service';
 
 @Component({
   selector: 'app-user-listing',
@@ -12,7 +13,11 @@ export class UserListingPage implements OnInit {
   filteredUsers: any[] = [];
   searchQuery: string = '';
 
-  constructor(private databaseService: DatabaseService, private router: Router) {}
+  constructor(
+    private databaseService: DatabaseService,
+    public authService: AutheticationService, 
+    private router: Router
+    ) {}
 
   ngOnInit() {
     this.fetchUsers();
@@ -33,7 +38,12 @@ export class UserListingPage implements OnInit {
   }
 
   onUserSelect(user: any) {
-    // Navigate to the messaging page with the selected user's ID
-    this.router.navigate(['/messaging', { id: user.uid }]);
+    this.authService.getCurrentUserId().then(currentUserId => {
+      if (currentUserId) {
+        const chatId = [currentUserId, user.uid].sort().join('_');
+        // Navigate to the messaging page with the generated chat ID
+        this.router.navigate(['/messaging', { chatId: chatId }]);
+      }
+    });
   }
 }

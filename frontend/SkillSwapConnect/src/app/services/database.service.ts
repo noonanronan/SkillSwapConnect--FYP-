@@ -4,12 +4,13 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import firebase from 'firebase/compat/app';
 import { User } from 'src/app/services/user.model'; 
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase ) {}
 
   // Method to fetch all users in DatabaseService
   async getAllUsers(): Promise<any[]> {
@@ -84,6 +85,7 @@ export class DatabaseService {
     await userRef.update({ photoURL });
   }
 
+  // Method to fetch teaching materials for a user
   async updateTeachingMaterial(uid: string, materialUrl: string, materialType: 'notes' | 'video'): Promise<void> {
     const materialsRef = this.db.object(`users/${uid}/teachingMaterials/${materialType}`);
     const materials = (await materialsRef.query.ref.once('value')).val() || [];
@@ -91,4 +93,49 @@ export class DatabaseService {
     
     await materialsRef.set(materials);
   }
+
+  // Method to fetch teaching materials for a user
+  async loadChatMessages(chatId: string): Promise<any[]> {
+    const snapshot = await this.db.database.ref(`/messages/${chatId}`).once('value');
+    if (snapshot.exists()) {
+      const messagesArray = snapshotToArray(snapshot);
+      return messagesArray;
+    }
+    return [];
+  }
+
+  // Real-time subscription to chat messages
+  getChatMessages(chatId: string): Observable<any[]> {
+    return new Observable((observer) => {
+      const messagesRef = this.db.database.ref(`/messages/${chatId}`);
+      messagesRef.on('value', (snapshot) => {
+        const messagesArray = snapshotToArray(snapshot);
+        observer.next(messagesArray);
+      }, (errorObject) => {
+        console.error("The read failed:", errorObject);
+      });
+
+      // Make sure to handle unsubscribe
+      return () => messagesRef.off('value');
+    });
+  }
+}
+
+// Function to convert Firebase snapshot to array
+function snapshotToArray(snapshot: firebase.database.DataSnapshot): any[] { 
+  const returnArr = [];
+
+  snapshot.forEach(childSnapshot => {
+    let item = childSnapshot.val(); 
+    try {
+      item = JSON.parse(item); 
+    } catch (e) {
+      console.error('Error parsing JSON from Firebase:', e);
+    }
+    item = { ...item, key: childSnapshot.key };
+    returnArr.push(item);
+    return false; // Return false to continue forEach loop
+  });
+
+  return returnArr;
 }

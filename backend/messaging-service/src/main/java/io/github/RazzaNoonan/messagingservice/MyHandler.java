@@ -70,13 +70,13 @@ public class MyHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println("New message received: " + message.getPayload());
+    	System.out.println("Received message via WebSocket: " + message.getPayload());
         publishMessageToKafka("YourKafkaTopic", message.getPayload());
     }
 
     private void publishMessageToKafka(String topic, String message) {
+    	System.out.println("Publishing message to Kafka topic " + topic + ": " + message);
         kafkaTemplate.send(topic, message);
-        System.out.println("Message published to Kafka topic: " + topic);
     }
 
     public static void broadcastMessage(String message) {

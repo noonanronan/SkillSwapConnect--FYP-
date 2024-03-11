@@ -35,7 +35,11 @@ export class SimpleWebSocketService {
       this.webSocket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          this.messagesSubject.next(data); // Push the parsed JSON data to subscribers
+          if (typeof data === 'object' && data !== null) {
+            this.messagesSubject.next(data); // Push the parsed JSON data to subscribers
+          } else {
+            console.error('Received data is not a valid object:', data);
+          }
         } catch (error) {
           console.error("Error parsing JSON:", error);
         }
@@ -57,15 +61,19 @@ export class SimpleWebSocketService {
     }
   }
 
+  
   public sendMessage(message: any): void {
     if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
       console.log('Sending message to server:', message);
       this.webSocket.send(JSON.stringify(message));
     } else {
-      console.error('WebSocket is not open. Queuing message.');
+      console.error('WebSocket is not open. Queuing message.', message);
       this.messageQueue.push(message);
+      // Try to reconnect if the connection is not open
+      this.connect(this.webSocket.url);
     }
   }
+  
   
   private clearMessageQueue(): void {
     while (this.messageQueue.length > 0) {
