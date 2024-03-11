@@ -1,14 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Messaging</ion-title>
+    <ion-buttons slot="start">
+      
+      <ion-avatar>
+        <img [src]="chatPartner?.photoURL || 'assets/default-profile.png'">
+      </ion-avatar>
+      
+    
+    <ion-title>{{ chatPartner?.displayName || 'Messaging' }}</ion-title>
+    <button class="back-button" onclick="history.back()"> <!-- Back button -->
+      <img src="../assets/icon/backButton.png" alt="Back"> <!-- Back button -->
+    </button> 
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <ion-list>
-    <div *ngFor="let message of messages" [ngClass]="{'message-sent': isCurrentUser(message.senderId), 'message-received': !isCurrentUser(message.senderId)}">
-      <p>{{ message.text }}</p>
-      <small>{{ message.timestamp }}</small>
+    <div *ngFor="let message of messages">
+      <!-- Display date if displayDate is set -->
+      <div *ngIf="message.displayDate" class="date-separator">
+        {{ message.displayDate | date: 'fullDate' }}
+      </div>
+      <div [ngClass]="{'message-sent': isCurrentUser(message.senderId), 'message-received': !isCurrentUser(message.senderId)}">
+        <p>{{ message.text }}</p>
+        <small>{{ message.timestamp | date: 'shortTime' }}</small>
+      </div>
     </div>    
   </ion-list>
 

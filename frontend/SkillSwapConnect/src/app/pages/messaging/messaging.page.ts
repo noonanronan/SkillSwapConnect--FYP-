@@ -18,6 +18,7 @@ export class MessagingPage implements OnInit, OnDestroy {
   message = '';
   messages: any[] = []; // This array holds received messages
   currentUserId: string;
+  chatPartner: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,28 +29,40 @@ export class MessagingPage implements OnInit, OnDestroy {
     ) {}
 
     async ngOnInit() {
+      this.currentUserId = await this.authService.getCurrentUserId(); // Get the current user ID
+      console.log('Current User ID:', this.currentUserId); // Log the current user ID for verification
+    
       this.simpleWebSocketService.connect('ws://localhost:8080/ws');
       this.simpleWebSocketService.messages$.subscribe((message) => {
         console.log('Message received from WebSocket:', message);
-        this.messages.push(message); // This line ensures that any new message from WebSocket is added to the messages array
+        this.messages.push(message);
+        this.changeDetectorRef.detectChanges(); // Update the view
       });
     
       const chatId = this.route.snapshot.paramMap.get('chatId');
       console.log('Current chatId from route:', chatId);
-
+    
       if (chatId) {
+        const partnerId = chatId.replace(this.currentUserId, '').replace('_', '');
+        this.fetchChatPartner(partnerId);
         this.subscribeToMessages(chatId);
         this.databaseService.getChatMessages(chatId).subscribe((messages) => {
           console.log('Received messages from Firebase subscription:', messages);
-          this.messages = messages;
-          this.changeDetectorRef.detectChanges(); // Manually trigger change detection
+          this.messages = this.processMessages(messages);
+          this.changeDetectorRef.detectChanges(); // Update the view
         }, error => {
           console.error("Error subscribing to chat messages:", error);
         });
       }
     }
+
+    async fetchChatPartner(partnerId: string) {
+      // Fetch the user details from the database
+      const partnerDetails = await this.databaseService.getUserDetails(partnerId);
+      this.chatPartner = partnerDetails;
+      this.changeDetectorRef.detectChanges(); // Update the view with the new details
+    }
   
-    // Implement the isCurrentUser method
     isCurrentUser(senderId: string): boolean {
       return senderId === this.currentUserId;
     }
@@ -82,6 +95,34 @@ export class MessagingPage implements OnInit, OnDestroy {
       this.changeDetectorRef.detectChanges(); // Trigger change detection manually
     });
   }
+
+  processMessages(messages: any[]): any[] {
+  if (messages.length === 0) return [];
+
+  // Sort messages by timestamp to ensure they are in order
+  messages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+  // Process messages to add 'displayDate' where needed
+  const processedMessages = [];
+  let lastDisplayedDate = null;
+
+  for (const message of messages) {
+    const messageDate = new Date(message.timestamp);
+    const dateStr = messageDate.toDateString();
+
+    if (lastDisplayedDate !== dateStr) {
+      // This is a new day, so we'll mark this message to display the date
+      message.displayDate = messageDate;
+      lastDisplayedDate = dateStr;
+    } else {
+      message.displayDate = null;
+    }
+
+    processedMessages.push(message);
+  }
+  return processedMessages;
+}
+
 
   ngOnDestroy(): void {
     this.simpleWebSocketService.disconnect();

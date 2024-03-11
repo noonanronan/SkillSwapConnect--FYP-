@@ -1,8 +1,92 @@
+/* Styling for the header of the page */
+ion-header {
+  background-color: #4169e1; // Royale Blue
+  ion-toolbar {
+    --background: transparent; // Makes the toolbar background transparent
+
+    ion-title {
+      color: #fff; // Sets the title color to white for better contrast
+      font-size: 22px; // 22Px font sizw
+      text-transform: uppercase; // Uppercase title for a more better appearance
+      font-weight: bold; // Bold title 
+      // text-align: center; // Centers the title text
+    }
+  }
+}
+
+ion-avatar {
+  --border-radius: 50%;
+  margin-right: 0.5rem;
+  width: 34px; 
+  height: 34px; 
+  
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message-sent,
+.message-received {
+  max-width: 60%; // Limit the maximum width of a message
+  margin-bottom: 10px; // Spacing between messages
+  padding: 8px 12px; // Padding inside the bubble 
+  border-radius: 18px; // Rounded corners for the bubble look 
+  color: white; // Text color 
+  font-size: 16px; // Adjust the font size as needed 
+  line-height: 1.4; // Line height for better readability
+}
+
 .message-sent {
-    text-align: right;
+  text-align: right;
+  float: right;
+  clear: both;
+  background-color: #0B93F6; // colour for sent messages 
+  margin-right: 10px; // Spacing from the right edge 
+}
+
+.message-received {
+  text-align: left;
+  float: left;
+  clear: both;
+  background-color: #E5E5EA; // colour for received messages
+  margin-left: 10px; // Spacing from the left edge
+  color: black; // Text color for received messages 
+}
+
+.message:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.date-separator {
+  text-align: center;
+  margin: 20px 0;
+  color: #888;
+}
+
+/* Back button */
+.back-button {
+  background: none; // Removes any default styling
+  border: none;
+  cursor: pointer;
+  display: flex; // Use flexbox to position the button
+  float: right; // Float the button to the right
+
+  img {
+    width: 24px; 
+    height: auto;
+    display: block; // Ensure the icon is centered within the button
   }
-  
-  .message-received {
-    text-align: left;
+
+  &:hover {
+    opacity: 0.8; // Slight visual feedback on hover
   }
-  
+
+  // Position the button to the right
+  margin-left: auto;
+}
+
