@@ -2,11 +2,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center; // Center content horizontally 
-  height: 100vh; // Full height 
+  align-items: center; // Center content horizontally
+  justify-content: center; // Center content vertically
+  height: 100vh; // Full height
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center; // Center all child element text 
+  text-align: center; // Center all child element text
 }
 
 /* Header styling, fixed at the top of the viewport */
@@ -15,36 +16,79 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: #4169e1; // Royal blue background color 
+  background-color: #4169e1; // Royal blue background color
   color: #fff; // Text color for header is white
   position: fixed;
   top: 0;
-  z-index: 10; // Stacking context higher than other elements 
+  z-index: 10; // Stacking context higher than other elements
 }
 
 /* Logo image within header */
 .app-header .logo img {
   height: 90px;
   width: auto;
-  display: block; // Center logo image 
 }
 
 /* Logout button styling */
 .app-header button {
-  background-color: #4169e1; // Royale blue again to match button color with header 
-  color: #fff; // White text 
-  padding: 12px 24px; // Padding for button size 
-  border: none; // No border 
-  border-radius: 5px; // Rounded corners 
+  background-color: #4169e1; // Royale blue to match button color with header
+  color: #fff; // White text
+  padding: 12px 24px; // Padding for button size
+  border: none; // No border
+  border-radius: 5px; // Rounded corners
   cursor: pointer; // Cursor changes to pointer to indicate that you can click it
   font-weight: bold; // Bold text
-  transition: background-color 0.3s ease; // Transition for hover effect 
+  transition: background-color 0.3s ease; // Transition for hover effect
 }
 
 /* Hover effect for buttons */
 .app-header button:hover {
-  background-color: #ffe5b4; // Change background color on hover 
+  background-color: #ffe5b4; // Change background color on hover
 }
+
+
+/* Main content area styling */
+.content-area {
+  padding: 20px; // Padding around content
+  margin-top: 0px; // Margin to push content below header
+  width: 100%; // Take the full width of the container
+}
+
+/* Headings within content area */
+.content-area h2 {
+  font-size: 24px; // Font size for h2 heading
+  color: #333; // Dark grey text color
+  font-weight: bold; // Bold font weight
+  margin-bottom: 8px; // Bottom margin for spacing
+}
+
+/* Search bar styling */
+ion-searchbar {
+  --width: 200px; // Make the search bar wider
+  margin-left: auto; // Align to the center for RTL support
+  margin-right: auto; // Align to the center for LTR support
+  margin-bottom: 20px; // Space below search bar
+}
+
+
+.welcome-section, .featured-subjects {
+  text-align: left;
+  padding: 20px;
+
+}
+
+.featured-subjects .subject-list {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+}
+
+/* List styling for scrolling */
+ion-list {
+  max-height: 200px; // Maximum height for list
+  overflow-y: auto; // Enable vertical scrolling if there is content going down the page
+}
+
 
 /* Side Menu styling */
 ion-menu {
@@ -90,22 +134,45 @@ ion-menu ion-button {
   margin-bottom: 0; // No bottom margin 
 }
 
-/* Main content area styling */
-.content-area {
-  padding: 20px; // Padding around content 
-  margin-top: 100px; // Margin to push content below header 
+/* Chat icon styling - Move to bottom left with increased specificity and !important */
+.chat-icon {
+  position: fixed !important; // Stick to the viewport
+  bottom: 20px !important; // Distance from bottom
+  right: 20px !important; // Distance from left
+  font-size: 40px !important; // Size of the icon
+  cursor: pointer !important; // Change cursor on hover
+  z-index: 9999 !important; // Ensure it's on top of other elements
 }
 
-/* Headings within content area */
-.content-area h2 {
-  font-size: 24px; // Font size for h2 heading 
-  color: #333; // Dark grey text color 
-  font-weight: bold; // Bold font weight 
-  margin-bottom: 8px; // Bottom margin for spacing 
+/* Add this to ensure the icon appears */
+ion-icon {
+  z-index: 10000; // Even higher z-index to ensure visibility
 }
 
-/* List styling for scrolling */
-ion-list {
-  max-height: 200px; // Maximum height for list 
-  overflow-y: auto; // Enable vertical scrolling if there is content going down the page 
+.for-you-trigger {
+  position: absolute; // Position it absolutely within the container
+  top: 50%; // Align vertically to the middle
+  transform: translateY(-50%); // Offset by half its height to truly center
+  left: 20px; // Distance from the left
+  border: 2px solid #4169e1; // Border color to match the header
+  background-color: #fff; // White background
+  color: #4169e1; // Text color to match the border
+  padding: 10px 20px; // Padding around text
+  border-radius: 25px; // Rounded corners for pill shape
+  font-weight: bold; // Bold text
+  box-shadow: 0 4px 8px rgba(65, 105, 225, 0.3); // Subtle shadow for depth
+  transition: all 0.3s ease; // Smooth transition for hover effects
+  z-index: 10; // Ensure it's above other elements
+
+  &::after {
+    content: '\f0f3'; // Unicode for bell icon from FontAwesome, adjust if using a different icon set
+    font-family: 'Font Awesome 5 Free'; // Ensure you have FontAwesome included in your project
+    padding-left: 10px; // Space between text and icon
+  }
+
+  &:hover {
+    background-color: #4169e1; // Royal blue background on hover
+    color: #fff; // White text on hover
+    box-shadow: 0 6px 12px rgba(65, 105, 225, 0.5); // Larger shadow on hover
+  }
 }

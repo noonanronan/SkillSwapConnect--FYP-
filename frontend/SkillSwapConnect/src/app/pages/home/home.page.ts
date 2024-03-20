@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { User } from 'firebase/auth';
 import { AddImageService } from '../../services/add-image.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { ModalController } from '@ionic/angular';
+import { ForYouContentComponent } from '../../components/for-you-content/for-you-content.component';
+
 
 /* Interface to define the structure of user profile data */
 interface UserProfile {
@@ -42,6 +45,7 @@ export class HomePage implements OnInit, OnDestroy {
     public authService: AutheticationService,
     private addImageService: AddImageService,
     private databaseService: DatabaseService,
+    public modalController: ModalController
   ) {
     // Initialize the filtered subjects list with all teaching options
     this.filteredSubjects = this.teachingOptions.slice();
@@ -74,6 +78,17 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+  }
+
+  async openForYouSection() {
+    const modal = await this.modalController.create({
+      component: ForYouContentComponent, // Replace with your component
+      cssClass: 'for-you-modal',
+      componentProps: {
+        // Pass any necessary props here, like user's interests
+      },
+    });
+    return await modal.present();
   }
 
   openUserListingPage() {

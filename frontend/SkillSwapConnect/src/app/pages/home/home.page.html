@@ -54,10 +54,19 @@
   
     <!-- Main content container -->
     <div class="container" id="main-content">
+
       <!-- Area for displaying the main content -->
       <main class="content-area">
+
+        <!-- Welcome message and quick tips -->
+        <section class="welcome-section">
+          <h2>Welcome, {{ user?.displayName || 'Guest' }}!</h2>
+          <p>Explore new subjects or dive deeper into your interests.</p>
+        </section>
+
+        
         <!-- Search bar component -->
-        <ion-searchbar (ionInput)="setFilteredItems($event)"></ion-searchbar>
+        <ion-searchbar class="search-bar" (ionInput)="setFilteredItems($event)"></ion-searchbar>
         <!-- List of subjects -->
         <ion-list>
           <!-- Iterate over filtered subjects and display them as items -->
@@ -65,8 +74,26 @@
             {{ subject }}
           </ion-item>
         </ion-list>
-        <ion-button (click)="openUserListingPage()">Open Messaging</ion-button>
+
+        
+
+        <!-- Featured Subjects Section -->
+        <section class="featured-subjects">
+          <h3>Featured Subjects</h3>
+          <div class="subject-list">
+            <ion-chip *ngFor="let subject of ['Art', 'Programming', 'Yoga']" (click)="onSubjectSelect(subject)">
+              <ion-label>{{ subject }}</ion-label>
+            </ion-chip>
+          </div>
+        </section>
+        
       </main>
     </div>
+    <div class="chat-icon" (click)="openUserListingPage()">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </div>
+
+    <!-- Trigger for the 'For You' section -->
+    <ion-button class="for-you-trigger" (click)="openForYouSection()">For You</ion-button>
   </ion-app>
 </div>
