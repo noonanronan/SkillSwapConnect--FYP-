@@ -25,6 +25,7 @@ interface UserProfile {
 export class HomePage implements OnInit, OnDestroy {
   user: UserProfile | null = null; // Holds the current user's profile data
   private authSubscription: Subscription; // Subscription to track authentication changes
+  isListVisible: boolean = false; // Controls visibility of the filtered subjects list
 
   /* Properties for managing the list of subjects and filtered list based on search */
   filteredSubjects: string[] = [];

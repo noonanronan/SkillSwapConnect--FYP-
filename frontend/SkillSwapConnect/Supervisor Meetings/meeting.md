@@ -35,6 +35,12 @@ Wednesday 14th February 2024 15m 38s (Teams)
 Wednesday 21st February 2024 10m 37s (Teams)
 * Adding better UI and Kafka Messaging System
 
-Wednesday 28th February 2024
+Wednesday 28th February 2024 12m 37s (Teams)
+* Completed messaging system after problems happened 
+
+Wednesday 6th March 2024 15m 50s (Teams)
+* Dissertation write up
+
+Wednesday 20th March 2024
 
 

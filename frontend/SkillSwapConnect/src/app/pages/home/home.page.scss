@@ -49,9 +49,17 @@
 
 /* Main content area styling */
 .content-area {
-  padding: 20px; // Padding around content
-  margin-top: 0px; // Margin to push content below header
-  width: 100%; // Take the full width of the container
+  display: flex; /* Use flexbox to manage children */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center-align the items for consistency */
+  padding-top: 0; /* Reset padding at the top */
+  margin-top: 0px; /* Adjust based on your fixed header's height */
+  width: 100%; /* Take the full width of the container */
+}
+
+/* Adjusting first child of <main> if necessary */
+.content-area > *:first-child {
+  margin-top: 0; /* Removes margin from the first element */
 }
 
 /* Headings within content area */
@@ -62,31 +70,106 @@
   margin-bottom: 8px; // Bottom margin for spacing
 }
 
+/* Gretting message */
+.welcome-section {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.welcome-background {
+  background: url('/assets/landing.png') no-repeat center center/cover;
+  padding: 50px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+  z-index: -1;
+}
+
+.welcome-section h2 {
+  font-size: 2.5rem; /* Bigger for emphasis */
+  margin-bottom: 0.5rem;
+}
+
+.welcome-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.search-container {
+  position: relative; /* Positioned relative to its normal position */
+  width: 100%; /* Full width to contain the search bar */
+  z-index: 11; /* Ensure it's above the main content but below fixed elements */
+}
+
 /* Search bar styling */
 ion-searchbar {
-  --width: 200px; // Make the search bar wider
+  --width: 100%; /* Use the full width of its container */
+  margin-bottom: 10px; /* Space below the search bar */
   margin-left: auto; // Align to the center for RTL support
   margin-right: auto; // Align to the center for LTR support
-  margin-bottom: 20px; // Space below search bar
 }
 
-
-.welcome-section, .featured-subjects {
-  text-align: left;
-  padding: 20px;
-
-}
-
-.featured-subjects .subject-list {
-  display: flex;
-  justify-content: start;
-  gap: 10px;
-}
-
-/* List styling for scrolling */
+/* Styling for the list that appears */
 ion-list {
-  max-height: 200px; // Maximum height for list
-  overflow-y: auto; // Enable vertical scrolling if there is content going down the page
+  position: absolute; /* Absolutely position within the search-container */
+  top: 100%; /* Start right below the search bar */
+  width: 100%; /* Match width with the search bar for a consistent look */
+  max-height: 300px; /* Maximum height before scrolling */
+  overflow-y: auto; /* Enable scrolling for overflow */
+  background-color: #fff; /* Background color of the list */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Optional: adds shadow for depth */
+  border-radius: 0 0 4px 4px; /* Optional: rounds the bottom corners */
+  border-top: none; /* Removes top border if it exists */
+  z-index: 12; /* Ensure it appears above other content */
+}
+
+.featured-subjects {
+  padding: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.subject-card {
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.subject-card:hover {
+  transform: scale(1.05);
+}
+
+.subject-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h4 {
+  margin: 0;
+  font-size: 1.1rem;
 }
 
 

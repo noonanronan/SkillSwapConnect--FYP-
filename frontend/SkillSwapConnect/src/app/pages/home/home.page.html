@@ -54,38 +54,44 @@
   
     <!-- Main content container -->
     <div class="container" id="main-content">
-
-      <!-- Area for displaying the main content -->
-      <main class="content-area">
-
-        <!-- Welcome message and quick tips -->
-        <section class="welcome-section">
-          <h2>Welcome, {{ user?.displayName || 'Guest' }}!</h2>
-          <p>Explore new subjects or dive deeper into your interests.</p>
-        </section>
-
-        
+      <!-- Search Container -->
+      <div class="search-container">
         <!-- Search bar component -->
-        <ion-searchbar class="search-bar" (ionInput)="setFilteredItems($event)"></ion-searchbar>
-        <!-- List of subjects -->
-        <ion-list>
-          <!-- Iterate over filtered subjects and display them as items -->
+        <ion-searchbar class="search-bar" (ionInput)="setFilteredItems($event)" 
+                                              (ionFocus)="isListVisible = true" 
+                                              (ionBlur)="isListVisible = false"></ion-searchbar>
+        <!-- List of subjects, conditionally shown -->
+        <ion-list *ngIf="isListVisible">
           <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
             {{ subject }}
           </ion-item>
         </ion-list>
-
-        
-
-        <!-- Featured Subjects Section -->
-        <section class="featured-subjects">
-          <h3>Featured Subjects</h3>
-          <div class="subject-list">
-            <ion-chip *ngFor="let subject of ['Art', 'Programming', 'Yoga']" (click)="onSubjectSelect(subject)">
-              <ion-label>{{ subject }}</ion-label>
-            </ion-chip>
+      </div>
+      
+      <!-- Area for displaying the main content -->
+      <main class="content-area">
+        <!-- Welcome message and quick tips -->
+        <section class="welcome-section">
+          <div class="welcome-background">
+            <h2>Welcome, {{ user?.displayName || 'Guest' }}!</h2>
+            <p>Explore new subjects or dive deeper into your interests.</p>
           </div>
         </section>
+
+        
+ 
+    <!-- Featured Subjects Section with Card Layout -->
+    <section class="featured-subjects">
+      <h3>Featured Subjects</h3>
+      <div class="card-container">
+        <div class="subject-card" *ngFor="let subject of ['Art', 'Programming', 'Yoga']" (click)="onSubjectSelect(subject)">
+          <img src="path_to_subject_image.png" alt="{{ subject }}">
+          <div class="card-content">
+            <h4>{{ subject }}</h4>
+          </div>
+        </div>
+      </div>
+    </section>
         
       </main>
     </div>

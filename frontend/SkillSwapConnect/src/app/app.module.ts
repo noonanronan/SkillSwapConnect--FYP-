@@ -20,6 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DatePipe } from '@angular/common'; // Import DatePipe
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -32,6 +35,8 @@ import { DatePipe } from '@angular/common'; // Import DatePipe
     AngularFireStorageModule,
     HttpClientModule,
     IonicModule.forRoot(), // Add IonicModule to your imports
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [AutheticationService, DatePipe],
   bootstrap: [AppComponent],
