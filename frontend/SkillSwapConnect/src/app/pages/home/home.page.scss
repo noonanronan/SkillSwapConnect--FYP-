@@ -70,6 +70,14 @@
   margin-bottom: 8px; // Bottom margin for spacing
 }
 
+/* Search bar styling */
+ion-searchbar {
+  --width: 100%; /* Use the full width of its container */
+  margin-bottom: 10px; /* Space below the search bar */
+  margin-left: auto; // Align to the center for RTL support
+  margin-right: auto; // Align to the center for LTR support
+}
+
 /* Gretting message */
 .welcome-section {
   position: relative;
@@ -109,14 +117,6 @@
   position: relative; /* Positioned relative to its normal position */
   width: 100%; /* Full width to contain the search bar */
   z-index: 11; /* Ensure it's above the main content but below fixed elements */
-}
-
-/* Search bar styling */
-ion-searchbar {
-  --width: 100%; /* Use the full width of its container */
-  margin-bottom: 10px; /* Space below the search bar */
-  margin-left: auto; // Align to the center for RTL support
-  margin-right: auto; // Align to the center for LTR support
 }
 
 /* Styling for the list that appears */

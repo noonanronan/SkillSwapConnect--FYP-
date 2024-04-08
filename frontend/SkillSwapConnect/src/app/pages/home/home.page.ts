@@ -53,25 +53,26 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Subscribe to the authentication service to receive user data
-    this.authSubscription = this.authService.currentUser.subscribe(
-      async (firebaseUser) => {
+    this.authSubscription = this.authService.currentUser.subscribe({
+      next: async (firebaseUser) => {
         if (firebaseUser) {
-          // Fetch additional user details from the database
-          const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
-          // Update local user profile data
-          this.user = {
-            uid: firebaseUser.uid,
-            displayName: userDetails.displayName || 'User',
-            email: firebaseUser.email,
-            photoURL: userDetails.photoURL
-          };
+          try {
+            // Fetch additional user details from the database
+            const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
+            // Update local user profile data
+            this.user = {
+              uid: firebaseUser.uid,
+              displayName: userDetails.displayName || 'User',
+              email: firebaseUser.email,
+              photoURL: userDetails.photoURL
+            };
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
         }
       },
-      (error) => {
-        console.error('Error fetching user data:', error);
-      }
-    );
+      error: (error) => console.error('Error in user data subscription:', error)
+    });
   }
 
   ngOnDestroy(): void {
@@ -138,6 +139,12 @@ export class HomePage implements OnInit, OnDestroy {
           console.error('Error uploading file:', error);
         }
       }
+    }
+
+    onSearchBarBlur(): void {
+      setTimeout(() => {
+        this.isListVisible = false;
+      }, 300); // Adjust the delay as needed
     }
   
     /* Navigates to the user's profile page */

@@ -57,9 +57,9 @@
       <!-- Search Container -->
       <div class="search-container">
         <!-- Search bar component -->
-        <ion-searchbar class="search-bar" (ionInput)="setFilteredItems($event)" 
-                                              (ionFocus)="isListVisible = true" 
-                                              (ionBlur)="isListVisible = false"></ion-searchbar>
+        <ion-searchbar (ionInput)="setFilteredItems($event)" 
+                       (ionFocus)="isListVisible = true" 
+                       (ionBlur)="onSearchBarBlur()"></ion-searchbar>
         <!-- List of subjects, conditionally shown -->
         <ion-list *ngIf="isListVisible">
           <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
