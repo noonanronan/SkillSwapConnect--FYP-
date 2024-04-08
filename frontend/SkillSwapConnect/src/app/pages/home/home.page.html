@@ -58,14 +58,15 @@
       <div class="search-container">
         <!-- Search bar component -->
         <ion-searchbar (ionInput)="setFilteredItems($event)" 
+                       (ionChange)="setFilteredItems($event)"
                        (ionFocus)="isListVisible = true" 
                        (ionBlur)="onSearchBarBlur()"></ion-searchbar>
-        <!-- List of subjects, conditionally shown -->
         <ion-list *ngIf="isListVisible">
           <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
             {{ subject }}
           </ion-item>
         </ion-list>
+
       </div>
       
       <!-- Area for displaying the main content -->
@@ -84,12 +85,12 @@
     <section class="featured-subjects">
       <h3>Featured Subjects</h3>
       <div class="card-container">
-        <div class="subject-card" *ngFor="let subject of ['Art', 'Programming', 'Yoga']" (click)="onSubjectSelect(subject)">
-          <img src="path_to_subject_image.png" alt="{{ subject }}">
+        <div *ngFor="let subject of displayedSubjects" class="subject-card" (click)="onSubjectSelect(subject.name)">
+          <img [src]="subject.image" alt="{{ subject.name }}">
           <div class="card-content">
-            <h4>{{ subject }}</h4>
+            <h4>{{ subject.name }}</h4>
           </div>
-        </div>
+        </div>               
       </div>
     </section>
         

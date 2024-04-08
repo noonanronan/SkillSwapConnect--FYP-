@@ -73,6 +73,7 @@
 /* Search bar styling */
 ion-searchbar {
   --width: 100%; /* Use the full width of its container */
+  margin-top: 60px; /* Space above the search bar */	
   margin-bottom: 10px; /* Space below the search bar */
   margin-left: auto; // Align to the center for RTL support
   margin-right: auto; // Align to the center for LTR support
@@ -135,42 +136,37 @@ ion-list {
 
 .featured-subjects {
   padding: 20px;
+  text-align: center;
+
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+
+    .subject-card {
+      border: 1px solid #ddd;
+      border-radius: 0px;
+      overflow: hidden;
+      width: 150px;
+      height: auto; // Make the height auto so it scales with the width
+      text-align: center; // This will center the text inside the card-content
+
+      img {
+        width: 60%;
+        height: auto; // Make the height auto so it scales with the width
+      }
+
+      .card-content {
+        padding: 0px;
+
+        h4 {
+          margin-top:0px; // This gives some space between the image and the text
+        }
+      }
+    }
+  }
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.subject-card {
-  width: 200px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-
-.subject-card:hover {
-  transform: scale(1.05);
-}
-
-.subject-card img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.card-content h4 {
-  margin: 0;
-  font-size: 1.1rem;
-}
 
 
 /* Side Menu styling */
