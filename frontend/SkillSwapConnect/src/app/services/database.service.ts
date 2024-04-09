@@ -86,10 +86,10 @@ export class DatabaseService {
   }
 
   // Method to fetch teaching materials for a user
-  async updateTeachingMaterial(uid: string, materialUrl: string, materialType: 'notes' | 'video'): Promise<void> {
+  async updateTeachingMaterial(uid: string, material: { url: string, name: string }, materialType: 'notes' | 'video'): Promise<void> {
     const materialsRef = this.db.object(`users/${uid}/teachingMaterials/${materialType}`);
-    const materials = (await materialsRef.query.ref.once('value')).val() || [];
-    materials.push(materialUrl);
+    const materialsSnapshot = await materialsRef.query.ref.once('value');
+    const materials = materialsSnapshot.val() ? [...materialsSnapshot.val(), material] : [material];
     
     await materialsRef.set(materials);
   }

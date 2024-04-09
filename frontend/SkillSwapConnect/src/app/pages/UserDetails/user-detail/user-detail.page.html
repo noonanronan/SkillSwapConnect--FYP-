@@ -3,7 +3,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <button class="back-button" onclick="history.back()">
-        <img src="../assets/icon/backButton.png" alt="Back"> <!-- Replace with your icon path -->
+        <img src="../assets/icon/backButton.png" alt="Back"> 
       </button>
     </ion-buttons>
     <ion-title>Profile Page</ion-title>
@@ -36,16 +36,17 @@
   <div [ngSwitch]="segmentValue">
     <!-- Videos container -->
     <div *ngSwitchCase="'videos'" class="material-container">
-      <!-- Loop through each video URL and display a video player -->
-      <div *ngFor="let videoUrl of teachingMaterials.videos" class="material-card">
-        <video [src]="videoUrl" controls></video>
+      <!-- Loop to iterate through videos and display their names -->
+      <div *ngFor="let video of teachingMaterials.videos" class="material-card">
+        <video [src]="video.url" controls></video>
+        <p>{{ video.name }}</p>
       </div>
     </div>
     <!-- Notes container -->
     <div *ngSwitchCase="'notes'" class="material-container">
-      <!-- Loop through each note URL and display a link to view the note -->
-      <div *ngFor="let notesUrl of teachingMaterials.notes" class="material-card">
-        <a [href]="notesUrl" target="_blank">View Note</a>
+      <!-- Loop to iterate through notes and display their names -->
+      <div *ngFor="let note of teachingMaterials.notes" class="material-card">
+        <a [href]="note.url" target="_blank">{{ note.name }}</a>
       </div>
     </div>
   </div>

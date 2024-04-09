@@ -31,6 +31,10 @@ export class ProfilePage implements OnInit {
   selectedNotesFile: File | null = null;
   selectedVideoFile: File | null = null;
 
+  selectedNotesName: string = ''; // Bind to the input field for notes name/title
+  selectedVideoName: string = ''; // Bind to the input field for video name/title
+
+
   // Reference to the hidden file input for profile image upload
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
 
@@ -148,34 +152,39 @@ export class ProfilePage implements OnInit {
   }
 
   storeFile(event: any, type: 'notes' | 'video'): void {
-    // Stores the selected file temporarily before upload
     const file: File = event.target.files[0];
     if (type === 'notes') {
       this.selectedNotesFile = file;
+      // Assume you have a mechanism to capture the name/title
+      // Maybe an input field tied to `selectedNotesName`
     } else if (type === 'video') {
       this.selectedVideoFile = file;
+      // Similarly, capture the video title into `selectedVideoName`
     }
   }
 
   async uploadMaterials(): Promise<void> {
-    // Uploads the stored teaching materials (notes and videos)
-    if (this.selectedNotesFile) {
-      await this.uploadFile(this.selectedNotesFile, 'notes');
-      this.selectedNotesFile = null;
+    // Check if we have a notes file and a title
+    if (this.selectedNotesFile && this.selectedNotesName.trim()) {
+      await this.uploadFile(this.selectedNotesFile, 'notes', this.selectedNotesName);
+      this.selectedNotesFile = null; // Reset the file input
+      this.selectedNotesName = ''; // Reset the input field for the next upload
     }
-    if (this.selectedVideoFile) {
-      await this.uploadFile(this.selectedVideoFile, 'video');
-      this.selectedVideoFile = null;
+    
+    // Check if we have a video file and a title
+    if (this.selectedVideoFile && this.selectedVideoName.trim()) {
+      await this.uploadFile(this.selectedVideoFile, 'video', this.selectedVideoName);
+      this.selectedVideoFile = null; // Reset the file input
+      this.selectedVideoName = ''; // Reset the input field for the next upload
     }
   }
 
-  private async uploadFile(file: File, type: 'notes' | 'video'): Promise<void> {
-    // Helper method to upload a single file and update the database with the file's URL
+  private async uploadFile(file: File, type: 'notes' | 'video', name: string): Promise<void> {
     if (!this.user || !this.selectedTeachingOption) return;
-    const path = `teaching_materials/${this.selectedTeachingOption}/${type}`;
+    const path = `teaching_materials/${this.selectedTeachingOption}/${type}/${name}`;
     try {
       const downloadURL = await this.contentUploadService.uploadContent(file, path);
-      await this.databaseService.updateTeachingMaterial(this.user.uid, downloadURL, type);
+      await this.databaseService.updateTeachingMaterial(this.user.uid, { url: downloadURL, name }, type);
       console.log(`${type} uploaded successfully:`, downloadURL);
     } catch (error) {
       console.error(`Error uploading ${type}:`, error);

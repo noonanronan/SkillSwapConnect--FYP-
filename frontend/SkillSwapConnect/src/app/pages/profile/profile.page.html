@@ -78,12 +78,16 @@
       <div class="upload-section">
         <label for="uploadNotes">Upload Notes:</label>
         <input type="file" id="uploadNotes" (change)="storeFile($event, 'notes')" accept=".pdf,.doc,.docx">
+        <!-- Add input field for notes name/title -->
+        <input type="text" placeholder="Enter notes title" [(ngModel)]="selectedNotesName">
       </div>
 
       <!-- Upload Video -->
       <div class="upload-section">
         <label for="uploadVideo">Upload Video:</label>
         <input type="file" id="uploadVideo" (change)="storeFile($event, 'video')" accept="video/*">
+        <!-- Add input field for video name/title -->
+        <input type="text" placeholder="Enter video title" [(ngModel)]="selectedVideoName">
       </div>
 
       <!-- Upload Button -->
