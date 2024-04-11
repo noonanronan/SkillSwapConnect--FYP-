@@ -11,12 +11,10 @@ ion-content {
   --overflow: auto; // Ensure Ionic content is scrollable
 }
 
-// g
-
 /* Header */
 .app-header {
   display: flex;
-  justify-content: space-between; // Space between elements
+  justify-content: center; // Space between elements
   align-items: center; // Center elements vertically
   width: 100%; // Full width of the header
   background-color: #4169e1; // BG set to Blue

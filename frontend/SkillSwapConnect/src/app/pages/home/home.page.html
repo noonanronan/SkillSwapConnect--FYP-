@@ -1,106 +1,101 @@
-<!-- Root container element -->
-<div class="container">
-  <!-- App Header with Toolbar -->
-  <ion-header>
-    <ion-toolbar>
-      <!-- Toolbar is left intentionally empty to match the design -->
-    </ion-toolbar>
-  </ion-header>
-  
-  <!-- Main header with navigation logo and logout functionality -->
-  <header class="app-header">
-    <!-- Menu button that opens side menu -->
+<!-- Header containing navigation and Logo -->
+<ion-header class="app-header">
+  <ion-toolbar>
+    <!-- Menu button for side navigation -->
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <!-- Logo section -->
+
+    <!-- Centered logo -->
     <div class="logo">
-      <img src="assets/logo.png"/>
+      <img src="assets/logo.jpg"/>
     </div>
-    <!-- Logout button -->
-    <button (click)="logout()">Logout</button>
-  </header>
 
-  <ion-app>
-    <!-- Side menu for navigation -->
-    <ion-menu contentId="main-content" side="start">
-      <!-- Menu header -->
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <!-- Menu content area -->
-      <ion-content>
-        <!-- User Profile Card -->
-        <section class="profile-card menu-top-spacing" *ngIf="user">
-          <!-- Button to go to user profile -->
-          <ion-button class="profile-icon-button" style="--background:#0000;" (click)="goToProfile()">
-            <ion-icon name="person-circle"></ion-icon>
-          </ion-button>        
-          <!-- Display user profile picture -->
-          <img [src]="user?.photoURL || 'assets/icon/default.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
-          <!-- Hidden input for file upload -->
-          <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
-          <!-- Display user's name -->
-          <h2>{{ user?.displayName || 'User' }}</h2>
-          <!-- Display user's email -->
-          <p>{{ user?.email }}</p>
-          <!-- Button to logout -->
-          <ion-button (click)="logout()">Logout</ion-button>
-        </section>
-      </ion-content>
-    </ion-menu>
+    <!-- Logout button on the right for user to sign out -->
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-app>
+  <!-- Side menu for navigation -->
+<ion-menu contentId="main-content" side="start">
+  <!-- Menu header -->
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
   
-    <!-- Main content container -->
-    <div class="container" id="main-content">
-      <!-- Search Container -->
-      <div class="search-container">
-        <!-- Search bar component -->
-        <ion-searchbar (ionInput)="setFilteredItems($event)" 
-                       (ionChange)="setFilteredItems($event)"
-                       (ionFocus)="isListVisible = true" 
-                       (ionBlur)="onSearchBarBlur()"></ion-searchbar>
-        <ion-list *ngIf="isListVisible">
-          <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
-            {{ subject }}
-          </ion-item>
-        </ion-list>
-
-      </div>
-      
-      <!-- Area for displaying the main content -->
-      <main class="content-area">
-        <!-- Welcome message and quick tips -->
-        <section class="welcome-section">
-          <div class="welcome-background">
-            <h2>Welcome, {{ user?.displayName || 'Guest' }}!</h2>
-            <p>Explore new subjects or dive deeper into your interests.</p>
-          </div>
-        </section>
-
-        
- 
-    <!-- Featured Subjects Section with Card Layout -->
-    <section class="featured-subjects">
-      <h3>Featured Subjects</h3>
-      <div class="card-container">
-        <div *ngFor="let subject of displayedSubjects" class="subject-card" (click)="onSubjectSelect(subject.name)">
-          <img [src]="subject.image" alt="{{ subject.name }}">
-          <div class="card-content">
-            <h4>{{ subject.name }}</h4>
-          </div>
-        </div>               
-      </div>
+  <!-- Menu content area -->
+  <ion-content>
+    <!-- User Profile Card -->
+    <section class="profile-card menu-top-spacing" *ngIf="user">
+      <!-- Button to go to user profile -->
+      <ion-button class="profile-icon-button" style="--background:#0000;" (click)="goToProfile()">
+        <ion-icon name="person-circle"></ion-icon>
+      </ion-button>        
+      <!-- Display user profile picture -->
+      <img [src]="user?.photoURL || 'assets/icon/default.png'" alt="User Image" class="profile-pic" (click)="triggerFileInput()">
+      <!-- Hidden input for file upload -->
+      <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+      <!-- Display user's name -->
+      <h2>{{ user?.displayName || 'User' }}</h2>
+      <!-- Display user's email -->
+      <p>{{ user?.email }}</p>
+      <!-- Button to logout -->
+      <ion-button (click)="logout()">Logout</ion-button>
     </section>
-        
-      </main>
-    </div>
-    <div class="chat-icon" (click)="openUserListingPage()">
-      <ion-icon name="chatbubbles-outline"></ion-icon>
-    </div>
+  </ion-content>
+</ion-menu>
 
-    <!-- Trigger for the 'For You' section -->
-    <ion-button class="for-you-trigger" (click)="openForYouSection()">For You</ion-button>
-  </ion-app>
-</div>
+  <!-- Main content container -->
+  <div class="container" id="main-content">
+    <!-- Search Container -->
+    <div class="search-container">
+      <!-- Search bar component -->
+      <ion-searchbar (ionInput)="setFilteredItems($event)" 
+                     (ionChange)="setFilteredItems($event)"
+                     (ionFocus)="isListVisible = true" 
+                     (ionBlur)="onSearchBarBlur()"></ion-searchbar>
+      <ion-list *ngIf="isListVisible">
+        <ion-item *ngFor="let subject of filteredSubjects" (click)="onSubjectSelect(subject)">
+          {{ subject }}
+        </ion-item>
+      </ion-list>
+    </div>
+    
+    <!-- Area for displaying the main content -->
+    <main class="content-area">
+      <!-- Welcome message and quick tips -->
+      <section class="welcome-section">
+        <div class="welcome-background">
+          <h2>Welcome, {{ user?.displayName || 'Guest' }}!</h2>
+          <p>Explore new subjects or dive deeper into your interests.</p>
+        </div>
+      </section>
+
+      <!-- Featured Subjects Section with Card Layout -->
+      <section class="featured-subjects">
+        <h3>Featured Subjects</h3>
+        <div class="card-container">
+          <div *ngFor="let subject of displayedSubjects" class="subject-card" (click)="onSubjectSelect(subject.name)">
+            <img [src]="subject.image" alt="{{ subject.name }}">
+            <div class="card-content">
+              <h4>{{ subject.name }}</h4>
+            </div>
+          </div>               
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="chat-icon" (click)="openUserListingPage()">
+    <ion-icon name="chatbubbles-outline"></ion-icon>
+  </div>
+
+  <!-- Trigger for the 'For You' section -->
+  <ion-button class="for-you-trigger" (click)="openForYouSection()">For You</ion-button>
+</ion-app>

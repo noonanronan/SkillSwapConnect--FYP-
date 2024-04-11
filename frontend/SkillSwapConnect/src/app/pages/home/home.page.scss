@@ -10,40 +10,80 @@
   text-align: center; // Center all child element text
 }
 
-/* Header styling, fixed at the top of the viewport */
+/* Global Styles */
+html, body {
+  height: 100%; // Full viewport height
+  margin: 0; // Reset default margin
+  padding: 0; // Reset default padding
+  overflow-y: auto; // Enable vertical scrolling
+}
+
+/* Ion Content */
+ion-content {
+  --overflow: auto; // Ensure Ionic content is scrollable
+}
+
+/* Header */
 .app-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  background-color: #4169e1; // Royal blue background color
-  color: #fff; // Text color for header is white
-  position: fixed;
+  justify-content: center; // Space between elements
+  align-items: center; // Center elements vertically
+  width: 100%; // Full width of the header
+  background-color: #4169e1; // BG set to Blue
+  color: #fff;
+  position: fixed; // Position set to fixed
   top: 0;
-  z-index: 10; // Stacking context higher than other elements
+  z-index: 1001;
 }
 
-/* Logo image within header */
+.app-header ion-button {
+  font-size: 32px;
+  --background: transparent; // Set to transparent so colour blue is seen behind
+  --color: #fff;
+  --padding: 0; // Remove padding for the buttons to be less bulky
+}
+
+
+  /* Header sections for alignment */
+.app-header .left-header,
+.app-header .right-header {
+  flex: 1;
+  display: flex;
+  align-items: center; // Center items vertically 
+}
+
+.app-header .left-header {
+  justify-content: flex-start; // Align items to the left 
+}
+    
+.app-header .right-header {
+  justify-content: flex-end; // Align items to the right 
+}
+
+.app-header .logo {
+  flex-grow: 2; // Allow the logo to occupy the maximum available space 
+  display: flex;
+  justify-content: center; // Center the logo horizontally 
+}
+
 .app-header .logo img {
-  height: 90px;
-  width: auto;
+  height: 90px; // Set logo height 
+  width: auto; // Adjust width automatically to maintain aspect ratio 
 }
 
-/* Logout button styling */
 .app-header button {
-  background-color: #4169e1; // Royale blue to match button color with header
-  color: #fff; // White text
-  padding: 12px 24px; // Padding for button size
-  border: none; // No border
-  border-radius: 5px; // Rounded corners
-  cursor: pointer; // Cursor changes to pointer to indicate that you can click it
-  font-weight: bold; // Bold text
-  transition: background-color 0.3s ease; // Transition for hover effect
+  background-color: #4169e1; // Match button background with the header 
+  color: #fff; // Button text color white 
+  padding: 12px 24px; // Add padding for a larger clickable area 
+  border: none; // Remove default button border 
+  border-radius: 5px; // Round button corners 
+  cursor: pointer; // Change cursor to pointer to show that it can be clicked
+  font-weight: bold; // Make button text bold 
+  transition: background-color 0.3s ease; // Smooth background color transition on hover 
 }
 
-/* Hover effect for buttons */
-.app-header button:hover {
-  background-color: #ffe5b4; // Change background color on hover
+ion-header, ion-toolbar {
+  --background: #4169e1; // Set Ionic header and toolbar background color 
 }
 
 
@@ -180,6 +220,10 @@ ion-menu {
 /* Top margin for the profile card */
 .menu-top-spacing {
   margin-top: -276px; // Negative margin to adjust position 
+  text-align: center; // Ensures content is centered horizontally
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Center items horizontally in a flex container
 }
 
 /* Profile icon button styling */
@@ -213,6 +257,7 @@ ion-menu ion-button {
   margin-bottom: 0; // No bottom margin 
 }
 
+
 /* Chat icon styling - Move to bottom left with increased specificity and !important */
 .chat-icon {
   position: fixed !important; // Stick to the viewport
@@ -223,14 +268,18 @@ ion-menu ion-button {
   z-index: 9999 !important; // Ensure it's on top of other elements
 }
 
-/* Add this to ensure the icon appears */
+.chat-icon ion-icon {
+  font-size: 60px; // Increase icon size
+}
+
+/* Added to ensure the icon appears */
 ion-icon {
   z-index: 10000; // Even higher z-index to ensure visibility
 }
 
 .for-you-trigger {
   position: absolute; // Position it absolutely within the container
-  top: 50%; // Align vertically to the middle
+  top: 90%; // Align vertically to the middle
   transform: translateY(-50%); // Offset by half its height to truly center
   left: 20px; // Distance from the left
   border: 2px solid #4169e1; // Border color to match the header
