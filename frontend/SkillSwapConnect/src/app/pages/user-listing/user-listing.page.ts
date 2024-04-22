@@ -32,10 +32,12 @@ export class UserListingPage implements OnInit {
   
 
   onSearchQueryChange() {
-    this.filteredUsers = this.searchQuery ? this.users.filter(user =>
-      user.displayName.toLowerCase().includes(this.searchQuery.toLowerCase())
+    const query = this.searchQuery.trim().toLowerCase();
+    this.filteredUsers = query ? this.users.filter(user =>
+      user.displayName.toLowerCase().includes(query)
     ) : this.users;
   }
+  
 
   onUserSelect(user: any) {
     this.authService.getCurrentUserId().then(currentUserId => {

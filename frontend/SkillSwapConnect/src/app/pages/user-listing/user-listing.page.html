@@ -10,7 +10,7 @@
 
 <ion-content>
   <div class="user-listing">
-    <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="onSearchQueryChange()" placeholder="Search users..."></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="onSearchQueryChange()" placeholder="Search users..."></ion-searchbar>
     <ion-list>
       <ion-item *ngFor="let user of filteredUsers" (click)="onUserSelect(user)">
         <ion-avatar slot="start">

@@ -90,7 +90,7 @@ export class DatabaseService {
     const materialsRef = this.db.object(`users/${uid}/teachingMaterials/${materialType}`);
     const materialsSnapshot = await materialsRef.query.ref.once('value');
     const materials = materialsSnapshot.val() ? [...materialsSnapshot.val(), material] : [material];
-    
+
     await materialsRef.set(materials);
   }
 

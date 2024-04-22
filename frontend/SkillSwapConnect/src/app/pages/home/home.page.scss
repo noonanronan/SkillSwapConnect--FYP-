@@ -99,7 +99,7 @@ ion-header, ion-toolbar {
 
 /* Adjusting first child of <main> if necessary */
 .content-area > *:first-child {
-  margin-top: 0; /* Removes margin from the first element */
+  margin-top: 0px; /* Removes margin from the first element */
 }
 
 /* Headings within content area */
@@ -302,5 +302,19 @@ ion-icon {
     background-color: #4169e1; // Royal blue background on hover
     color: #fff; // White text on hover
     box-shadow: 0 6px 12px rgba(65, 105, 225, 0.5); // Larger shadow on hover
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header .logo img {
+    height: 60px; // Reduce the size on smaller screens
+  }
+
+  .content-area {
+    padding-top: 0px; // Increase padding if header is fixed
+  }
+
+  .search-container ion-searchbar {
+    --width: 10%; // Reduce width for smaller screens
   }
 }
