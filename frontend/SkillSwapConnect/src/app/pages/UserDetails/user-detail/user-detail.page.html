@@ -37,16 +37,18 @@
     <!-- Videos container -->
     <div *ngSwitchCase="'videos'" class="material-container">
       <!-- Loop to iterate through videos and display their names -->
-      <div *ngFor="let video of teachingMaterials.videos" class="material-card">
+      <div *ngFor="let video of teachingMaterials.videos; let i = index" class="material-card">
         <video [src]="video.url" controls></video>
         <p>{{ video.name }}</p>
+        <ion-button color="danger" (click)="deleteMaterial(video, 'video', i)">Delete</ion-button>
       </div>
     </div>
     <!-- Notes container -->
     <div *ngSwitchCase="'notes'" class="material-container">
       <!-- Loop to iterate through notes and display their names -->
-      <div *ngFor="let note of teachingMaterials.notes" class="material-card">
+      <div *ngFor="let note of teachingMaterials.notes; let i = index" class="material-card">
         <a [href]="note.url" target="_blank">{{ note.name }}</a>
+        <ion-button color="danger" (click)="deleteMaterial(note, 'notes', i)">Delete</ion-button>
       </div>
     </div>
   </div>

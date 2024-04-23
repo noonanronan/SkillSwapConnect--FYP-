@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       
       <ion-avatar>
-        <img [src]="chatPartner?.photoURL || 'assets/default-profile.png'">
+        <img [src]="chatPartner?.photoURL || 'assets/icon/default.png'">
       </ion-avatar>
       
     
@@ -16,18 +16,22 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content #content>
   <ion-list>
-    <div *ngFor="let message of messages">
-      <!-- Display date if displayDate is set -->
-      <div *ngIf="message.displayDate" class="date-separator">
-        {{ message.displayDate | date: 'fullDate' }}
+    <ng-container *ngFor="let item of messages">
+      <!-- Handle date separators -->
+      <div *ngIf="item.isDate" class="date-separator">
+        {{ item.date | date: 'fullDate' }}
       </div>
-      <div [ngClass]="{'message-sent': isCurrentUser(message.senderId), 'message-received': !isCurrentUser(message.senderId)}">
-        <p>{{ message.text }}</p>
-        <small>{{ message.timestamp | date: 'shortTime' }}</small>
-      </div>
-    </div>    
+
+      <!-- Handle actual messages -->
+      <ng-container *ngIf="!item.isDate">
+        <div [ngClass]="{'message-sent': isCurrentUser(item.senderId), 'message-received': !isCurrentUser(item.senderId)}">
+          <p>{{ item.text }}</p>
+          <small>{{ item.timestamp | date: 'shortTime' }}</small>
+        </div>
+      </ng-container>
+    </ng-container>
   </ion-list>
 
   <form (ngSubmit)="sendMessage()">

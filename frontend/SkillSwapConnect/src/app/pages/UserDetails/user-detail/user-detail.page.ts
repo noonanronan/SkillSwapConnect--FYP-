@@ -25,6 +25,26 @@ export class UserDetailPage implements OnInit {
     this.fetchData(); // Calls fetchData to retrieve user details and teaching materials
   }
 
+  deleteMaterial(material: any, type: 'video' | 'notes', index: number) {
+    // Confirm deletion with the user
+    if (!confirm(`Are you sure you want to delete "${material.name}"?`)) {
+      return;
+    }
+  
+    // Call the database service to delete the material
+    this.databaseService.deleteMaterial(this.userId, material, type).then(() => {
+      // Remove the material from the local array to update UI
+      if (type === 'video') {
+        this.teachingMaterials.videos.splice(index, 1);
+      } else {
+        this.teachingMaterials.notes.splice(index, 1);
+      }
+    }).catch(error => {
+      console.error('Failed to delete the material:', error);
+    });
+  }
+  
+
   fetchData() {
     // Method to fetch user details from the database
     this.databaseService.getUserDetails(this.userId).then(details => {

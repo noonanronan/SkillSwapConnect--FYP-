@@ -3,6 +3,8 @@ import { SimpleWebSocketService } from 'src/app/services/simple-web-socket.servi
 import { AutheticationService } from 'src/app/services/authetication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ActivatedRoute } from '@angular/router';
+import { ViewChild, ElementRef } from '@angular/core';
+
 
 
 @Component({
@@ -97,31 +99,27 @@ export class MessagingPage implements OnInit, OnDestroy {
   }
 
   processMessages(messages: any[]): any[] {
-  if (messages.length === 0) return [];
-
-  // Sort messages by timestamp to ensure they are in order
-  messages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-
-  // Process messages to add 'displayDate' where needed
-  const processedMessages = [];
-  let lastDisplayedDate = null;
-
-  for (const message of messages) {
-    const messageDate = new Date(message.timestamp);
-    const dateStr = messageDate.toDateString();
-
-    if (lastDisplayedDate !== dateStr) {
-      // This is a new day, so we'll mark this message to display the date
-      message.displayDate = messageDate;
-      lastDisplayedDate = dateStr;
-    } else {
-      message.displayDate = null;
-    }
-
-    processedMessages.push(message);
+    if (!messages.length) return [];
+  
+    messages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+  
+    const processedMessages = [];
+    let lastDisplayedDate = '';
+  
+    messages.forEach(message => {
+      const messageDate = new Date(message.timestamp);
+      const dateStr = messageDate.toDateString();
+  
+      if (lastDisplayedDate !== dateStr) {
+        processedMessages.push({ isDate: true, date: messageDate, displayDate: dateStr });
+        lastDisplayedDate = dateStr;
+      }
+      processedMessages.push(message);
+    });
+  
+    return processedMessages;
   }
-  return processedMessages;
-}
+  
 
 
   ngOnDestroy(): void {

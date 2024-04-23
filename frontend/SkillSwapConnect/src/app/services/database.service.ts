@@ -104,6 +104,19 @@ export class DatabaseService {
     return [];
   }
 
+  async deleteMaterial(userId: string, material: any, type: 'video' | 'notes'): Promise<void> {
+    const path = `users/${userId}/teachingMaterials/${type}`;
+    const materialsRef = this.db.object(path);
+    const materialsSnapshot = await materialsRef.query.ref.once('value');
+    let materials = materialsSnapshot.val();
+  
+    if (materials) {
+      materials = materials.filter((m: any) => m.url !== material.url);
+      await materialsRef.set(materials);
+    }
+  }
+  
+
   // Real-time subscription to chat messages
   getChatMessages(chatId: string): Observable<any[]> {
     return new Observable((observer) => {
