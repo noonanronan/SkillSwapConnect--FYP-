@@ -190,7 +190,6 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     onSearchBarBlur(): void {
-      console.log("Blurring search bar...");
       // Use a delay to wait for the click event before hiding the list
       // Delay hiding the list to catch click event on items
       setTimeout(() => this.isListVisible = false, 300);
