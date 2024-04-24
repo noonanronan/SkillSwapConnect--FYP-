@@ -40,6 +40,7 @@ Follow these steps to run the app locally on your machine:
   4. cd to kafka folder and run  ".\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties"
   5. cd to kafka folder and run ".\bin\windows\kafka-server-start.bat .\config\server.properties"
   6. Cd to \backend\messaging-service and run "mvn spring-boot:run"
+```
 
 
 
