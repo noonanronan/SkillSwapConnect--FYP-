@@ -22,6 +22,8 @@ import { DatePipe } from '@angular/common'; // Import DatePipe
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ForYouContentModule } from './components/for-you-content/for-you-content.module'; // Import the ForYouContentModule
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IonicModule.forRoot(), // Add IonicModule to your imports
     FormsModule,
     ReactiveFormsModule,
+    ForYouContentModule // Add the ForYouContentModule to your imports
   ],
   providers: [AutheticationService, DatePipe],
   bootstrap: [AppComponent],

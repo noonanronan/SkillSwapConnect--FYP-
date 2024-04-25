@@ -1,0 +1,77 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <!-- Home button on the left for navigation -->
+    <ion-buttons slot="start">
+      <button class="back-button" onclick="history.back()"> <!-- Back button -->
+        <img src="../assets/icon/backButton.png" alt="Back"> <!-- Back button -->
+      </button> 
+    </ion-buttons>
+
+    <!-- Centered logo -->
+    <div class="logo">
+      <img src="assets/logo.jpg"/>
+    </div>
+
+    <!-- Logout button on the right for user to sign out -->
+    <ion-buttons slot="end">
+      <ion-button >
+        <button class="back-button" onclick="history.back()">
+          <img src="../assets/icon/nothing.png" alt="Back">
+        </button>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<!-- For You Page Content -->
+<ion-content fullscreen>
+  <ion-segment [(ngModel)]="segmentValue">
+    <ion-segment-button value="videos">
+      <ion-label>Videos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="notes">
+      <ion-label>Notes</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-grid>
+    <!-- Videos Section -->
+    <div *ngIf="segmentValue === 'videos'">
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let material of teachingMaterials">
+          <ion-card *ngIf="material.type === 'video'">
+            <ion-card-header>
+              <ion-img [src]="material.userPhoto" alt="User image"></ion-img>
+              <ion-card-subtitle>{{ material.userName }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="video-content">
+              <video #videoPlayer [src]="material.url" controls></video>
+              <div class="video-info">
+                <ion-card-title>{{ material.name }}</ion-card-title>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <!-- Notes Section -->
+    <div *ngIf="segmentValue === 'notes'">
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let material of teachingMaterials">
+          <ion-card *ngIf="material.type === 'notes'">
+            <ion-card-header>
+              <ion-img [src]="material.userPhoto" alt="User image"></ion-img>
+              <ion-card-subtitle>{{ material.userName }}</ion-card-subtitle>
+              <ion-card-title>{{ material.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <a [href]="material.url" target="_blank">{{ material.name }}</a>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>

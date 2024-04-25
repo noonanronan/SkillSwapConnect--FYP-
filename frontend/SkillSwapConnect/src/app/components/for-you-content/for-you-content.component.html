@@ -1,3 +1,22 @@
-<p>
-  for-you-content works!
-</p>
+<ion-content>
+  <div *ngIf="materials.videos.length">
+    <h2>Videos</h2>
+    <ion-list>
+      <ion-item *ngFor="let video of materials.videos">
+        <video [src]="video.url" controls></video>
+        <p>{{ video.name }}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="materials.notes.length">
+    <h2>Notes</h2>
+    <ion-list>
+      <ion-item *ngFor="let note of materials.notes">
+        <a [href]="note.url" target="_blank">{{ note.name }}</a>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ng-template #noMaterialsTemplate>
+    <ion-label>No materials available for your current interests.</ion-label>
+  </ng-template>
+</ion-content>

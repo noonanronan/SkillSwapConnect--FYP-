@@ -5,7 +5,6 @@ import { User } from 'src/app/services/user.model';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.page.html',
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SearchResultsPage implements OnInit {
   subject: string; // Holds the search query parameter value
-  users: User[]; // Array to store users matching the search criteria
+  users: User[] = []; // Initialize the array to prevent undefined issues
 
   constructor(
     private route: ActivatedRoute,
@@ -28,9 +27,11 @@ export class SearchResultsPage implements OnInit {
     console.log(`Looking up users for subject: ${this.subject}`);
     
     // Fetch users from the database who are associated with the selected subject
-    this.databaseService.searchUsersBySubject(this.subject, (filteredUsers) => {
+    this.databaseService.searchUsersBySubject(this.subject).then(filteredUsers => {
       this.users = filteredUsers; // Assign fetched users to the local array
       this.changeDetectorRef.detectChanges(); // Manually trigger change detection to ensure UI updates
+    }).catch(error => {
+      console.error('Error fetching users:', error);
     });
   }
 

@@ -1,12 +1,12 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 import { AutheticationService } from '../../services/authetication.service';
 import { Subscription } from 'rxjs';
-import { User } from 'firebase/auth';
 import { AddImageService } from '../../services/add-image.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { ModalController } from '@ionic/angular';
 import { ForYouContentComponent } from '../../components/for-you-content/for-you-content.component';
+
 
 
 /* Interface to define the structure of user profile data */
@@ -15,6 +15,7 @@ interface UserProfile {
   displayName: string;
   email: string;
   photoURL?: string;
+  learningSubjects?: string[];
 }
 
 interface Subject {
@@ -42,6 +43,7 @@ export class HomePage implements OnInit, OnDestroy {
     'Yoga', 'Martial Arts', 'Gardening', 'DIY', 'Fitness', 
     'Coding', 'Design', 'Marketing', 'Finance', 'Business Strategy'
   ];
+  materialsForYou: { videos: any[]; notes: any[] } = { videos: [], notes: [] }; // Holds the materials recommended for the user
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>; // Reference to the file input element
 
@@ -83,25 +85,24 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSubscription = this.authService.currentUser.subscribe({
-      next: async (firebaseUser) => {
-        if (firebaseUser) {
-          try {
-            // Fetch additional user details from the database
-            const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
-            // Update local user profile data
-            this.user = {
-              uid: firebaseUser.uid,
-              displayName: userDetails.displayName || 'User',
-              email: firebaseUser.email,
-              photoURL: userDetails.photoURL,
-            };
-          } catch (error) {
-            console.error('Error fetching user data:', error);
-          }
-        }
-      },
-      error: (error) => console.error('Error in user data subscription:', error),
+        next: async (firebaseUser) => {
+            if (firebaseUser) {
+                console.log('Firebase User ID: ', firebaseUser.uid);
+                const userDetails = await this.databaseService.getUserDetails(firebaseUser.uid);
+                this.user = {
+                    uid: firebaseUser.uid,
+                    displayName: userDetails.displayName || 'User',
+                    email: firebaseUser.email,
+                    photoURL: userDetails.photoURL,
+                    learningSubjects: userDetails.learningSubjects || []
+                };
+                console.log('Updated User Details: ', this.user);
+                this.loadUserInterestsMaterials();
+            }
+        },
+        error: (error) => console.error('Error in user data subscription:', error)
     });
+
   
     this.rotationInterval = setInterval(() => {
       this.rotateFeaturedSubjects();
@@ -109,6 +110,7 @@ export class HomePage implements OnInit, OnDestroy {
   
     // Initial set of displayed subjects
     this.displayedSubjects = this.allSubjects.slice(0, 3);
+
   }
   
 
@@ -130,20 +132,55 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
+  async loadUserInterestsMaterials() {
+    if (this.user && this.user.learningSubjects && this.user.learningSubjects.length > 0) {
+      console.log('Loading materials for subjects:', this.user.learningSubjects);
+      try {
+        const materials = await this.databaseService.getMaterialsBySubjects(this.user.learningSubjects);
+        if (materials) {
+          // Process the materials into videos and notes
+          this.materialsForYou.videos = materials.filter(material => material.type === 'video');
+          this.materialsForYou.notes = materials.filter(material => material.type === 'note');
+          console.log('Materials for User Interests Loaded: ', this.materialsForYou);
+        } else {
+          console.log('No materials found for the subjects:', this.user.learningSubjects);
+        }
+      } catch (error) {
+        console.error('Error fetching materials:', error);
+      }
+    } else {
+      console.log('No learning subjects found for the user.');
+    }
+  }
+  
+  
+
   async openForYouSection() {
-    const modal = await this.modalController.create({
-      component: ForYouContentComponent, // Replace with your component
-      cssClass: 'for-you-modal',
-      componentProps: {
-        // Pass any necessary props here, like user's interests
-      },
-    });
-    return await modal.present();
+    console.log('Navigating to For You page');
+    this.router.navigateByUrl('/for-you');
   }
 
-  openUserListingPage() {
-    this.router.navigateByUrl('/user-listing');
+
+  async loadMaterials() {
+    if (this.user && this.user.learningSubjects) {
+      try {
+        console.log('Attempting to load materials for user:', this.user.uid);
+        const materials = await this.databaseService.getMaterialsBySubjects(this.user.learningSubjects);
+        if (materials) {
+          // Separate the materials into videos and notes
+          this.materialsForYou.videos = materials.filter(material => material.type === 'video');
+          this.materialsForYou.notes = materials.filter(material => material.type === 'note');
+          console.log('Loaded materials for user:', this.materialsForYou);
+        } else {
+          console.error('No materials found for the subjects:', this.user.learningSubjects);
+        }
+      } catch (error) {
+        console.error('Failed to fetch materials', error);
+      }
+    }
   }
+  
+  
 
   /* Filters the subjects based on the user's search input */
   setFilteredItems(event: any): void {
@@ -198,6 +235,11 @@ export class HomePage implements OnInit, OnDestroy {
     /* Navigates to the user's profile page */
     goToProfile() {
       this.router.navigateByUrl('/profile');
+    }
+
+    openUserListingPage(): void {
+      console.log('Navigating to User Listing page');
+      this.router.navigateByUrl('/user-listing'); // Ensure you have a route defined for '/user-listing'
     }
   
     /* Logs out the current user and navigates to the landing page */

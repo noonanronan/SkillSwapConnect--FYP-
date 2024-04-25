@@ -5,20 +5,25 @@ import firebase from 'firebase/compat/app';
 import { User } from 'src/app/services/user.model'; 
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  constructor(private db: AngularFireDatabase ) {}
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth ) {}
 
   // Method to fetch all users in DatabaseService
   async getAllUsers(): Promise<any[]> {
     const snapshot = await this.db.database.ref('/users').once('value');
     const usersObject = snapshot.val();
+    if (!usersObject) return []; // Return an empty array if no users found
+  
     const usersArray = Object.keys(usersObject).map(key => ({
       ...usersObject[key],
-      uid: key // Add the UID to the user object
+      uid: key // Ensure UID is added to the user object
     }));
     return usersArray;
   }
@@ -53,31 +58,50 @@ export class DatabaseService {
   }  
 
   // Method to fetch users teaching a specific subject
-  searchUsersBySubject(subject: string, callback: (users: User[]) => void): void {
-    this.db.list<User>('/users').snapshotChanges().pipe(
-      map(actions => actions.map(a => ({
-        uid: a.payload.key,
-        ...a.payload.val() as User,
-        photoURL: a.payload.val().photoURL || 'assets/default-profile.png' // Uses a default photoURL if not present
-      })))
-    ).subscribe(users => {
-      // Filter and callback logic as before
-      const filteredUsers = users.filter(user => 
-        user.interests?.some(interest => 
-          interest.subject === subject && interest.type === 'teach'
-        )
-      );
-      console.log('Filtered users:', filteredUsers);
-      callback(filteredUsers); // Use the callback to pass filtered users
-    }, error => {
-      console.error("Error fetching users by subject:", error);
+  searchUsersBySubject(subject: string): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.db.list<User>('/users').snapshotChanges().pipe(
+        map(actions => actions.map(a => ({
+          uid: a.payload.key,
+          ...a.payload.val() as User,
+          photoURL: a.payload.val().photoURL || 'assets/default-profile.png' // Uses a default photoURL if not present
+        })))
+      ).subscribe(users => {
+        const filteredUsers = users.filter(user => 
+          user.interests?.some(interest => 
+            interest.subject === subject && interest.type === 'teach'
+          )
+        );
+        resolve(filteredUsers);
+      }, error => {
+        console.error("Error fetching users by subject:", error);
+        reject(error);
+      });
     });
   }
   
   // Gets detailed user information by their ID
-  getUserDetails(userId: string): Promise<any> {
-    return this.db.database.ref(`users/${userId}`).once('value').then(snapshot => snapshot.val());
+  async getUserDetails(userId: string): Promise<any> {
+    return this.db.database.ref(`users/${userId}`).once('value').then(snapshot => {
+        const userDetails = snapshot.val();
+        console.log("User Details Fetched: ", userDetails);
+        if (userDetails && userDetails.interests) {
+            userDetails.learningSubjects = userDetails.interests
+                .filter(interest => interest.type === 'learn')
+                .map(interest => interest.subject);
+            console.log("Learning Subjects Extracted: ", userDetails.learningSubjects);
+        }
+        return userDetails;
+    });
+}
+
+async getCurrentUserProfile(): Promise<any> {
+  const user = await this.afAuth.currentUser;
+  if (user) {
+    return this.db.database.ref(`/users/${user.uid}`).once('value').then(snapshot => snapshot.val());
   }
+  throw new Error('User not logged in');
+}
 
   // Method to update the user's profile image URL
   async updateUserPhotoURL(uid: string, photoURL: string): Promise<void> {
@@ -115,7 +139,23 @@ export class DatabaseService {
       await materialsRef.set(materials);
     }
   }
+
+  // Method to fetch materials based on multiple subjects
+  getMaterialsBySubjects(subjects: string[]): Promise<any[]> {
+    console.log(`Fetching materials for subjects: ${subjects.join(', ')}`);
+    const promises = subjects.map(subject =>
+      this.db.list(`/materials/${subject}`).valueChanges().pipe(take(1)).toPromise()
+    );
   
+    return Promise.all(promises).then(materials => {
+      const flattenedMaterials = materials.flat();
+      console.log(`Materials fetched for subjects: ${JSON.stringify(flattenedMaterials)}`);
+      return flattenedMaterials;
+    }).catch(error => {
+      console.error(`Error fetching materials for subjects: ${error}`);
+      return [];
+    });
+  }
 
   // Real-time subscription to chat messages
   getChatMessages(chatId: string): Observable<any[]> {

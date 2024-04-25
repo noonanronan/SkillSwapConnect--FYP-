@@ -47,6 +47,10 @@ const routes: Routes = [
     path: 'messaging',
     loadChildren: () => import('./pages/messaging/messaging.module').then( m => m.MessagingPageModule)
   },
+  {
+    path: 'for-you',
+    loadChildren: () => import('./pages/for-you/for-you.module').then( m => m.ForYouPageModule)
+  },
 
 ];
 

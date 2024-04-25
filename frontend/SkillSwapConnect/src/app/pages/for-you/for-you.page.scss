@@ -1,0 +1,152 @@
+/* for-you.page.scss */
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: center; // Space between elements
+    align-items: center; // Center elements vertically
+    width: 100%; // Full width of the header
+    background-color: #4169e1; // BG set to Blue
+    color: #fff;
+    top: 0;
+    z-index: 1001;
+  }
+  
+  .app-header ion-button {
+    font-size: 32px;
+    --background: transparent; // Set to transparent so colour blue is seen behind
+    --color: #fff;
+    --padding: 0; // Remove padding for the buttons to be less bulky
+  }
+  
+  
+    /* Header sections for alignment */
+  .app-header .left-header,
+  .app-header .right-header {
+    flex: 1;
+    display: flex;
+    align-items: center; // Center items vertically 
+  }
+  
+  .app-header .left-header {
+    justify-content: flex-start; // Align items to the left 
+  }
+      
+  .app-header .right-header {
+    justify-content: flex-end; // Align items to the right 
+  }
+  
+  .app-header .logo {
+    flex-grow: 2; // Allow the logo to occupy the maximum available space 
+    display: flex;
+    justify-content: center; // Center the logo horizontally 
+  }
+  
+  .app-header .logo img {
+    height: 90px; // Set logo height 
+    width: auto; // Adjust width automatically to maintain aspect ratio 
+  }
+  
+  .app-header button {
+    background-color: #4169e1; // Match button background with the header 
+    color: #fff; // Button text color white 
+    padding: 12px 24px; // Add padding for a larger clickable area 
+    border: none; // Remove default button border 
+    border-radius: 5px; // Round button corners 
+    cursor: pointer; // Change cursor to pointer to show that it can be clicked
+    font-weight: bold; // Make button text bold 
+    transition: background-color 0.3s ease; // Smooth background color transition on hover 
+  }
+  
+  ion-header, ion-toolbar {
+    --background: #4169e1; // Set Ionic header and toolbar background color 
+  }
+
+  /* Back button */
+.back-button {
+    background: none; // Removes any default styling
+    border: none; // Remove default border
+    cursor: pointer; // Change cursor to pointer on hover
+    display: flex; // Use flexbox to position the button
+    float: right; // Float the button to the right
+  
+    img {
+      width: 40px; // Set the width of the icon
+      height: auto; // Automatically adjust height to maintain aspect ratio
+      display: block; // Ensure the icon is centered within the button
+    }
+  
+    &:hover {
+      opacity: 0.8; // Slight visual feedback on hover
+    }
+  
+    // Position the button to the right
+    margin-left: auto;
+  }
+
+ion-content {
+    margin-top: px; // Add space between the header and content
+    --background: #f4f5f8; // Set background color for the content area
+  
+    ion-grid {
+      padding: 16px; // Add padding around the grid
+      ion-row {
+        justify-content: center; // Center the columns in the row
+      }
+    }
+  
+    ion-card {
+      display: flex; // Use flexbox for layout control
+      flex-direction: column; // Stack elements vertically
+      width: 100%; // Ensure cards take full width of the column
+      max-width: 480px; // Increase maximum width of the cards
+
+      &:hover {
+        transform: translateY(-10px);
+      }
+  
+      ion-img {
+        width: 40px; // Set width of the image
+        height: 40px; // Set height of the image
+        border-radius: 50%; // Make the image circular
+        object-fit: cover; // Cover the entire area with the image
+        margin-right: 10px; // Add space between the image and text
+      }
+  
+      .video-content, .video-info {
+        display: flex; // Use flexbox for layout control
+        align-items: center; // Aligns the video and the title vertically
+        justify-content: center; // Center content inside the video-info
+      }
+  
+      video {
+        width: 100%; // Adjusts to the size of the container
+        max-height: 200px; // Increased height to better fit content
+        margin-right: 10px; // Space between the video and the title
+        position: relative; // Make sure video is positioned relatively
+        z-index: 1; // Ensure video z-index is lower than .video-info
+      }
+  
+      .video-info {
+        position: relative; // Make sure .video-info is positioned relatively
+        z-index: 10; // Set z-index higher than the video player controls
+        margin-bottom: 30px; // Adjust the space above the video controls
+        flex: 1; // Take up remaining space
+        display: flex; // Use flexbox for layout control
+        align-items: center; // Center the title vertically next to the video
+        justify-content: space-between; // Distribute space between items inside
+        padding: 10px; // Added padding for better spacing
+        overflow: hidden; // Hide overflow content
+    }
+    
+    ion-card-title {
+        line-height: 1.2; // Adjust line height to ensure text fits and doesn't overlap
+        padding: 5px 0; // Give some padding at the top and bottom within the container
+        font-size: 1.2rem; // Adjust title size for better visibility
+        margin: 0; // Remove any default margin
+        white-space: nowrap; // Ensure the text stays in a single line
+        overflow: hidden; // Hide text that overflows the container boundaries
+        text-overflow: ellipsis; // Add ellipsis if the text overflows
+        max-width: 90%; // Limit maximum width to prevent overlapping other elements
+    }
+    }
+}

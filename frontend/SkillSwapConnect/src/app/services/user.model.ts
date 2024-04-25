@@ -11,6 +11,7 @@ export interface User {
   interests?: Interest[]; 
   role: string;
   photoURL?: string; 
+  teachingMaterials?: TeachingMaterials;
 }
 
 export interface Message {
@@ -19,4 +20,9 @@ export interface Message {
   timestamp: string;
   senderId: string;
   chatId?: string;
+}
+
+export interface TeachingMaterials {
+  notes: any[]; 
+  videos: any[]; 
 }
