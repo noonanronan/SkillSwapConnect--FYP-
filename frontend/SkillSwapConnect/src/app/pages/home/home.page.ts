@@ -241,6 +241,7 @@ export class HomePage implements OnInit, OnDestroy {
       console.log('Navigating to User Listing page');
       this.router.navigateByUrl('/user-listing'); // Ensure you have a route defined for '/user-listing'
     }
+
   
     /* Logs out the current user and navigates to the landing page */
     async logout(): Promise<void> {

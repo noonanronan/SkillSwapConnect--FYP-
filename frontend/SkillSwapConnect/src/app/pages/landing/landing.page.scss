@@ -1,32 +1,79 @@
-/* landing page - Styling */
 .custom-landing-page {
-  --background: url('/assets/landing.png') 0 0/100% 100% no-repeat; // Set the background image
-  background-size: cover; // Covers the entire content area
-  background-position: center; // Center the background image
-  background-repeat: no-repeat; // Prevent the background image from repeating
+  display: flex; // Flex container for centering
+  justify-content: center; // Center text elements
+  align-items: center; // Center text elements
+  text-align: center; // Center text elements
+  height: 100vh; // Full viewport height
+  --background: #f4f5f8; // Light grey background for a clean look
+  padding: 0; // Reset default padding
+  margin: 0; // Reset default margin
 
-  /* Section for the 'Get Started' button */
-  .cta-section {
-    position: absolute; // Position the section absolutely within the ion-content
-    right: 11%; // Align to the right side of the page with a 9.8% offset from the right edge - (Must be changed later for Mobiles)
-    top: 50%; // Center vertically
-    transform: translateY(-50%); // Adjust for exact vertical centering
-    text-align: center; // Center the text (and button) horizontally
+  .content-wrapper {
+    width: 90%;
+    max-width: 500px; // This limits the width on larger screens but allows expansion on smaller ones
+    margin: auto; // This centers it both vertically and horizontally
 
-    /* Style for the 'Get Started' button */
-    .cta-button {
-      font-weight: bold; // Button text Bold
-      background-color: #304875; // Set the button color
-      color: #fff; // Set the text color for contrast
-      font-size: 1.2em; // Increase the font size for visibility
-      padding: 15px 30px; // Adds padding around the text
-      border: none; // Remove any default borders
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Applies a shadow
-      transition: transform 0.3s ease; // Animate the transform property
+    .branding-section {
+      margin-bottom: 2em; // Space below the branding section
 
-      &:active {
-        transform: scale(0.95); // Scale down button when active/clicked
+      .brand-logo {
+        height: 100px; // Fixed logo height
+        margin-bottom: 1em; // Space below the logo
+      }
+
+      h1 {
+        font-size: 2.5em; // Large font size for the welcome message
+        color: #304875; // Dark blue for text to match the button
+        margin-bottom: 0.5em; // Space below the title
+      }
+
+      p {
+        color: #6c757d; // Grey for the subtitle
+        font-size: 1.2em; // Slightly larger text for better readability
+        margin-bottom: 2em; // Space below the subtitle
       }
     }
+
+    .cta-section {
+      .cta-button {
+        font-weight: 600; // Slightly bolder
+        background-color: #304875; // Consistent with the theme
+        color: #fff; // White text for better contrast
+        font-size: 1.4em; // Larger text for better visibility
+        padding: 15px 60px; // Bigger button for better mobile interaction
+        border: none; // Removes default button border
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+
+        &:active {
+          transform: scale(0.98); // Slightly shrink on click for a tactile feel
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-landing-page .content-wrapper {
+    width: 50%; // Half the width on larger screens
+    max-width: 800px; // Limit the width to prevent it from becoming too wide
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-landing-page .content-wrapper {
+    width: 100%; // Full width on mobile for maximum space
+  }
+
+  .custom-landing-page .branding-section .brand-logo {
+    height: 80px; // Smaller logo on mobile
+  }
+
+  .custom-landing-page .branding-section h1 {
+    font-size: 2em; // Slightly smaller text on mobile
+  }
+
+  .custom-landing-page .cta-section .cta-button {
+    padding: 15px 50px; // Slightly smaller button on mobile
+    font-size: 1.2em; // Smaller text on mobile
   }
 }
