@@ -22,15 +22,15 @@ Follow these steps to run the app locally on your machine:
  #### Frontend
 ```
     3. npm install:
-    * Make sure you have node installed - node -v or npm -v (Checks if installed)
-    * npm install -g @angular/cli
-    * npm install -g firebase-tools
-    * npm install @angular/fire
-    * npm install firebase
-    * npm install firebase @angular/fire --force
-    * npm install kafkajs
-    * npm install @angular/fire/compat/firestore
-    * npm install sockjs-client webstomp-client --save --legacy-peer-deps
+    - Ensure you have Node.js installed: `node -v` or `npm -v` (to check if installed)
+- Install Angular CLI globally: `npm install -g @angular/cli`
+- Install Firebase tools globally: `npm install -g firebase-tools`
+- Install Angular Firebase: `npm install @angular/fire`
+- Install Firebase SDK: `npm install firebase`
+- Force install Angular Firebase (if needed): `npm install firebase @angular/fire --force`
+- Install KafkaJS: `npm install kafkajs`
+- Install Angular Firestore compatibility package: `npm install @angular/fire/compat/firestore`
+- Install WebSocket dependencies: `npm install sockjs-client webstomp-client --save --legacy-peer-deps`
 
     4. ionic serve
 ```
