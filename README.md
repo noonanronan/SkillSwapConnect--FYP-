@@ -65,7 +65,7 @@ Skill Swap Connect utilizes a microservices architecture with a frontend built u
 For more information, feedback, or inquiries about Skill Swap Connect, please feel free to contact me via email:
 
 #### Ronan Noonan
-Email: G00384824@atu.ie
+Email: noonanronanw@gmail.com
 
 
 
